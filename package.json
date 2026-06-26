@@ -1,0 +1,31 @@
+{
+  "name": "careconnect",
+  "version": "1.0.0",
+  "description": "CareConnect (CarpalTunnel Focus) electron desktop application",
+  "keywords": [
+    "careconnect",
+    "electron",
+    "carpaltunnel",
+    "npm",
+    "node"
+  ],
+  "homepage": "https://github.com/ksbickmore/CareConnect_Desktop#readme",
+  "bugs": {
+    "url": "https://github.com/ksbickmore/CareConnect_Desktop/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ksbickmore/CareConnect_Desktop.git"
+  },
+  "license": "MIT",
+  "author": "Kristopher Bickmore <ksbickmore@gmail.com>",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "test"
+  },
+  "devDependencies": {
+    "electron": "^42.5.0"
+  }
+}
