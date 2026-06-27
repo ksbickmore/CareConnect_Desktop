@@ -1,0 +1,59 @@
+/*
+ * CareConnect design tokens — sourced from .figma/color_tokens.css and
+ * .figma/type_scale.css. Single source of truth for color, spacing, radius,
+ * and typography across every component's CSS module.
+ */
+:root {
+  /* --- Primary: Teal --- */
+  --teal-900: #04342c;
+  --teal-800: #085041;
+  --teal-600: #0f6e56; /* primary */
+  --teal-400: #1d9e75;
+  --teal-200: #5dcaa5;
+  --teal-100: #9fe1cb;
+  --teal-50: #e1f5ee;
+  --primary: var(--teal-600);
+
+  /* --- Secondary: Amber --- */
+  --amber-900: #412402;
+  --amber-800: #633806;
+  --amber-700: #854f0b;
+  --amber-600: #ba7517; /* secondary */
+  --amber-200: #ef9f27;
+  --amber-100: #fac775;
+  --amber-50: #faeeda;
+  --secondary: var(--amber-600);
+
+  /* --- Semantic --- */
+  --emergency: #e24b4a;
+  --emergency-bg: #fbe9e8;
+  --success: #639922;
+  --success-bg: #eaf2df;
+  --success-fg: #3f6314;
+
+  /* --- Neutrals --- */
+  --text: #2c2c2a;
+  --muted: #888780;
+  --border: #d3d1c7;
+  --bg: #f1efe8;
+  --surface: #ffffff;
+  --surface-alt: #fbfaf6;
+  --menubar-fg: #dcefe6;
+  --menubar-status: #bfe3d6;
+
+  /* --- Radii --- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* --- Spacing (8pt grid) --- */
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* --- Typography --- */
+  --font-family: 'DM Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}

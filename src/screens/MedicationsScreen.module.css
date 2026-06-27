@@ -1,0 +1,213 @@
+.segmented {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+}
+
+.segment {
+  height: 28px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.segmentActive {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--teal-800);
+}
+
+.layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 480fr) minmax(0, 640fr);
+  gap: 24px;
+  padding: 24px;
+  min-height: 0;
+}
+
+.master,
+.detail {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow-y: auto;
+}
+
+.master {
+  padding: 12px;
+}
+
+.group + .group {
+  margin-top: 12px;
+}
+
+.groupLabel {
+  padding: 12px 8px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+}
+
+.empty {
+  padding: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.medRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  text-align: left;
+}
+
+.medRow:hover {
+  background: var(--surface-alt);
+}
+
+.medRowSelected,
+.medRowSelected:hover {
+  background: var(--teal-50);
+  border-color: var(--teal-100);
+}
+
+.medRowDone {
+  background: var(--surface-alt);
+}
+
+.dot {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: var(--radius-sm);
+  background: var(--teal-50);
+  position: relative;
+}
+
+.dot::after {
+  content: '';
+  position: absolute;
+  inset: 11px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+.dotDone {
+  background: var(--success-bg);
+}
+
+.dotDone::after {
+  background: var(--success);
+}
+
+.medText {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.medName {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.medRowDone .medName {
+  color: var(--muted);
+}
+
+.medMeta {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Detail panel */
+.detail {
+  padding: 24px;
+}
+
+.detailEmpty {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.detailHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.detailName {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.detailSub {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.tile {
+  padding: 14px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-sm);
+}
+
+.tileLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+}
+
+.tileValue {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.tileSuccess {
+  color: var(--success);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.instructions {
+  margin: 24px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}

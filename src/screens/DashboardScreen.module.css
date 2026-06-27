@@ -1,0 +1,248 @@
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 300px;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.searchKbd {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.greeting {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.dateLine {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.statCard {
+  height: 104px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.statLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+}
+
+.statValue {
+  margin-top: 4px;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 44px;
+}
+
+.statHint {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.amber {
+  color: var(--secondary);
+}
+
+.teal {
+  color: var(--primary);
+}
+
+.neutral {
+  color: var(--text);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 643fr) minmax(0, 429fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.card {
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.nextMed {
+  background: var(--teal-50);
+  border-color: var(--teal-100);
+}
+
+.nextMedHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eyebrowTeal {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--teal-800);
+}
+
+.duePill {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  background: var(--amber-50);
+  color: var(--amber-800);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.nextMedName {
+  margin: 14px 0 4px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.nextMedMeta {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: var(--teal-800);
+}
+
+.allDone {
+  margin: 14px 0 0;
+  font-size: 15px;
+  color: var(--teal-800);
+}
+
+.symptom {
+  background: var(--amber-50);
+  border-color: var(--amber-100);
+}
+
+.eyebrowAmber {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--amber-800);
+}
+
+.symptomMsg {
+  margin: 12px 0 18px;
+  font-size: 13px;
+  color: var(--amber-900);
+}
+
+.symptomActions {
+  display: flex;
+  gap: 12px;
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  margin-bottom: 8px;
+}
+
+.rowUnread {
+  background: var(--teal-50);
+  border: 1px solid var(--teal-100);
+}
+
+.rowTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.rowDetail {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.timePill {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.pillSoon {
+  background: var(--amber-100);
+  color: var(--amber-900);
+}
+
+.pillLater {
+  background: var(--bg);
+  color: var(--muted);
+}
+
+.unreadDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+}

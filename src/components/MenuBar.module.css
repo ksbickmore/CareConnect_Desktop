@@ -1,0 +1,65 @@
+.bar {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  flex: 0 0 38px;
+  padding: 0 16px;
+  background: var(--teal-900);
+  color: #fff;
+  font-size: 13px;
+  user-select: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 132px;
+}
+
+.dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--teal-400);
+}
+
+.brandName {
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.menus {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.menuItem {
+  background: none;
+  border: none;
+  color: var(--menubar-fg);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 2px;
+}
+
+.menuItem:hover {
+  color: #fff;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--menubar-status);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--teal-400);
+}

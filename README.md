@@ -1,2 +1,89 @@
-# CareConnect_Desktop
-An Electron implementation of the CareConnect application
+# CareConnect Desktop
+
+An Electron desktop implementation of the CareConnect application (carpal
+tunnel care focus), ported incrementally from the
+[CareConnect Expo mobile app](../careconnect_expo). Built with
+**Electron + React + TypeScript + Vite** (via `electron-vite`).
+
+The design follows the desktop Figma in [`.figma/`](.figma) and the
+accessibility requirements in [`docs/`](docs) — every primary action is
+operable by keyboard alone.
+
+## Screens
+
+This phase implements three generally-functional screens:
+
+| Screen | Notes |
+| --- | --- |
+| **Login** | Pre-filled demo credentials (`demo@careconnect.app` / `demo1234`). "Sign In" or "Continue as Guest" both enter the app. |
+| **Dashboard** | Greeting, three stat cards, a **live** "Next Medication" banner (Confirm taken updates state), plus schedule and messages widgets (static mock data). |
+| **Medications** | Two-column master–detail. Live medication list grouped into Today / Completed, an All/Due/Taken filter, and a detail panel with schedule, refill, adherence, and prescriber. "Confirm taken" moves a medication to Completed. |
+
+Only **Medications** is wired to live state (a Zustand store + in-memory
+repository ported from the mobile app). The dashboard's secondary widgets
+render from static mock data.
+
+## Setup
+
+Requires Node.js 18+ and npm.
+
+```powershell
+npm install
+```
+
+## Running locally
+
+```powershell
+npm run dev      # start with hot reload (electron-vite dev)
+```
+
+Other scripts:
+
+```powershell
+npm run build      # build main, preload, and renderer to out/
+npm run start      # preview the production build (electron-vite preview)
+npm run typecheck  # tsc --noEmit
+```
+
+## Keyboard shortcuts
+
+Accessibility is a hard requirement — all nav items and buttons are
+focusable with a visible focus ring, and the active nav item exposes
+`aria-current`.
+
+| Key | Action |
+| --- | --- |
+| `1` | Go to Dashboard |
+| `2` | Go to Medications |
+| `Tab` / `Shift+Tab` | Move focus between controls |
+| `Enter` / `Space` | Activate the focused control |
+
+Number shortcuts are ignored while typing in a text field.
+
+## Project structure
+
+```
+electron/            Electron main + preload (CommonJS output)
+  main.ts            BrowserWindow, app lifecycle, native menu
+  preload.ts         Minimal contextBridge (placeholder for IPC)
+src/
+  main.tsx           React entry
+  App.tsx            HashRouter + routes
+  theme/tokens.css   Design tokens (color/spacing/radius) from Figma
+  index.css          Global styles, DM Sans, focus rings
+  models/types.ts    Shared data models (ported from mobile)
+  stores/            Zustand stores: auth, medications, async helpers
+  data/              In-memory medications repository + dashboard mock data
+  components/        AppShell, MenuBar, Sidebar, Toolbar, Button, StatusBadge
+  screens/           LoginScreen, DashboardScreen, MedicationsScreen
+electron.vite.config.ts   Build config (main/preload/renderer + @ alias)
+```
+
+## Tech notes
+
+- **Routing:** `HashRouter`, so routes resolve under `file://` in packaged
+  builds.
+- **State:** Zustand stores and the in-memory repository are ported nearly
+  verbatim from the mobile app (no React Native dependencies).
+- **Fonts:** DM Sans is bundled via `@fontsource/dm-sans` (works offline).
+- **Icons:** `lucide-react`.
