@@ -1,0 +1,1568 @@
+/* Dashboard */
+
+position: relative;
+width: 1440px;
+height: 900px;
+
+background: #F1EFE8;
+
+
+/* Menu Bar */
+
+position: absolute;
+width: 1440px;
+height: 38px;
+left: 0px;
+top: 0px;
+
+background: #04342C;
+
+
+/* Ellipse */
+
+position: absolute;
+width: 22px;
+height: 22px;
+left: 16px;
+top: 8px;
+
+background: #1D9E75;
+
+
+/* CareConnect */
+
+position: absolute;
+width: 86px;
+height: 17px;
+left: 44px;
+top: 11px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+
+/* File */
+
+position: absolute;
+width: 21px;
+height: 17px;
+left: 160px;
+top: 11px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* Edit */
+
+position: absolute;
+width: 25px;
+height: 17px;
+left: 205px;
+top: 11px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* View */
+
+position: absolute;
+width: 30px;
+height: 17px;
+left: 254px;
+top: 11px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* Help */
+
+position: absolute;
+width: 28px;
+height: 17px;
+left: 308px;
+top: 11px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* ● All systems active Sung Y. · Caregiver-linked */
+
+position: absolute;
+width: 267px;
+height: 16px;
+left: 1161px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 16px;
+/* identical to box height */
+
+color: #BFE3D6;
+
+
+
+/* Sidebar */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 248px;
+height: 862px;
+left: 0px;
+top: 38px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+
+
+/* Profile Chip */
+
+position: absolute;
+width: 232px;
+height: 64px;
+left: 8px;
+top: 76px;
+
+background: #E1F5EE;
+border-radius: 12px;
+
+
+/* Ellipse */
+
+position: absolute;
+width: 40px;
+height: 40px;
+left: 12px;
+top: 12px;
+
+background: #0F6E56;
+
+
+/* SY */
+
+position: absolute;
+width: 16px;
+height: 17px;
+left: 22px;
+top: 23px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+
+/* Sung Yoon */
+
+position: absolute;
+width: 66px;
+height: 17px;
+left: 62px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* SEVERE CTS CARE PLAN */
+
+position: absolute;
+width: 129px;
+height: 13px;
+left: 62px;
+top: 34px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 10px;
+line-height: 13px;
+/* identical to box height */
+letter-spacing: 0.6px;
+
+color: #888780;
+
+
+
+/* CARE */
+
+position: absolute;
+width: 30px;
+height: 13px;
+left: 14px;
+top: 156px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 10px;
+line-height: 13px;
+/* identical to box height */
+letter-spacing: 0.9px;
+
+color: #888780;
+
+
+
+/* nav-Dashboard */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 180px;
+
+background: #0F6E56;
+border-radius: 12px;
+
+
+/* Dashboard */
+
+position: absolute;
+width: 70px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+
+/* kbd */
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #085041;
+border-radius: 6px;
+
+
+/* 1 */
+
+position: absolute;
+width: 5px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #FFFFFF;
+
+
+
+/* nav-Medications */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 228px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Medications */
+
+position: absolute;
+width: 80px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* kbd */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* 2 */
+
+position: absolute;
+width: 7px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* nav-Schedule */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 276px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Schedule */
+
+position: absolute;
+width: 60px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* kbd */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* 3 */
+
+position: absolute;
+width: 7px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* nav-Messages */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 324px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Messages */
+
+position: absolute;
+width: 64px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* kbd */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* 4 */
+
+position: absolute;
+width: 8px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* badge */
+
+position: absolute;
+width: 20px;
+height: 20px;
+left: 176px;
+top: 12px;
+
+background: #FAC775;
+border-radius: 10px;
+
+
+/* 1 */
+
+position: absolute;
+width: 5px;
+height: 14px;
+left: 6px;
+top: 4px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 11px;
+line-height: 14px;
+
+color: #412402;
+
+
+
+/* nav-Health Log */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 372px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Health Log */
+
+position: absolute;
+width: 68px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* nav-Emergency */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 802px;
+
+background: #FBE9E8;
+border-radius: 12px;
+
+
+/* Emergency (SOS) */
+
+position: absolute;
+width: 112px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #E24B4A;
+
+
+
+/* Toolbar */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 1192px;
+height: 60px;
+left: 248px;
+top: 38px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+
+
+/* Dashboard */
+
+position: absolute;
+width: 97px;
+height: 23px;
+left: 24px;
+top: 21px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 18px;
+line-height: 23px;
+
+color: #2C2C2A;
+
+
+
+/* Search */
+
+position: absolute;
+width: 300px;
+height: 42px;
+left: 832px;
+top: 9px;
+
+background: #F1EFE8;
+border-radius: 12px;
+
+
+/* 🔍 Search records, meds… Ctrl F */
+
+position: absolute;
+width: 216px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* btn-New record */
+
+position: absolute;
+width: 132px;
+height: 44px;
+left: 1144px;
+top: 8px;
+
+background: #0F6E56;
+border-radius: 12px;
+
+
+/* + New record */
+
+position: absolute;
+width: 91px;
+height: 18px;
+left: 20px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #FFFFFF;
+
+
+
+/* Good morning, Sung 👋 */
+
+position: absolute;
+width: 306px;
+height: 36px;
+left: 280px;
+top: 130px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 28px;
+line-height: 36px;
+
+color: #2C2C2A;
+
+
+
+/* Thursday, May 28 · 2 of 3 medications taken today */
+
+position: absolute;
+width: 325px;
+height: 18px;
+left: 280px;
+top: 166px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 18px;
+
+color: #888780;
+
+
+
+/* stat-Pain Level */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 360px;
+height: 104px;
+left: 280px;
+top: 210px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+border-radius: 16px;
+
+
+/* PAIN LEVEL */
+
+position: absolute;
+width: 68px;
+height: 14px;
+left: 20px;
+top: 18px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+letter-spacing: 0.8px;
+
+color: #888780;
+
+
+
+/* 6/10 */
+
+position: absolute;
+width: 70px;
+height: 44px;
+left: 20px;
+top: 36px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 34px;
+line-height: 44px;
+
+color: #BA7517;
+
+
+
+/* ↑ Up from yesterday */
+
+position: absolute;
+width: 127px;
+height: 17px;
+left: 20px;
+top: 76px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* stat-Meds Today */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 360px;
+height: 104px;
+left: 648px;
+top: 210px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+border-radius: 16px;
+
+
+/* MEDS TODAY */
+
+position: absolute;
+width: 77px;
+height: 14px;
+left: 20px;
+top: 18px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+letter-spacing: 0.8px;
+
+color: #888780;
+
+
+
+/* 2/3 */
+
+position: absolute;
+width: 52px;
+height: 44px;
+left: 20px;
+top: 36px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 34px;
+line-height: 44px;
+
+color: #0F6E56;
+
+
+
+/* 1 remaining */
+
+position: absolute;
+width: 67px;
+height: 17px;
+left: 20px;
+top: 76px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* stat-Sleep */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 360px;
+height: 104px;
+left: 1016px;
+top: 210px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+border-radius: 16px;
+
+
+/* SLEEP */
+
+position: absolute;
+width: 36px;
+height: 14px;
+left: 20px;
+top: 18px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+letter-spacing: 0.8px;
+
+color: #888780;
+
+
+
+/* 6.5h */
+
+position: absolute;
+width: 69px;
+height: 44px;
+left: 20px;
+top: 36px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 34px;
+line-height: 44px;
+
+color: #2C2C2A;
+
+
+
+/* Goal: 8h */
+
+position: absolute;
+width: 50px;
+height: 17px;
+left: 20px;
+top: 76px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* Next Medication */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 643px;
+height: 168px;
+left: 280px;
+top: 322px;
+
+background: #E1F5EE;
+border: 1px solid #9FE1CB;
+border-radius: 16px;
+
+
+/* NEXT MEDICATION */
+
+position: absolute;
+width: 111px;
+height: 14px;
+left: 20px;
+top: 18px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+letter-spacing: 0.8px;
+
+color: #085041;
+
+
+
+/* Lisinopril 10 mg */
+
+position: absolute;
+width: 137px;
+height: 23px;
+left: 20px;
+top: 42px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 18px;
+line-height: 23px;
+
+color: #2C2C2A;
+
+
+
+/* Due in 45 min · 8:00 AM · Daily */
+
+position: absolute;
+width: 197px;
+height: 17px;
+left: 20px;
+top: 68px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #085041;
+
+
+
+/* badge-due */
+
+position: absolute;
+width: 60px;
+height: 24px;
+left: 563px;
+top: 44px;
+
+background: #FAEEDA;
+border-radius: 999px;
+
+
+/* DUE */
+
+position: absolute;
+width: 22px;
+height: 14px;
+left: 16px;
+top: 7px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #633806;
+
+
+
+/* btn-Confirm */
+
+position: absolute;
+width: 603px;
+height: 44px;
+left: 20px;
+top: 104px;
+
+background: #0F6E56;
+border-radius: 12px;
+
+
+/* ✓ Confirm taken */
+
+position: absolute;
+width: 116px;
+height: 18px;
+left: 241px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #FFFFFF;
+
+
+
+/* Today Schedule */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 643px;
+height: 184px;
+left: 280px;
+top: 502px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+border-radius: 16px;
+
+
+/* Today's Schedule */
+
+position: absolute;
+width: 154px;
+height: 23px;
+left: 20px;
+top: 18px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 18px;
+line-height: 23px;
+
+color: #2C2C2A;
+
+
+
+/* See all → */
+
+position: absolute;
+width: 55px;
+height: 17px;
+left: 563px;
+top: 22px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #0F6E56;
+
+
+
+/* Physical Therapy */
+
+position: absolute;
+width: 619px;
+height: 52px;
+left: 12px;
+top: 60px;
+
+background: #FBFAF6;
+border-radius: 10px;
+
+
+/* Physical Therapy */
+
+position: absolute;
+width: 117px;
+height: 18px;
+left: 12px;
+top: 10px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #2C2C2A;
+
+
+
+/* 2:00 PM · UMGC Medical */
+
+position: absolute;
+width: 137px;
+height: 16px;
+left: 12px;
+top: 28px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 16px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 52px;
+height: 20px;
+left: 555px;
+top: 16px;
+
+background: #FAC775;
+border-radius: 999px;
+
+
+/* SOON */
+
+position: absolute;
+width: 29px;
+height: 13px;
+left: 8px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 10px;
+line-height: 13px;
+/* identical to box height */
+
+color: #412402;
+
+
+
+/* Vitamin B6 */
+
+position: absolute;
+width: 619px;
+height: 52px;
+left: 12px;
+top: 120px;
+
+background: #FBFAF6;
+border-radius: 10px;
+
+
+/* Vitamin B6 */
+
+position: absolute;
+width: 75px;
+height: 18px;
+left: 12px;
+top: 10px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #2C2C2A;
+
+
+
+/* 9:00 PM · Daily */
+
+position: absolute;
+width: 83px;
+height: 16px;
+left: 12px;
+top: 28px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 16px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 52px;
+height: 20px;
+left: 555px;
+top: 16px;
+
+background: #F1EFE8;
+border-radius: 999px;
+
+
+/* LATER */
+
+position: absolute;
+width: 31px;
+height: 13px;
+left: 8px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 10px;
+line-height: 13px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* Symptom Log */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 429px;
+height: 168px;
+left: 947px;
+top: 322px;
+
+background: #FAEEDA;
+border: 1px solid #FAC775;
+border-radius: 16px;
+
+
+/* LOG TODAY'S SYMPTOMS */
+
+position: absolute;
+width: 150px;
+height: 14px;
+left: 20px;
+top: 18px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+letter-spacing: 0.8px;
+
+color: #633806;
+
+
+
+/* Not logged yet today. */
+
+position: absolute;
+width: 128px;
+height: 17px;
+left: 20px;
+top: 42px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #412402;
+
+
+
+/* btn-Voice log */
+
+position: absolute;
+width: 188px;
+height: 44px;
+left: 20px;
+top: 78px;
+
+background: #BA7517;
+border-radius: 12px;
+
+
+/* 🎤 Voice log */
+
+position: absolute;
+width: 83px;
+height: 18px;
+left: 12px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #FFFFFF;
+
+
+
+/* btn-Manual log */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 188px;
+height: 44px;
+left: 220px;
+top: 78px;
+
+background: #FFFFFF;
+border: 2px solid #0F6E56;
+border-radius: 12px;
+
+
+/* ✏ Manual log */
+
+position: absolute;
+width: 94px;
+height: 18px;
+left: 12px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #085041;
+
+
+
+/* Messages Preview */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 429px;
+height: 184px;
+left: 947px;
+top: 502px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+border-radius: 16px;
+
+
+/* Messages */
+
+position: absolute;
+width: 88px;
+height: 23px;
+left: 20px;
+top: 18px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 18px;
+line-height: 23px;
+
+color: #2C2C2A;
+
+
+
+/* Open → */
+
+position: absolute;
+width: 48px;
+height: 17px;
+left: 365px;
+top: 22px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #0F6E56;
+
+
+
+/* Dr. Park */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 405px;
+height: 52px;
+left: 12px;
+top: 56px;
+
+background: #E1F5EE;
+border: 1px solid #9FE1CB;
+border-radius: 10px;
+
+
+/* Dr. Park */
+
+position: absolute;
+width: 53px;
+height: 18px;
+left: 12px;
+top: 10px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #2C2C2A;
+
+
+
+/* Please bring your symptom log. */
+
+position: absolute;
+width: 174px;
+height: 16px;
+left: 12px;
+top: 28px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 16px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* Ellipse */
+
+position: absolute;
+width: 8px;
+height: 8px;
+left: 393px;
+top: 22px;
+
+background: #0F6E56;
+
+
+/* Nurse */
+
+position: absolute;
+width: 405px;
+height: 52px;
+left: 12px;
+top: 116px;
+
+background: #FBFAF6;
+border-radius: 10px;
+
+
+/* Nurse */
+
+position: absolute;
+width: 41px;
+height: 18px;
+left: 12px;
+top: 10px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #2C2C2A;
+
+
+
+/* Great progress this week! */
+
+position: absolute;
+width: 143px;
+height: 16px;
+left: 12px;
+top: 28px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 16px;
+/* identical to box height */
+
+color: #888780;
+

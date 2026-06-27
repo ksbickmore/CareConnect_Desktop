@@ -1,0 +1,1897 @@
+/* Health Log */
+
+position: relative;
+width: 1440px;
+height: 900px;
+
+background: #F1EFE8;
+
+
+/* Menu Bar */
+
+position: absolute;
+width: 1440px;
+height: 38px;
+left: 0px;
+top: 0px;
+
+background: #04342C;
+
+
+/* ● CareConnect */
+
+position: absolute;
+width: 101px;
+height: 17px;
+left: 16px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+
+/* File */
+
+position: absolute;
+width: 21px;
+height: 17px;
+left: 160px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* Edit */
+
+position: absolute;
+width: 25px;
+height: 17px;
+left: 220px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* View */
+
+position: absolute;
+width: 30px;
+height: 17px;
+left: 280px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* Help */
+
+position: absolute;
+width: 28px;
+height: 17px;
+left: 340px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* Sidebar */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 248px;
+height: 862px;
+left: 0px;
+top: 38px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 64px;
+left: 8px;
+top: 76px;
+
+background: #E1F5EE;
+border-radius: 12px;
+
+
+/* Ellipse */
+
+position: absolute;
+width: 40px;
+height: 40px;
+left: 12px;
+top: 12px;
+
+background: #0F6E56;
+
+
+/* SY */
+
+position: absolute;
+width: 16px;
+height: 17px;
+left: 22px;
+top: 23px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+
+/* Sung Yoon */
+
+position: absolute;
+width: 66px;
+height: 17px;
+left: 62px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Severe CTS Care Plan */
+
+position: absolute;
+width: 100px;
+height: 13px;
+left: 62px;
+top: 34px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 13px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* CARE */
+
+position: absolute;
+width: 30px;
+height: 13px;
+left: 14px;
+top: 156px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 10px;
+line-height: 13px;
+/* identical to box height */
+letter-spacing: 0.9px;
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 158px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Dashboard */
+
+position: absolute;
+width: 70px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #F1EFE8;
+border-radius: 6px;
+
+
+/* 1 */
+
+position: absolute;
+width: 5px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 206px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Medications */
+
+position: absolute;
+width: 80px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #F1EFE8;
+border-radius: 6px;
+
+
+/* 2 */
+
+position: absolute;
+width: 7px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 254px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Schedule */
+
+position: absolute;
+width: 60px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #F1EFE8;
+border-radius: 6px;
+
+
+/* 3 */
+
+position: absolute;
+width: 7px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 302px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Messages */
+
+position: absolute;
+width: 64px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #F1EFE8;
+border-radius: 6px;
+
+
+/* 4 */
+
+position: absolute;
+width: 8px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 20px;
+height: 20px;
+left: 176px;
+top: 12px;
+
+background: #FAC775;
+border-radius: 10px;
+
+
+/* 1 */
+
+position: absolute;
+width: 5px;
+height: 14px;
+left: 6px;
+top: 4px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 11px;
+line-height: 14px;
+
+color: #412402;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 350px;
+
+background: #0F6E56;
+border-radius: 12px;
+
+
+/* Health Log */
+
+position: absolute;
+width: 68px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 802px;
+
+background: #FBE9E8;
+border-radius: 12px;
+
+
+/* Emergency (SOS) */
+
+position: absolute;
+width: 112px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #E24B4A;
+
+
+
+/* Toolbar */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 1192px;
+height: 60px;
+left: 248px;
+top: 38px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+
+
+/* Health Log */
+
+position: absolute;
+width: 94px;
+height: 23px;
+left: 24px;
+top: 21px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 18px;
+line-height: 23px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 160px;
+height: 44px;
+left: 860px;
+top: 8px;
+
+background: #FFFFFF;
+border: 2px solid #0F6E56;
+border-radius: 12px;
+
+
+/* ↓ Export log */
+
+position: absolute;
+width: 89px;
+height: 18px;
+left: 28px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #085041;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 148px;
+height: 44px;
+left: 1032px;
+top: 8px;
+
+background: #BA7517;
+border-radius: 12px;
+
+
+/* 🎤 Voice log */
+
+position: absolute;
+width: 83px;
+height: 18px;
+left: 20px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #FFFFFF;
+
+
+
+/* Health Log */
+
+position: absolute;
+width: 142px;
+height: 36px;
+left: 272px;
+top: 122px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 28px;
+line-height: 36px;
+
+color: #2C2C2A;
+
+
+
+/* Track symptoms and review recent entries */
+
+position: absolute;
+width: 276px;
+height: 18px;
+left: 420px;
+top: 128px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 18px;
+
+color: #888780;
+
+
+
+/* Symptom Logger */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 560px;
+height: 702px;
+left: 272px;
+top: 174px;
+
+background: #FAEEDA;
+border: 1px solid #FAC775;
+border-radius: 16px;
+
+
+/* LOG TODAY'S SYMPTOMS */
+
+position: absolute;
+width: 150px;
+height: 14px;
+left: 24px;
+top: 24px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+letter-spacing: 0.8px;
+
+color: #633806;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 512px;
+height: 52px;
+left: 24px;
+top: 56px;
+
+background: #BA7517;
+border-radius: 12px;
+
+
+/* 🎤 Voice log */
+
+position: absolute;
+width: 95px;
+height: 21px;
+left: 204px;
+top: 17px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 21px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 512px;
+height: 52px;
+left: 24px;
+top: 120px;
+
+background: #FFFFFF;
+border: 2px solid #0F6E56;
+border-radius: 12px;
+
+
+/* ✏ Manual entry */
+
+position: absolute;
+width: 127px;
+height: 21px;
+left: 200px;
+top: 17px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 21px;
+/* identical to box height */
+
+color: #085041;
+
+
+
+/* WRIST PAIN LEVEL */
+
+position: absolute;
+width: 110px;
+height: 14px;
+left: 24px;
+top: 200px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+letter-spacing: 0.8px;
+
+color: #633806;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 170px;
+height: 10px;
+left: 24px;
+top: 226px;
+
+background: #639922;
+
+
+/* Frame */
+
+position: absolute;
+width: 170px;
+height: 10px;
+left: 194px;
+top: 226px;
+
+background: #EF9F27;
+
+
+/* Frame */
+
+position: absolute;
+width: 171px;
+height: 10px;
+left: 365px;
+top: 226px;
+
+background: #E24B4A;
+
+
+/* Ellipse */
+
+position: absolute;
+width: 10px;
+height: 10px;
+left: 24px;
+top: 226px;
+
+background: #639922;
+
+
+/* Ellipse */
+
+position: absolute;
+width: 10px;
+height: 10px;
+left: 526px;
+top: 226px;
+
+background: #E24B4A;
+
+
+/* Ellipse */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 26px;
+height: 26px;
+left: 318px;
+top: 218px;
+
+background: #FFFFFF;
+border: 3px solid #BA7517;
+
+
+/* No pain */
+
+position: absolute;
+width: 36px;
+height: 13px;
+left: 24px;
+top: 242px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 13px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* Moderate */
+
+position: absolute;
+width: 45px;
+height: 13px;
+left: 264px;
+top: 242px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 13px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* Severe */
+
+position: absolute;
+width: 32px;
+height: 13px;
+left: 505px;
+top: 242px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 13px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* 6 / 10 */
+
+position: absolute;
+width: 85px;
+height: 44px;
+left: 24px;
+top: 268px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 34px;
+line-height: 44px;
+
+color: #BA7517;
+
+
+
+/* Moderate-severe · Up from yesterday (5/10) */
+
+position: absolute;
+width: 265px;
+height: 17px;
+left: 24px;
+top: 314px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #412402;
+
+
+
+/* OTHER SYMPTOMS TODAY */
+
+position: absolute;
+width: 154px;
+height: 14px;
+left: 24px;
+top: 346px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+letter-spacing: 0.8px;
+
+color: #633806;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 512px;
+height: 44px;
+left: 24px;
+top: 374px;
+
+background: #FFFFFF;
+border-radius: 10px;
+
+
+/* 😴 */
+
+position: absolute;
+width: 18px;
+height: 18px;
+left: 12px;
+top: 13px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 23px;
+
+color: #000000;
+
+
+
+/* Sleep quality */
+
+position: absolute;
+width: 90px;
+height: 18px;
+left: 44px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #2C2C2A;
+
+
+
+/* 6.5 hrs */
+
+position: absolute;
+width: 46px;
+height: 18px;
+left: 452px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #412402;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 512px;
+height: 44px;
+left: 24px;
+top: 426px;
+
+background: #FAEEDA;
+border-radius: 10px;
+
+
+/* 😐 */
+
+position: absolute;
+width: 18px;
+height: 18px;
+left: 12px;
+top: 13px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 23px;
+
+color: #000000;
+
+
+
+/* Mood */
+
+position: absolute;
+width: 39px;
+height: 18px;
+left: 44px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #2C2C2A;
+
+
+
+/* OK */
+
+position: absolute;
+width: 21px;
+height: 18px;
+left: 452px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #412402;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 512px;
+height: 44px;
+left: 24px;
+top: 478px;
+
+background: #FFFFFF;
+border-radius: 10px;
+
+
+/* 🫱 */
+
+position: absolute;
+width: 18px;
+height: 18px;
+left: 12px;
+top: 13px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 23px;
+
+color: #000000;
+
+
+
+/* Swelling */
+
+position: absolute;
+width: 57px;
+height: 18px;
+left: 44px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #2C2C2A;
+
+
+
+/* Mild */
+
+position: absolute;
+width: 30px;
+height: 18px;
+left: 452px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #412402;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 512px;
+height: 44px;
+left: 24px;
+top: 530px;
+
+background: #FAEEDA;
+border-radius: 10px;
+
+
+/* ⚡ */
+
+position: absolute;
+width: 18px;
+height: 18px;
+left: 12px;
+top: 13px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 23px;
+
+color: #000000;
+
+
+
+/* Numbness */
+
+position: absolute;
+width: 74px;
+height: 18px;
+left: 44px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #2C2C2A;
+
+
+
+/* Yes */
+
+position: absolute;
+width: 24px;
+height: 18px;
+left: 452px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #412402;
+
+
+
+/* Recent Entries */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 560px;
+height: 702px;
+left: 856px;
+top: 174px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+border-radius: 16px;
+
+
+/* Recent Entries */
+
+position: absolute;
+width: 158px;
+height: 29px;
+left: 24px;
+top: 24px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 22px;
+line-height: 29px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Wed, May 27 */
+
+position: absolute;
+width: 528px;
+height: 80px;
+left: 16px;
+top: 68px;
+
+background: #FBFAF6;
+border-radius: 12px;
+
+
+/* Wed, May 27 */
+
+position: absolute;
+width: 92px;
+height: 20px;
+left: 16px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 20px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 69px;
+height: 22px;
+left: 16px;
+top: 40px;
+
+background: #E1F5EE;
+border-radius: 999px;
+
+
+/* Pain 5/10 */
+
+position: absolute;
+width: 49px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #085041;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 66px;
+height: 22px;
+left: 93px;
+top: 40px;
+
+background: #E1F5EE;
+border-radius: 999px;
+
+
+/* Sleep 7h */
+
+position: absolute;
+width: 46px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #085041;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 72px;
+height: 22px;
+left: 167px;
+top: 40px;
+
+background: #FAEEDA;
+border-radius: 999px;
+
+
+/* Mood: OK */
+
+position: absolute;
+width: 52px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #412402;
+
+
+
+/* Tue, May 26 */
+
+position: absolute;
+width: 528px;
+height: 80px;
+left: 16px;
+top: 156px;
+
+background: #FBFAF6;
+border-radius: 12px;
+
+
+/* Tue, May 26 */
+
+position: absolute;
+width: 87px;
+height: 20px;
+left: 16px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 20px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 68px;
+height: 22px;
+left: 16px;
+top: 40px;
+
+background: #FAEEDA;
+border-radius: 999px;
+
+
+/* Pain 7/10 */
+
+position: absolute;
+width: 48px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #412402;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 77px;
+height: 22px;
+left: 92px;
+top: 40px;
+
+background: #E1F5EE;
+border-radius: 999px;
+
+
+/* Sleep 5.5h */
+
+position: absolute;
+width: 57px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #085041;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 78px;
+height: 22px;
+left: 177px;
+top: 40px;
+
+background: #FBE9E8;
+border-radius: 999px;
+
+
+/* Mood: Low */
+
+position: absolute;
+width: 58px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #E24B4A;
+
+
+
+/* Mon, May 25 */
+
+position: absolute;
+width: 528px;
+height: 80px;
+left: 16px;
+top: 244px;
+
+background: #FBFAF6;
+border-radius: 12px;
+
+
+/* Mon, May 25 */
+
+position: absolute;
+width: 92px;
+height: 20px;
+left: 16px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 20px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 70px;
+height: 22px;
+left: 16px;
+top: 40px;
+
+background: #E1F5EE;
+border-radius: 999px;
+
+
+/* Pain 4/10 */
+
+position: absolute;
+width: 50px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #085041;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 67px;
+height: 22px;
+left: 94px;
+top: 40px;
+
+background: #E1F5EE;
+border-radius: 999px;
+
+
+/* Sleep 8h */
+
+position: absolute;
+width: 47px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #085041;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 86px;
+height: 22px;
+left: 169px;
+top: 40px;
+
+background: #EAF2DF;
+border-radius: 999px;
+
+
+/* Mood: Good */
+
+position: absolute;
+width: 66px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #639922;
+
+
+
+/* Sun, May 24 */
+
+position: absolute;
+width: 528px;
+height: 80px;
+left: 16px;
+top: 332px;
+
+background: #FBFAF6;
+border-radius: 12px;
+
+
+/* Sun, May 24 */
+
+position: absolute;
+width: 88px;
+height: 20px;
+left: 16px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 20px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 69px;
+height: 22px;
+left: 16px;
+top: 40px;
+
+background: #FAEEDA;
+border-radius: 999px;
+
+
+/* Pain 6/10 */
+
+position: absolute;
+width: 49px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #412402;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 67px;
+height: 22px;
+left: 93px;
+top: 40px;
+
+background: #E1F5EE;
+border-radius: 999px;
+
+
+/* Sleep 6h */
+
+position: absolute;
+width: 47px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #085041;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 72px;
+height: 22px;
+left: 168px;
+top: 40px;
+
+background: #FAEEDA;
+border-radius: 999px;
+
+
+/* Mood: OK */
+
+position: absolute;
+width: 52px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #412402;
+
+
+
+/* Sat, May 23 */
+
+position: absolute;
+width: 528px;
+height: 80px;
+left: 16px;
+top: 420px;
+
+background: #FBFAF6;
+border-radius: 12px;
+
+
+/* Sat, May 23 */
+
+position: absolute;
+width: 84px;
+height: 20px;
+left: 16px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 20px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 69px;
+height: 22px;
+left: 16px;
+top: 40px;
+
+background: #E1F5EE;
+border-radius: 999px;
+
+
+/* Pain 3/10 */
+
+position: absolute;
+width: 49px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #085041;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 75px;
+height: 22px;
+left: 93px;
+top: 40px;
+
+background: #E1F5EE;
+border-radius: 999px;
+
+
+/* Sleep 7.5h */
+
+position: absolute;
+width: 55px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #085041;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 86px;
+height: 22px;
+left: 176px;
+top: 40px;
+
+background: #EAF2DF;
+border-radius: 999px;
+
+
+/* Mood: Good */
+
+position: absolute;
+width: 66px;
+height: 14px;
+left: 10px;
+top: 5px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #639922;
+

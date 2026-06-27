@@ -1,0 +1,669 @@
+/* Keyboard shortcuts */
+
+box-sizing: border-box;
+
+position: relative;
+width: 1440px;
+height: 220px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+border-radius: 16px;
+
+
+/* Keyboard Shortcut Reference */
+
+position: absolute;
+width: 262px;
+height: 23px;
+left: 32px;
+top: 24px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 18px;
+line-height: 23px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 672px;
+height: 28px;
+left: 32px;
+top: 60px;
+
+background: #FBFAF6;
+border-radius: 6px;
+
+
+/* New record / appointment */
+
+position: absolute;
+width: 160px;
+height: 17px;
+left: 12px;
+top: 8px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 120px;
+height: 22px;
+left: 540px;
+top: 3px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* Ctrl + N */
+
+position: absolute;
+width: 41px;
+height: 14px;
+left: 8px;
+top: 6px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 672px;
+height: 28px;
+left: 32px;
+top: 90px;
+
+background: #FFFFFF;
+border-radius: 6px;
+
+
+/* Save */
+
+position: absolute;
+width: 29px;
+height: 17px;
+left: 12px;
+top: 8px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 120px;
+height: 22px;
+left: 540px;
+top: 3px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* Ctrl + S */
+
+position: absolute;
+width: 39px;
+height: 14px;
+left: 8px;
+top: 6px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 672px;
+height: 28px;
+left: 32px;
+top: 120px;
+
+background: #FBFAF6;
+border-radius: 6px;
+
+
+/* Search / Find */
+
+position: absolute;
+width: 80px;
+height: 17px;
+left: 12px;
+top: 8px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 120px;
+height: 22px;
+left: 540px;
+top: 3px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* Ctrl + F */
+
+position: absolute;
+width: 39px;
+height: 14px;
+left: 8px;
+top: 6px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 672px;
+height: 28px;
+left: 32px;
+top: 150px;
+
+background: #FFFFFF;
+border-radius: 6px;
+
+
+/* Open settings */
+
+position: absolute;
+width: 85px;
+height: 17px;
+left: 12px;
+top: 8px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 120px;
+height: 22px;
+left: 540px;
+top: 3px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* Ctrl + , */
+
+position: absolute;
+width: 36px;
+height: 14px;
+left: 8px;
+top: 6px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 672px;
+height: 28px;
+left: 32px;
+top: 180px;
+
+background: #FBFAF6;
+border-radius: 6px;
+
+
+/* Dashboard / Meds / Schedule / Messages */
+
+position: absolute;
+width: 250px;
+height: 17px;
+left: 12px;
+top: 8px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 120px;
+height: 22px;
+left: 540px;
+top: 3px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* 1 2 3 4 */
+
+position: absolute;
+width: 41px;
+height: 14px;
+left: 8px;
+top: 6px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 672px;
+height: 28px;
+left: 720px;
+top: 60px;
+
+background: #FBFAF6;
+border-radius: 6px;
+
+
+/* Navigate panels */
+
+position: absolute;
+width: 96px;
+height: 17px;
+left: 12px;
+top: 8px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 120px;
+height: 22px;
+left: 540px;
+top: 3px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* Tab / Shift+Tab */
+
+position: absolute;
+width: 81px;
+height: 14px;
+left: 8px;
+top: 6px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 672px;
+height: 28px;
+left: 720px;
+top: 90px;
+
+background: #FFFFFF;
+border-radius: 6px;
+
+
+/* Close dialog / menu */
+
+position: absolute;
+width: 120px;
+height: 17px;
+left: 12px;
+top: 8px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 120px;
+height: 22px;
+left: 540px;
+top: 3px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* Esc */
+
+position: absolute;
+width: 20px;
+height: 14px;
+left: 8px;
+top: 6px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 672px;
+height: 28px;
+left: 720px;
+top: 120px;
+
+background: #FBFAF6;
+border-radius: 6px;
+
+
+/* Keyboard shortcuts help */
+
+position: absolute;
+width: 149px;
+height: 17px;
+left: 12px;
+top: 8px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 120px;
+height: 22px;
+left: 540px;
+top: 3px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* F1 or ? */
+
+position: absolute;
+width: 34px;
+height: 14px;
+left: 8px;
+top: 6px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 672px;
+height: 28px;
+left: 720px;
+top: 150px;
+
+background: #FFFFFF;
+border-radius: 6px;
+
+
+/* Voice command / dictation */
+
+position: absolute;
+width: 165px;
+height: 17px;
+left: 12px;
+top: 8px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 120px;
+height: 22px;
+left: 540px;
+top: 3px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* Ctrl + Space */
+
+position: absolute;
+width: 66px;
+height: 14px;
+left: 8px;
+top: 6px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 672px;
+height: 28px;
+left: 720px;
+top: 180px;
+
+background: #FBFAF6;
+border-radius: 6px;
+
+
+/* Emergency SOS */
+
+position: absolute;
+width: 97px;
+height: 17px;
+left: 12px;
+top: 8px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 120px;
+height: 22px;
+left: 540px;
+top: 3px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 6px;
+
+
+/* Ctrl + Shift + E */
+
+position: absolute;
+width: 77px;
+height: 14px;
+left: 8px;
+top: 6px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #2C2C2A;
+
