@@ -1,0 +1,1289 @@
+/* Messages */
+
+position: relative;
+width: 1440px;
+height: 900px;
+
+background: #F1EFE8;
+
+
+/* Menu Bar */
+
+position: absolute;
+width: 1440px;
+height: 38px;
+left: 0px;
+top: 0px;
+
+background: #04342C;
+
+
+/* ● CareConnect */
+
+position: absolute;
+width: 101px;
+height: 17px;
+left: 16px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+
+/* File */
+
+position: absolute;
+width: 21px;
+height: 17px;
+left: 160px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* Edit */
+
+position: absolute;
+width: 25px;
+height: 17px;
+left: 220px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* View */
+
+position: absolute;
+width: 30px;
+height: 17px;
+left: 280px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* Help */
+
+position: absolute;
+width: 28px;
+height: 17px;
+left: 340px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #DCEFE6;
+
+
+
+/* Sidebar */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 248px;
+height: 862px;
+left: 0px;
+top: 38px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 64px;
+left: 8px;
+top: 76px;
+
+background: #E1F5EE;
+border-radius: 12px;
+
+
+/* Ellipse */
+
+position: absolute;
+width: 40px;
+height: 40px;
+left: 12px;
+top: 12px;
+
+background: #0F6E56;
+
+
+/* SY */
+
+position: absolute;
+width: 16px;
+height: 17px;
+left: 22px;
+top: 23px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+
+/* Sung Yoon */
+
+position: absolute;
+width: 66px;
+height: 17px;
+left: 62px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* SEVERE CTS CARE PLAN */
+
+position: absolute;
+width: 129px;
+height: 13px;
+left: 62px;
+top: 34px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 10px;
+line-height: 13px;
+/* identical to box height */
+letter-spacing: 0.6px;
+
+color: #888780;
+
+
+
+/* CARE */
+
+position: absolute;
+width: 30px;
+height: 13px;
+left: 14px;
+top: 156px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 10px;
+line-height: 13px;
+/* identical to box height */
+letter-spacing: 0.9px;
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 158px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Dashboard */
+
+position: absolute;
+width: 70px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #F1EFE8;
+border-radius: 6px;
+
+
+/* 1 */
+
+position: absolute;
+width: 5px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 206px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Medications */
+
+position: absolute;
+width: 80px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #F1EFE8;
+border-radius: 6px;
+
+
+/* 2 */
+
+position: absolute;
+width: 7px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 254px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Schedule */
+
+position: absolute;
+width: 60px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #F1EFE8;
+border-radius: 6px;
+
+
+/* 3 */
+
+position: absolute;
+width: 7px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 302px;
+
+background: #0F6E56;
+border-radius: 12px;
+
+
+/* Messages */
+
+position: absolute;
+width: 64px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #FFFFFF;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 22px;
+height: 18px;
+left: 204px;
+top: 13px;
+
+background: #085041;
+border-radius: 6px;
+
+
+/* 4 */
+
+position: absolute;
+width: 8px;
+height: 14px;
+left: 7px;
+top: 3px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 11px;
+line-height: 14px;
+
+color: #FFFFFF;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 20px;
+height: 20px;
+left: 176px;
+top: 12px;
+
+background: #FAC775;
+border-radius: 10px;
+
+
+/* 1 */
+
+position: absolute;
+width: 5px;
+height: 14px;
+left: 6px;
+top: 4px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 11px;
+line-height: 14px;
+
+color: #412402;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 350px;
+
+background: #FFFFFF;
+border-radius: 12px;
+
+
+/* Health Log */
+
+position: absolute;
+width: 68px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 232px;
+height: 44px;
+left: 8px;
+top: 802px;
+
+background: #FBE9E8;
+border-radius: 12px;
+
+
+/* Emergency (SOS) */
+
+position: absolute;
+width: 112px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #E24B4A;
+
+
+
+/* Toolbar */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 1192px;
+height: 60px;
+left: 248px;
+top: 38px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+
+
+/* Messages */
+
+position: absolute;
+width: 88px;
+height: 23px;
+left: 24px;
+top: 21px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 18px;
+line-height: 23px;
+
+color: #2C2C2A;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 280px;
+height: 42px;
+left: 752px;
+top: 9px;
+
+background: #F1EFE8;
+border-radius: 12px;
+
+
+/* 🔍 Search messages… */
+
+position: absolute;
+width: 133px;
+height: 17px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* Frame */
+
+position: absolute;
+width: 136px;
+height: 44px;
+left: 1044px;
+top: 8px;
+
+background: #0F6E56;
+border-radius: 12px;
+
+
+/* ✏ New message */
+
+position: absolute;
+width: 115px;
+height: 18px;
+left: 14px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #FFFFFF;
+
+
+
+/* Messages */
+
+position: absolute;
+width: 134px;
+height: 36px;
+left: 272px;
+top: 122px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 28px;
+line-height: 36px;
+
+color: #2C2C2A;
+
+
+
+/* Voice reply is the default — typing optional */
+
+position: absolute;
+width: 279px;
+height: 18px;
+left: 440px;
+top: 128px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 18px;
+
+color: #888780;
+
+
+
+/* Conversation List */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 340px;
+height: 706px;
+left: 272px;
+top: 170px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+border-radius: 16px;
+
+
+/* conv-Dr. Park */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 340px;
+height: 80px;
+left: 0px;
+top: 0px;
+
+background: #E1F5EE;
+border: 1px solid #D3D1C7;
+
+
+/* Ellipse */
+
+position: absolute;
+width: 40px;
+height: 40px;
+left: 16px;
+top: 20px;
+
+background: #9FE1CB;
+
+
+/* DP */
+
+position: absolute;
+width: 18px;
+height: 17px;
+left: 22px;
+top: 31px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #085041;
+
+
+
+/* Dr. Park */
+
+position: absolute;
+width: 53px;
+height: 18px;
+left: 68px;
+top: 16px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #2C2C2A;
+
+
+
+/* 8:16 AM */
+
+position: absolute;
+width: 39px;
+height: 14px;
+left: 237px;
+top: 18px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* Please bring your symptom log. */
+
+position: absolute;
+width: 256px;
+height: 17px;
+left: 68px;
+top: 38px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* Ellipse */
+
+position: absolute;
+width: 8px;
+height: 8px;
+left: 320px;
+top: 36px;
+
+background: #0F6E56;
+
+
+/* conv-Nurse */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 340px;
+height: 80px;
+left: 0px;
+top: 80px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+
+
+/* Ellipse */
+
+position: absolute;
+width: 40px;
+height: 40px;
+left: 16px;
+top: 20px;
+
+background: #FAEEDA;
+
+
+/* N */
+
+position: absolute;
+width: 10px;
+height: 17px;
+left: 24px;
+top: 31px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #412402;
+
+
+
+/* Nurse */
+
+position: absolute;
+width: 41px;
+height: 18px;
+left: 68px;
+top: 16px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 18px;
+
+color: #2C2C2A;
+
+
+
+/* 2d */
+
+position: absolute;
+width: 14px;
+height: 14px;
+left: 262px;
+top: 18px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* Great progress this week! */
+
+position: absolute;
+width: 256px;
+height: 17px;
+left: 68px;
+top: 38px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* Thread — Dr. Park */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 788px;
+height: 706px;
+left: 628px;
+top: 170px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+border-radius: 16px;
+
+
+/* thread-head */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 788px;
+height: 72px;
+left: 0px;
+top: 0px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+
+
+/* Ellipse */
+
+position: absolute;
+width: 40px;
+height: 40px;
+left: 20px;
+top: 16px;
+
+background: #9FE1CB;
+
+
+/* DP */
+
+position: absolute;
+width: 18px;
+height: 17px;
+left: 26px;
+top: 27px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #085041;
+
+
+
+/* Dr. Park */
+
+position: absolute;
+width: 60px;
+height: 21px;
+left: 72px;
+top: 18px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 800;
+font-size: 16px;
+line-height: 21px;
+/* identical to box height */
+
+color: #2C2C2A;
+
+
+
+/* Primary physician */
+
+position: absolute;
+width: 107px;
+height: 17px;
+left: 72px;
+top: 38px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* identical to box height */
+
+color: #888780;
+
+
+
+/* thread-body */
+
+position: absolute;
+width: 788px;
+height: 562px;
+left: 0px;
+top: 72px;
+
+background: #FBFAF6;
+
+
+/* bubble-8:02 AM */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 512px;
+height: 66px;
+left: 24px;
+top: 24px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+border-radius: 16px 16px 16px 4px;
+
+
+/* Reminder: Your PT session is tomorrow at 2:00 PM. */
+
+position: absolute;
+width: 480px;
+height: 20px;
+left: 16px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 20px;
+/* identical to box height, or 143% */
+
+color: #2C2C2A;
+
+
+
+/* 8:02 AM */
+
+position: absolute;
+width: 43px;
+height: 14px;
+left: 456px;
+top: 38px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* bubble-8:15 AM */
+
+position: absolute;
+width: 512px;
+height: 66px;
+left: 252px;
+top: 106px;
+
+background: #0F6E56;
+border-radius: 16px 16px 4px 16px;
+
+
+/* Thanks! I'll be there. */
+
+position: absolute;
+width: 480px;
+height: 20px;
+left: 16px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 20px;
+/* identical to box height, or 143% */
+
+color: #FFFFFF;
+
+
+
+/* 8:15 AM */
+
+position: absolute;
+width: 39px;
+height: 14px;
+left: 456px;
+top: 38px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 14px;
+
+color: #CFEEDE;
+
+
+
+/* bubble-8:16 AM */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 512px;
+height: 66px;
+left: 24px;
+top: 188px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+border-radius: 16px 16px 16px 4px;
+
+
+/* Please bring your symptom log. Voice reply is fine. */
+
+position: absolute;
+width: 480px;
+height: 20px;
+left: 16px;
+top: 14px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 20px;
+/* identical to box height, or 143% */
+
+color: #2C2C2A;
+
+
+
+/* 8:16 AM */
+
+position: absolute;
+width: 39px;
+height: 14px;
+left: 456px;
+top: 38px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 14px;
+
+color: #888780;
+
+
+
+/* thread-input */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 788px;
+height: 72px;
+left: 0px;
+top: 634px;
+
+background: #FFFFFF;
+border: 1px solid #D3D1C7;
+
+
+/* btn-voice */
+
+position: absolute;
+width: 44px;
+height: 44px;
+left: 16px;
+top: 14px;
+
+background: #0F6E56;
+border-radius: 12px;
+
+
+/* 🎤 */
+
+position: absolute;
+width: 20px;
+height: 20px;
+left: 12px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 26px;
+
+color: #000000;
+
+
+
+/* voice-input */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 640px;
+height: 48px;
+left: 68px;
+top: 12px;
+
+background: #F1EFE8;
+border: 2px solid #D3D1C7;
+border-radius: 12px;
+
+
+/* Voice reply… (or type) */
+
+position: absolute;
+width: 144px;
+height: 18px;
+left: 14px;
+top: 16px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 18px;
+
+color: #888780;
+
+
+
+/* btn-send */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 44px;
+height: 44px;
+left: 736px;
+top: 14px;
+
+background: #F1EFE8;
+border: 1px solid #D3D1C7;
+border-radius: 12px;
+
+
+/* → */
+
+position: absolute;
+width: 16px;
+height: 26px;
+left: 12px;
+top: 12px;
+
+font-family: 'DM Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 26px;
+/* identical to box height */
+
+color: #0F6E56;
+
