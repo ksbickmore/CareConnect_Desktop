@@ -3,7 +3,7 @@ import type { ConfigEnv, UserConfig } from 'vite';
 import {
   getBuildConfig,
   getBuildDefine,
-  external,
+  builtins,
   pluginHotRestart,
 } from './vite.base.config';
 
@@ -21,7 +21,9 @@ export default defineConfig((env) => {
         formats: ['cjs'],
       },
       rollupOptions: {
-        external,
+        // Externalize only Electron/Node built-ins; bundle JS deps (e.g.
+        // electron-squirrel-startup) so the packaged app needs no node_modules.
+        external: builtins,
       },
     },
     plugins: [pluginHotRestart('restart')],
