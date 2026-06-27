@@ -1,0 +1,4 @@
+- after finishing a task, phase or prompt, always provide a commit message.
+- use PowerShell for commands, we are running in Windows only
+- update README.md with any new features, setup instructions, or usage guidelines as needed.
+- Every primary action must be reachable and operable by keyboard alone.
