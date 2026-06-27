@@ -44,6 +44,7 @@ Other scripts:
 
 ```powershell
 npm run typecheck  # tsc --noEmit
+npm run clean      # remove build output (.vite/ and out/)
 ```
 
 ## Building a release package
@@ -55,6 +56,10 @@ Packaging uses Electron Forge **makers**. Output lands in `out/`
 npm run package  # bundle the app to out/CareConnect-win32-x64/ (no installer)
 npm run make     # build the Windows distributables (see below)
 ```
+
+Both `package` and `make` auto-run `npm run clean` first (via the
+`prepackage` / `premake` hooks), so every build starts from a clean
+`.vite/` and `out/`.
 
 `npm run make` produces, under `out/make/`:
 
