@@ -1,6 +1,6 @@
 import { defineConfig, mergeConfig } from 'vite';
 import type { ConfigEnv, UserConfig } from 'vite';
-import { getBuildConfig, external, pluginHotRestart } from './vite.base.config';
+import { getBuildConfig, builtins, pluginHotRestart } from './vite.base.config';
 
 // Vite config for the Electron preload script.
 export default defineConfig((env) => {
@@ -10,7 +10,7 @@ export default defineConfig((env) => {
   const config: UserConfig = {
     build: {
       rollupOptions: {
-        external,
+        external: builtins,
         // Preload may pull in web assets, so use rollupOptions.input here.
         input: forgeConfigSelf.entry!,
         output: {
