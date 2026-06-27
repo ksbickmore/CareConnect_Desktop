@@ -1,3 +1,4 @@
+/// <reference types="@electron-forge/plugin-vite/forge-vite-env" />
 import { defineConfig } from 'vite';
 import type { ConfigEnv, UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';

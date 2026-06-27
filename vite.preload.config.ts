@@ -1,3 +1,4 @@
+/// <reference types="@electron-forge/plugin-vite/forge-vite-env" />
 import { defineConfig, mergeConfig } from 'vite';
 import type { ConfigEnv, UserConfig } from 'vite';
 import { getBuildConfig, builtins, pluginHotRestart } from './vite.base.config';

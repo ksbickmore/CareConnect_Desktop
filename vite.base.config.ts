@@ -1,3 +1,4 @@
+/// <reference types="@electron-forge/plugin-vite/forge-vite-env" />
 import { builtinModules } from 'node:module';
 import type { AddressInfo } from 'node:net';
 import type { ConfigEnv, Plugin, UserConfig } from 'vite';
