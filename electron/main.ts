@@ -1,5 +1,12 @@
 import { app, BrowserWindow, ipcMain, Menu, shell } from 'electron';
 import { join } from 'node:path';
+import started from 'electron-squirrel-startup';
+
+// Squirrel runs the app with special flags while creating/removing shortcuts
+// during install and uninstall; quit immediately in that case.
+if (started) {
+  app.quit();
+}
 
 const GITHUB_URL = 'https://github.com/ksbickmore/CareConnect_Desktop';
 
@@ -80,7 +87,7 @@ function createWindow(): void {
     // accelerators (copy/paste, devtools, quit) keep working.
     autoHideMenuBar: true,
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
     },
@@ -96,12 +103,15 @@ function createWindow(): void {
     return { action: 'deny' };
   });
 
-  // electron-vite injects the dev server URL in development; production
-  // loads the built renderer from disk.
-  if (process.env.ELECTRON_RENDERER_URL) {
-    void win.loadURL(process.env.ELECTRON_RENDERER_URL);
+  // The Forge Vite plugin injects the dev server URL in development; in
+  // production we load the built renderer from disk
+  // (.vite/renderer/<name>/index.html).
+  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+    void win.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
-    void win.loadFile(join(__dirname, '../renderer/index.html'));
+    void win.loadFile(
+      join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`),
+    );
   }
 }
 
