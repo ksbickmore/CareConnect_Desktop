@@ -1,13 +1,24 @@
 import styles from './MenuBar.module.css';
 
-const MENUS = ['File', 'Edit', 'View', 'Help'];
+const MENUS: ReadonlyArray<readonly [label: string, id: string]> = [
+  ['File', 'file'],
+  ['Edit', 'edit'],
+  ['View', 'view'],
+  ['Help', 'help'],
+];
 
 /**
- * Dark in-window chrome strip matching the Figma desktop header. The menu
- * labels are presentational here (the real Electron Menu handles OS-level
- * shortcuts); they exist so the desktop look matches the design.
+ * Dark in-window chrome strip matching the Figma desktop header. This is the
+ * app's only menu bar: the OS menu bar is hidden, so each button pops the
+ * real Electron submenu up beneath itself via the preload bridge. Buttons are
+ * native <button>s, so they are fully keyboard-operable (Tab + Enter/Space).
  */
 export function MenuBar() {
+  const openMenu = (id: string, target: HTMLButtonElement) => {
+    const rect = target.getBoundingClientRect();
+    window.careconnect?.popupMenu(id, rect.left, rect.bottom);
+  };
+
   return (
     <header className={styles.bar}>
       <div className={styles.brand}>
@@ -15,9 +26,14 @@ export function MenuBar() {
         <span className={styles.brandName}>CareConnect</span>
       </div>
       <nav className={styles.menus} aria-label="Application menu">
-        {MENUS.map((m) => (
-          <button key={m} type="button" className={styles.menuItem}>
-            {m}
+        {MENUS.map(([label, id]) => (
+          <button
+            key={id}
+            type="button"
+            className={styles.menuItem}
+            onClick={(e) => openMenu(id, e.currentTarget)}
+          >
+            {label}
           </button>
         ))}
       </nav>
