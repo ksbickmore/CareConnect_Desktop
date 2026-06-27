@@ -1,13 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(npm install 2>&1)",
-      "PowerShell(npm run typecheck 2>&1)",
-      "PowerShell(npm run build 2>&1)",
+      "PowerShell(npm install *)",
+      "PowerShell(npm run typecheck *)",
+      "PowerShell(npm run build *)",
       "mcp__plugin_playwright_playwright__browser_resize",
       "PowerShell(npx --yes playwright install chrome 2>&1)",
       "PowerShell(npx --yes playwright install chromium 2>&1)",
-      "mcp__plugin_playwright_playwright__browser_navigate"
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "PowerShell(npx tsc --noEmit -p tsconfig.node.json 2>&1)",
+      "PowerShell(npm run build 2>&1)"
     ]
   }
 }

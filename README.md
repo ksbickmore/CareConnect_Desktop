@@ -60,12 +60,25 @@ focusable with a visible focus ring, and the active nav item exposes
 
 Number shortcuts are ignored while typing in a text field.
 
+## Menu bar
+
+The app shows a **single** menu bar: the styled teal strip rendered by
+[`MenuBar.tsx`](src/components/MenuBar.tsx). The OS-level Electron menu bar is
+hidden (`autoHideMenuBar`), but a real application `Menu` stays registered so
+standard accelerators (copy/paste, devtools, quit) still work.
+
+Each `File / Edit / View / Help` button pops the corresponding native Electron
+submenu up beneath itself, over the `menu:popup` IPC channel exposed by the
+preload bridge (`window.careconnect.popupMenu`). The buttons are native
+`<button>`s, so the menus are fully keyboard-operable: Tab to focus, Enter or
+Space to open, arrow keys to navigate, Esc to close.
+
 ## Project structure
 
 ```
 electron/            Electron main + preload (CommonJS output)
-  main.ts            BrowserWindow, app lifecycle, native menu
-  preload.ts         Minimal contextBridge (placeholder for IPC)
+  main.ts            BrowserWindow, app lifecycle, menu + popup IPC
+  preload.ts         contextBridge: platform + popupMenu over IPC
 src/
   main.tsx           React entry
   App.tsx            HashRouter + routes

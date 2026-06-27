@@ -41,10 +41,18 @@
   color: var(--menubar-fg);
   font-size: 13px;
   font-weight: 500;
-  padding: 4px 2px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .menuItem:hover {
+  color: #fff;
+}
+
+.menuItem:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
   color: #fff;
 }
 
