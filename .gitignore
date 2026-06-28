@@ -145,3 +145,5 @@ vite.config.ts.timestamp-*
 # Electron Forge packaged output
 out/
 
+CLAUDE.md
+.claude/
