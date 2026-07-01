@@ -1,0 +1,56 @@
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--teal-900);
+  border-radius: var(--radius-md);
+}
+
+.mic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--teal-600);
+  color: #fff;
+}
+
+.mic:hover {
+  filter: brightness(1.1);
+}
+
+.listening {
+  background: var(--secondary);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 159, 39, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(239, 159, 39, 0);
+  }
+}
+
+.label {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  color: var(--menubar-fg);
+}
+
+.kbd {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--menubar-status);
+}

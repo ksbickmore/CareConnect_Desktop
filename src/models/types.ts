@@ -46,15 +46,62 @@ export interface Medication {
 export interface Appointment {
   readonly id: string;
   readonly title: string;
-  readonly detail: string;
-  readonly badge: string;
-  readonly badgeTone: 'soon' | 'later';
+  readonly clinician: string;
+  /** The appointment's scheduled date + time (ms since epoch). */
+  readonly when: number;
+  readonly location: string;
+  readonly status: CareStatus;
 }
 
-export interface MessagePreview {
+/** Care-team contact. First contact is treated as the primary caregiver. */
+export interface Contact {
+  readonly name: string;
+  readonly relationship: string;
+  readonly initials: string;
+}
+
+/** One saved health-log reading. */
+export interface LogEntry {
+  /** Display label, e.g. "Today 14:32" or "Mon". */
+  readonly date: string;
+  readonly painLevel: number;
+  /** Sleep hours captured with the entry, if any. */
+  readonly sleepHours?: number;
+  /** Mood label captured with the entry, if any (e.g. "OK", "Good"). */
+  readonly mood?: string;
+  readonly note: string;
+}
+
+/**
+ * A captured voice note. Stores duration + savedAt only; real audio capture
+ * is a later integration (matches the mobile scaffold's behavior).
+ */
+export interface VoiceNote {
   readonly id: string;
-  readonly from: string;
-  readonly preview: string;
+  /** ms since epoch. */
+  readonly savedAt: number;
+  /** Length of the recording in milliseconds. */
+  readonly lengthMs: number;
+}
+
+/** A single message inside a conversation thread. */
+export interface Message {
+  readonly id: string;
+  /** True when the signed-in user sent it (right-aligned bubble). */
+  readonly fromMe: boolean;
+  readonly body: string;
+  /** Human label for the bubble timestamp, e.g. "8:15 AM". */
+  readonly at: string;
+}
+
+/** A care-team message thread shown in the Messages master-detail. */
+export interface Conversation {
+  readonly id: string;
+  readonly contactName: string;
+  readonly initials: string;
+  /** Role/subtitle shown under the name, e.g. "Primary physician". */
+  readonly subtitle: string;
+  readonly messages: readonly Message[];
   readonly unread: boolean;
 }
 

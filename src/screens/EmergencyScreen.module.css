@@ -1,0 +1,96 @@
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  min-height: 0;
+}
+
+.intro {
+  margin: 0;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.targets {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+}
+
+.target {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 4px solid transparent;
+  border-radius: var(--radius-lg);
+  color: #fff;
+  text-align: center;
+}
+
+.target:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.emergency {
+  background: var(--emergency);
+}
+
+.caregiver {
+  background: var(--secondary);
+  color: var(--amber-900);
+}
+
+.armed {
+  border-color: #fff;
+  filter: brightness(1.05);
+}
+
+.targetTitle {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.targetSub {
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.92;
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  background: var(--teal-900);
+  border-radius: var(--radius-md);
+}
+
+.countText {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.cancel {
+  min-height: 56px;
+  padding: 0 32px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--teal-900);
+}
+
+.cancel:hover {
+  background: var(--surface-alt);
+}

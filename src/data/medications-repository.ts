@@ -1,4 +1,7 @@
 import type { Medication } from '@/models/types';
+import { loadJSON, saveJSON } from './storage';
+
+const STORAGE_KEY = 'medications';
 
 /**
  * Read/write access to the user's medication list, ported from the mobile
@@ -83,11 +86,16 @@ export const defaultMedicationsSeed: readonly Medication[] = [
   },
 ];
 
-/** Pass an explicit `seed` in tests; production defaults to the shared seed. */
+/**
+ * Pass an explicit `seed` in tests; production hydrates from localStorage,
+ * falling back to the shared seed on first run. Every mutation persists the
+ * new snapshot so added/taken medications survive a restart.
+ */
 export function createMedicationsRepository(
-  seed: readonly Medication[] = defaultMedicationsSeed,
+  seed: readonly Medication[] = loadJSON(STORAGE_KEY, defaultMedicationsSeed),
 ): MedicationsRepository {
   const meds: Medication[] = [...seed];
+  const persist = () => saveJSON(STORAGE_KEY, meds);
   const snapshot = () => Object.freeze([...meds]);
 
   return {
@@ -111,6 +119,7 @@ export function createMedicationsRepository(
         takenAtLabel,
         timeLabel: `Taken at ${takenAtLabel}`,
       };
+      persist();
       return snapshot();
     },
 
@@ -119,6 +128,7 @@ export function createMedicationsRepository(
         throw new Error(`Medication with id "${med.id}" already exists`);
       }
       meds.push(med);
+      persist();
       return snapshot();
     },
   };
