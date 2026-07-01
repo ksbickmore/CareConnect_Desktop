@@ -37,7 +37,12 @@ export const useAppointmentsStore = create<AppointmentsStore>()((set, get) => ({
   },
 
   async add(appt) {
-    set({ appointments: await guard(() => repository.add(appt)) });
+    const result = await guard(() => repository.add(appt));
+    // Keep the current snapshot on failure and rethrow so the add-form can
+    // surface the message inline (the dialog catches this) instead of the
+    // whole schedule collapsing into an error state.
+    if (result.status === 'error') throw new Error(result.error);
+    set({ appointments: result });
   },
 
   async setReminder(id) {

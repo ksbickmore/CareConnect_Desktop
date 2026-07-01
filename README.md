@@ -62,6 +62,46 @@ npm run typecheck  # tsc --noEmit
 npm run clean      # remove build output (.vite/ and out/)
 ```
 
+## Testing
+
+The renderer is tested with **Jest** + **React Testing Library**
+(`jest-environment-jsdom`, `ts-jest`). Coverage is enforced at **≥ 60%
+statements/lines** via `coverageThreshold` (currently ~85% statements).
+
+```powershell
+npm test               # run the full suite
+npm run test:watch     # watch mode
+npm run test:coverage  # run with coverage (report in coverage/lcov-report/)
+```
+
+What's covered:
+
+- **Keyboard navigation (integration):**
+  [`AppShell.test.tsx`](src/components/AppShell.test.tsx) mounts the real
+  route tree in a `MemoryRouter` and drives the global shortcuts — `1`–`5`
+  navigation, `F1`/`?` overlay toggle, `Ctrl+Shift+E` (including while
+  typing), `Ctrl+Space` voice bar, typing/modifier suppression, focus moving
+  to each page's `<h1>`, and the native menu-action bridge.
+- **Components:** Dialog focus trap (Tab wrap, Esc, focus restore),
+  TwoTapConfirm (arm/confirm/auto-disarm/blur, fake timers), MenuBar
+  (keyboard activation + `popupMenu` bridge), StepControl (spinbutton
+  semantics, arrow keys, clamping).
+- **Screens:** Login, Dashboard (voice command wiring with a scripted
+  `SpeechRecognition` double), Medications (arrow-key ledger, filters,
+  two-tap taken, add-dialog validation), Emergency (two-tap + 5s countdown
+  with fake timers), Health Log (steppers, mood chips, save, export),
+  Messages (search, send, read-aloud via a `speechSynthesis` mock).
+- **Units:** formatters, voice-command parser, `localStorage` persistence,
+  `Async`/`guard` wrapper, repositories, and all Zustand stores (with
+  injected test repositories).
+
+Test plumbing lives in [`src/test-utils/`](src/test-utils): a global setup
+file (jsdom gap-fills for `speechSynthesis`/`URL.createObjectURL`, per-test
+store + `localStorage` resets) plus opt-in mocks for the `window.careconnect`
+preload bridge and the Web Speech API. Electron's main/preload processes are
+outside Jest's scope (they need the Electron runtime); their renderer-side
+consumers are tested against the mocked bridge.
+
 ## Building a release package
 
 Packaging uses Electron Forge **makers**. Output lands in `out/`
@@ -141,7 +181,8 @@ electron/            Electron main + preload (CommonJS output)
   preload.ts         contextBridge: platform, popupMenu, onMenuAction
 src/
   main.tsx           React entry
-  App.tsx            HashRouter + routes; loads async stores on startup
+  App.tsx            HashRouter + AppRoutes (route tree; loads async stores)
+  test-utils/        Jest setup (setup-tests.ts), render helpers, opt-in mocks
   theme/tokens.css   Design tokens (color/spacing/radius) from Figma
   index.css          Global styles, DM Sans, focus rings
   models/types.ts    Shared data models (ported from mobile)
