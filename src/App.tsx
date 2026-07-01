@@ -14,7 +14,11 @@ import { useAppointmentsStore } from '@/stores/appointments-store';
 import { useMessagesStore } from '@/stores/messages-store';
 import { routes } from '@/lib/routes';
 
-export function App() {
+/**
+ * Route tree + startup data loading, separate from the router so tests can
+ * mount it inside a MemoryRouter (the production shell uses HashRouter).
+ */
+export function AppRoutes() {
   // Load the async stores once on startup so every screen shares a single live
   // snapshot (the dashboard reads all three for its summary widgets).
   const loadMeds = useMedicationsStore((s) => s.load);
@@ -27,20 +31,26 @@ export function App() {
   }, [loadMeds, loadAppts, loadMessages]);
 
   return (
+    <Routes>
+      <Route path={routes.login} element={<LoginScreen />} />
+      <Route element={<AppShell />}>
+        <Route path={routes.dashboard} element={<DashboardScreen />} />
+        <Route path={routes.medications} element={<MedicationsScreen />} />
+        <Route path={routes.appointments} element={<AppointmentsScreen />} />
+        <Route path={routes.healthLog} element={<HealthLogScreen />} />
+        <Route path={routes.messages} element={<MessagesScreen />} />
+        <Route path={routes.emergency} element={<EmergencyScreen />} />
+        <Route path={routes.profile} element={<ProfileScreen />} />
+      </Route>
+      <Route path="*" element={<Navigate to={routes.login} replace />} />
+    </Routes>
+  );
+}
+
+export function App() {
+  return (
     <HashRouter>
-      <Routes>
-        <Route path={routes.login} element={<LoginScreen />} />
-        <Route element={<AppShell />}>
-          <Route path={routes.dashboard} element={<DashboardScreen />} />
-          <Route path={routes.medications} element={<MedicationsScreen />} />
-          <Route path={routes.appointments} element={<AppointmentsScreen />} />
-          <Route path={routes.healthLog} element={<HealthLogScreen />} />
-          <Route path={routes.messages} element={<MessagesScreen />} />
-          <Route path={routes.emergency} element={<EmergencyScreen />} />
-          <Route path={routes.profile} element={<ProfileScreen />} />
-        </Route>
-        <Route path="*" element={<Navigate to={routes.login} replace />} />
-      </Routes>
+      <AppRoutes />
     </HashRouter>
   );
 }

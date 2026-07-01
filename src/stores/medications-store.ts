@@ -42,7 +42,12 @@ export const useMedicationsStore = create<MedicationsStore>()((set, get) => ({
   },
 
   async add(med) {
-    set({ medications: await guard(() => repository.add(med)) });
+    const result = await guard(() => repository.add(med));
+    // Keep the current snapshot on failure and rethrow so the add-form can
+    // surface the message inline (the dialog catches this) instead of the
+    // whole ledger collapsing into an error state.
+    if (result.status === 'error') throw new Error(result.error);
+    set({ medications: result });
   },
 
   byId(id) {
