@@ -3,4 +3,9 @@ export const routes = {
   login: '/',
   dashboard: '/dashboard',
   medications: '/medications',
+  appointments: '/appointments',
+  healthLog: '/healthlog',
+  messages: '/messages',
+  emergency: '/emergency',
+  profile: '/profile',
 } as const;

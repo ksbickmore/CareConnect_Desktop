@@ -1,0 +1,340 @@
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 300px;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--muted);
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+}
+
+.layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 360fr) minmax(0, 720fr);
+  gap: 24px;
+  padding: 24px;
+  min-height: 0;
+}
+
+.list {
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow-y: auto;
+}
+
+.empty {
+  padding: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.convo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 4px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  text-align: left;
+}
+
+.convo:hover {
+  background: var(--surface-alt);
+}
+
+.convoActive,
+.convoActive:hover {
+  background: var(--teal-50);
+  border-color: var(--teal-100);
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 50%;
+  background: var(--teal-100);
+  color: var(--teal-900);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.convoText {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.convoTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.convoName {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.convoTime {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.convoPreview {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.unread {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* Thread */
+.thread {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  min-height: 0;
+}
+
+.threadEmpty {
+  padding: 24px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.threadHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.threadName {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.threadSub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.bubbleRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: 70%;
+}
+
+.theirs {
+  align-self: flex-start;
+}
+
+.mine {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.bubble {
+  padding: 12px 16px;
+  border-radius: var(--radius-lg);
+}
+
+.theirs .bubble {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+}
+
+.mine .bubble {
+  background: var(--primary);
+}
+
+.bubbleBody {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.mine .bubbleBody {
+  color: #fff;
+}
+
+.bubbleTime {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  text-align: right;
+  color: var(--muted);
+}
+
+.mine .bubbleTime {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.readAloud {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.readAloud:hover {
+  background: var(--teal-50);
+  color: var(--teal-800);
+}
+
+/* Composer */
+.composer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.compMic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border: 2px solid var(--secondary);
+  border-radius: 50%;
+  background: var(--amber-50);
+  color: var(--amber-700);
+}
+
+.compMic.listening {
+  background: var(--secondary);
+  color: #fff;
+}
+
+.compInput {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-alt);
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+}
+
+.compSend {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--teal-800);
+}
+
+.compSend:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Compose dialog */
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.formLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.select {
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.composeRow {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.textarea {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  resize: vertical;
+}

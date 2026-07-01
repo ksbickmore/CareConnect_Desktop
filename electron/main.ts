@@ -10,9 +10,35 @@ if (started) {
 
 const GITHUB_URL = 'https://github.com/ksbickmore/CareConnect_Desktop';
 
+type MenuAction = 'shortcuts' | 'emergency' | 'new-record';
+
+/** Forward a menu/accelerator action to the focused renderer. */
+function sendAction(action: MenuAction): void {
+  const win = BrowserWindow.getFocusedWindow() ?? BrowserWindow.getAllWindows()[0];
+  win?.webContents.send('menu:action', action);
+}
+
 const helpItem: Electron.MenuItemConstructorOptions = {
   label: 'CareConnect on GitHub',
   click: () => void shell.openExternal(GITHUB_URL),
+};
+
+const shortcutsItem: Electron.MenuItemConstructorOptions = {
+  label: 'Keyboard Shortcuts',
+  accelerator: 'F1',
+  click: () => sendAction('shortcuts'),
+};
+
+const newRecordItem: Electron.MenuItemConstructorOptions = {
+  label: 'New Record',
+  accelerator: 'CmdOrCtrl+N',
+  click: () => sendAction('new-record'),
+};
+
+const emergencyItem: Electron.MenuItemConstructorOptions = {
+  label: 'Emergency (SOS)',
+  accelerator: 'CmdOrCtrl+Shift+E',
+  click: () => sendAction('emergency'),
 };
 
 /**
@@ -24,13 +50,20 @@ const helpItem: Electron.MenuItemConstructorOptions = {
 function buildAppMenu(): void {
   const isMac = process.platform === 'darwin';
   const template: Electron.MenuItemConstructorOptions[] = [
-    ...(isMac
-      ? [{ role: 'appMenu' as const }]
-      : []),
-    { role: 'fileMenu' },
+    ...(isMac ? [{ role: 'appMenu' as const }] : []),
+    {
+      label: 'File',
+      submenu: [
+        newRecordItem,
+        { type: 'separator' },
+        emergencyItem,
+        { type: 'separator' },
+        isMac ? { role: 'close' } : { role: 'quit' },
+      ],
+    },
     { role: 'editMenu' },
     { role: 'viewMenu' },
-    { role: 'help', submenu: [helpItem] },
+    { role: 'help', submenu: [shortcutsItem, { type: 'separator' }, helpItem] },
   ];
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
@@ -43,6 +76,9 @@ function buildAppMenu(): void {
 function buildPopupMenus(): Record<string, Electron.Menu> {
   const isMac = process.platform === 'darwin';
   const file: Electron.MenuItemConstructorOptions[] = [
+    newRecordItem,
+    emergencyItem,
+    { type: 'separator' },
     ...(isMac ? [{ role: 'close' as const }] : []),
     { role: 'quit' },
   ];
@@ -70,7 +106,7 @@ function buildPopupMenus(): Record<string, Electron.Menu> {
     file: Menu.buildFromTemplate(file),
     edit: Menu.buildFromTemplate(edit),
     view: Menu.buildFromTemplate(view),
-    help: Menu.buildFromTemplate([helpItem]),
+    help: Menu.buildFromTemplate([shortcutsItem, { type: 'separator' }, helpItem]),
   };
 }
 

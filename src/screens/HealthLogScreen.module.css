@@ -1,0 +1,201 @@
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.headRow {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.sub {
+  margin: 0;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.logCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--amber-50);
+  border: 1px solid var(--amber-100);
+  border-radius: var(--radius-lg);
+}
+
+.recentCard {
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--amber-800);
+}
+
+.logActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  resize: vertical;
+}
+
+.painBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.track {
+  position: relative;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    90deg,
+    var(--success) 0%,
+    var(--secondary) 55%,
+    var(--emergency) 100%
+  );
+}
+
+.trackKnob {
+  position: absolute;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--text);
+  transform: translate(-50%, -50%);
+}
+
+.painMeta {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--amber-700);
+}
+
+.sleepRow {
+  display: flex;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+}
+
+.chip {
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.chipActive {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.recentTitle {
+  margin: 0 0 16px;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.entry {
+  padding: 14px 16px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-md);
+}
+
+.entryDate {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.entryChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.pill {
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pain {
+  background: var(--teal-50);
+  color: var(--teal-800);
+}
+
+.sleep {
+  background: var(--teal-50);
+  color: var(--teal-800);
+}
+
+.mood {
+  background: var(--success-bg);
+  color: var(--success-fg);
+}
+
+.entryNote {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}

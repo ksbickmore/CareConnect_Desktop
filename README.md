@@ -13,17 +13,32 @@ operable by keyboard alone.
 
 ## Screens
 
-This phase implements three generally-functional screens:
+All screens are fully functional and wired to live state (Zustand stores +
+repositories ported from the mobile app), with data persisted to
+`localStorage` so it survives restarts.
 
 | Screen | Notes |
 | --- | --- |
 | **Login** | Pre-filled demo credentials (`demo@careconnect.app` / `demo1234`). "Sign In" or "Continue as Guest" both enter the app. |
-| **Dashboard** | Greeting, three stat cards, a **live** "Next Medication" banner (Confirm taken updates state), plus schedule and messages widgets (static mock data). |
-| **Medications** | Two-column master–detail. Live medication list grouped into Today / Completed, an All/Due/Taken filter, and a detail panel with schedule, refill, adherence, and prescriber. "Confirm taken" moves a medication to Completed. |
+| **Dashboard** | Greeting, **live** stat cards (meds taken, latest pain/sleep), a **two-tap** "Next Medication" banner, live Today's Schedule and Messages widgets, and a persistent voice command bar. |
+| **Medications** | Two-column master–detail. Grouped Today / Completed list with an All/Due/Taken filter and Up/Down arrow-key navigation. Detail panel with a **two-tap** "Confirm taken", Snooze, and a Voice note recorder. "Add medication" opens a focus-trapped dialog (voice-dictated name). |
+| **Schedule** | Day/Week/Month calendar of appointments. Click a block to open a detail dialog with a **two-tap** "Set reminder". "New appointment" opens an add dialog (title dictation + date/time). |
+| **Messages** | Split-pane chat: keyboard-navigable conversation list + thread with a voice-first composer (dictate or type) and a "read aloud" (text-to-speech) button on incoming messages. |
+| **Health Log** | Big `[ − ] value [ + ]` step controls for pain/sleep (no sliders), mood chips, voice/manual note entry, a paginated "Recent Entries" history, and "Export log" to a text file. |
+| **Emergency (SOS)** | Two oversized stacked targets (911 + primary caregiver), each armed with a **two-tap** sequence and a keyboard-focused countdown cancel bar before "connecting". Reachable from the sidebar and the global `Ctrl+Shift+E` shortcut. |
+| **Profile** | Account details and the app's **Sign Out** action; reached from the sidebar profile chip. |
 
-Only **Medications** is wired to live state (a Zustand store + in-memory
-repository ported from the mobile app). The dashboard's secondary widgets
-render from static mock data.
+### Accessibility features (per [`docs/`](docs))
+
+- **Voice-first (C1):** the dashboard voice command bar and every dictation
+  field use the browser **Web Speech API** (Electron's Chromium). Voice
+  degrades gracefully to keyboard/typed entry when unavailable.
+- **No sustained gestures (C3):** critical actions (log taken, set reminder,
+  emergency call) use an explicit **two-tap confirm**; history uses **manual
+  pagination**, never infinite scroll.
+- **Screen-reader support:** polite/assertive `aria-live` regions announce
+  state changes; dialogs trap focus and restore it to the trigger on close;
+  focus moves to each page's `<h1>` on navigation.
 
 ## Setup
 
@@ -87,12 +102,18 @@ focusable with a visible focus ring, and the active nav item exposes
 
 | Key | Action |
 | --- | --- |
-| `1` | Go to Dashboard |
-| `2` | Go to Medications |
+| `1` … `5` | Dashboard / Medications / Schedule / Messages / Health Log |
+| `Ctrl+N` | New record |
+| `Ctrl+Shift+E` | Emergency (SOS) |
+| `Ctrl+Space` | Focus / toggle the voice command bar |
+| `F1` or `?` | Keyboard shortcut reference |
 | `Tab` / `Shift+Tab` | Move focus between controls |
 | `Enter` / `Space` | Activate the focused control |
+| `Esc` | Close the top dialog / menu |
 
-Number shortcuts are ignored while typing in a text field.
+Number shortcuts and `F1`/`?` are ignored while typing in a text field;
+`Ctrl+Shift+E` works everywhere. Press `F1` or `?` any time to see the full
+reference overlay.
 
 ## Menu bar
 
@@ -107,22 +128,34 @@ preload bridge (`window.careconnect.popupMenu`). The buttons are native
 `<button>`s, so the menus are fully keyboard-operable: Tab to focus, Enter or
 Space to open, arrow keys to navigate, Esc to close.
 
+The **File** menu (New Record, Emergency) and **Help** menu (Keyboard
+Shortcuts) carry real accelerators; the main process forwards their clicks —
+and the `Ctrl+Shift+E` / `Ctrl+N` / `F1` accelerators — to the renderer over a
+`menu:action` IPC channel (`window.careconnect.onMenuAction`).
+
 ## Project structure
 
 ```
 electron/            Electron main + preload (CommonJS output)
-  main.ts            BrowserWindow, app lifecycle, menu + popup IPC
-  preload.ts         contextBridge: platform + popupMenu over IPC
+  main.ts            BrowserWindow, app lifecycle, menu + popup/action IPC
+  preload.ts         contextBridge: platform, popupMenu, onMenuAction
 src/
   main.tsx           React entry
-  App.tsx            HashRouter + routes
+  App.tsx            HashRouter + routes; loads async stores on startup
   theme/tokens.css   Design tokens (color/spacing/radius) from Figma
   index.css          Global styles, DM Sans, focus rings
   models/types.ts    Shared data models (ported from mobile)
-  stores/            Zustand stores: auth, medications, async helpers
-  data/              In-memory medications repository + dashboard mock data
-  components/        AppShell, MenuBar, Sidebar, Toolbar, Button, StatusBadge
-  screens/           LoginScreen, DashboardScreen, MedicationsScreen
+  lib/               format helpers, voice-commands, speech/ (Web Speech API)
+  stores/            Zustand stores: auth, medications, appointments, messages,
+                     health-log, contacts, voice-notes, announcer, async helper
+  data/              Repositories (medications, appointments, health-log,
+                     contacts, messages) + localStorage persistence (storage.ts)
+  components/        AppShell, MenuBar, Sidebar, Toolbar, Button, StatusBadge,
+                     Dialog, TwoTapConfirm, StepControl, PaginatedList,
+                     ConnectingOverlay, VoiceInputBar, RecordingRadar,
+                     LiveRegion, KeyboardShortcutsOverlay
+  screens/           Login, Dashboard, Medications, Appointments (Schedule),
+                     Messages, HealthLog, Emergency, Profile
   forge-env.d.ts     Ambient types for Forge's injected Vite globals
 forge.config.ts            Electron Forge config (makers, Vite plugin, fuses)
 vite.base.config.ts        Shared Vite helpers (define keys, hot reload)
@@ -135,7 +168,13 @@ vite.renderer.config.ts    Vite config for the renderer (React + @ alias)
 
 - **Routing:** `HashRouter`, so routes resolve under `file://` in packaged
   builds.
-- **State:** Zustand stores and the in-memory repository are ported nearly
-  verbatim from the mobile app (no React Native dependencies).
+- **State:** Zustand stores and repositories are ported nearly verbatim from
+  the mobile app (no React Native dependencies). Each repository hydrates from
+  `localStorage` on first use and persists on every mutation, so added meds,
+  appointments, health-log entries, contacts, and sent messages survive
+  restarts. Clearing the app's `localStorage` resets everything to seed data.
+- **Voice:** the `src/lib/speech/` wrapper isolates the Web Speech API behind a
+  small interface; the rest of the app depends only on the `useSpeechRecognition`
+  hook, and everything degrades safely when speech is unavailable.
 - **Fonts:** DM Sans is bundled via `@fontsource/dm-sans` (works offline).
 - **Icons:** `lucide-react`.
