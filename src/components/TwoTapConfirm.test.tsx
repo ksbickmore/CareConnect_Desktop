@@ -140,6 +140,34 @@ describe('voice arming', () => {
     jest.useRealTimers();
   });
 
+  it('duplicate voice arm resets the disarm timer', () => {
+    jest.useFakeTimers();
+    const onConfirmed = jest.fn();
+    render(
+      <TwoTapConfirm
+        idleLabel="Confirm taken"
+        confirmLabel="Tap again to confirm"
+        onConfirmed={onConfirmed}
+        voicePhrases={['confirm taken']}
+      />,
+    );
+    act(() => {
+      dispatchVoiceCommand('confirm taken');
+    });
+    act(() => {
+      dispatchVoiceCommand('confirm taken');
+    });
+    act(() => {
+      jest.advanceTimersByTime(9000);
+    });
+    expect(screen.getByRole('button')).toHaveTextContent('Tap again to confirm');
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+    expect(screen.getByRole('button')).toHaveTextContent('Confirm taken');
+    jest.useRealTimers();
+  });
+
   it('"cancel" disarms without confirming', () => {
     const onConfirmed = jest.fn();
     render(

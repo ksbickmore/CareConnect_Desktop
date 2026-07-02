@@ -57,6 +57,7 @@ export function TwoTapConfirm({
   const VOICE_DISARM_MS = 10_000;
 
   const arm = (windowMs: number) => {
+    if (timer.current) clearTimeout(timer.current);
     setArmed(true);
     announce(`${confirmLabel}.`);
     timer.current = setTimeout(disarm, windowMs);
