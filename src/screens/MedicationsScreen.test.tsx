@@ -1,9 +1,17 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+jest.mock('@/lib/speech/speech-recognition', () =>
+  jest.requireActual<typeof import('@/test-utils/fake-speech')>(
+    '@/test-utils/fake-speech',
+  ).fakeSpeechModule,
+);
+
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MedicationsScreen } from './MedicationsScreen';
 import { createMedicationsRepository } from '@/data/medications-repository';
 import { useMedicationsStore } from '@/stores/medications-store';
 import type { Medication } from '@/models/types';
+import { renderAt, signIn } from '@/test-utils/render';
+import { fakeSpeech } from '@/test-utils/fake-speech';
 
 const med = (
   id: string,
@@ -151,5 +159,72 @@ describe('MedicationsScreen', () => {
     expect(
       screen.getByRole('dialog', { name: 'Voice note — Lisinopril' }),
     ).toBeInTheDocument();
+  });
+});
+
+const startVoice = async (user: ReturnType<typeof userEvent.setup>) => {
+  await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+};
+
+describe('voice commands', () => {
+  beforeEach(() => {
+    signIn();
+  });
+
+  afterEach(() => {
+    fakeSpeech.reset();
+  });
+
+  it('moves the selection with next/previous medication', async () => {
+    const user = userEvent.setup();
+    renderAt('/medications');
+    await screen.findByRole('heading', { level: 1, name: 'Medications' });
+    await startVoice(user);
+
+    const options = screen.getAllByRole('option');
+    expect(options[0]).toHaveAttribute('aria-selected', 'true');
+    act(() => fakeSpeech.emitFinal('next medication'));
+    expect(screen.getAllByRole('option')[1]).toHaveAttribute('aria-selected', 'true');
+    act(() => fakeSpeech.emitFinal('previous medication'));
+    expect(screen.getAllByRole('option')[0]).toHaveAttribute('aria-selected', 'true');
+  });
+
+  it('confirms taken via two-step voice confirmation', async () => {
+    const user = userEvent.setup();
+    renderAt('/medications');
+    await screen.findByRole('heading', { level: 1, name: 'Medications' });
+    await startVoice(user);
+
+    act(() => fakeSpeech.emitFinal('confirm taken'));
+    expect(screen.getByRole('button', { name: 'Tap again to confirm' })).toBeInTheDocument();
+    act(() => fakeSpeech.emitFinal('confirm'));
+    expect(await screen.findByRole('button', { name: 'Taken' })).toBeInTheDocument();
+  });
+
+  it('adds a medication end-to-end by voice', async () => {
+    const user = userEvent.setup();
+    renderAt('/medications');
+    await screen.findByRole('heading', { level: 1, name: 'Medications' });
+    await startVoice(user);
+
+    act(() => fakeSpeech.emitFinal('add medication'));
+    expect(await screen.findByRole('dialog', { name: 'New medication' })).toBeInTheDocument();
+    act(() => fakeSpeech.emitFinal('name Aspirin'));
+    act(() => fakeSpeech.emitFinal('dose 81 mg'));
+    act(() => fakeSpeech.emitFinal('save'));
+    expect(await screen.findByText(/Aspirin 81 mg/)).toBeInTheDocument();
+  });
+
+  it('filters by voice', async () => {
+    const user = userEvent.setup();
+    renderAt('/medications');
+    await screen.findByRole('heading', { level: 1, name: 'Medications' });
+    await startVoice(user);
+
+    act(() => fakeSpeech.emitFinal('filter taken'));
+    expect(screen.getByRole('tab', { name: 'Taken' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
   });
 });

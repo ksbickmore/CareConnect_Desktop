@@ -7,6 +7,7 @@ import { Dialog } from '@/components/Dialog';
 import { TwoTapConfirm } from '@/components/TwoTapConfirm';
 import { RecordingRadar } from '@/components/RecordingRadar';
 import { useSpeechRecognition } from '@/lib/speech/use-speech-recognition';
+import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import { slugify } from '@/lib/format';
 import { useMedicationsStore } from '@/stores/medications-store';
 import { dataOrNull } from '@/stores/async';
@@ -43,24 +44,8 @@ export function MedicationsScreen() {
     [ordered, selectedId],
   );
 
-  // Up/Down arrow keys move the selection through the visible rows (SRS
-  // Feature D desktop: keyboard-navigable medication ledger).
-  const onListKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-    e.preventDefault();
-    if (ordered.length === 0) return;
-    const idx = Math.max(
-      0,
-      ordered.findIndex((m) => m.id === selected?.id),
-    );
-    const next =
-      e.key === 'ArrowDown'
-        ? Math.min(ordered.length - 1, idx + 1)
-        : Math.max(0, idx - 1);
-    setSelectedId(ordered[next].id);
-  };
-
   const confirmTaken = (m: Medication) => {
+    setSelectedId(m.id);
     void markTaken(m.id);
     announce(`${m.name} ${m.dose} logged as taken.`);
   };
@@ -69,6 +54,61 @@ export function MedicationsScreen() {
     setSnoozed((s) => new Set(s).add(m.id));
     announce(`${m.name} snoozed 15 minutes.`);
   };
+
+  const moveSelection = (dir: 1 | -1) => {
+    if (ordered.length === 0) return;
+    const idx = Math.max(0, ordered.findIndex((m) => m.id === selected?.id));
+    const next = Math.min(ordered.length - 1, Math.max(0, idx + dir));
+    setSelectedId(ordered[next].id);
+    return `${ordered[next].name} ${ordered[next].dose} selected.`;
+  };
+
+  const onListKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    e.preventDefault();
+    moveSelection(e.key === 'ArrowDown' ? 1 : -1);
+  };
+
+  useVoiceCommands('screen', [
+    { phrases: ['next medication'], hint: 'next medication', run: () => moveSelection(1) },
+    {
+      phrases: ['previous medication'],
+      hint: 'previous medication',
+      run: () => moveSelection(-1),
+    },
+    ...FILTERS.map((f) => ({
+      phrases: [`filter ${f}`],
+      hint: `filter ${f}`,
+      run: () => {
+        setFilter(f);
+        return `Filter ${f}.`;
+      },
+    })),
+    {
+      phrases: ['snooze', 'snooze medication'],
+      hint: 'snooze',
+      run: () => {
+        if (!selected || selected.status === 'taken' || snoozed.has(selected.id))
+          return 'Nothing to snooze.';
+        snooze(selected);
+      },
+    },
+    {
+      phrases: ['voice note', 'leave a voice note'],
+      hint: 'voice note',
+      run: () => {
+        if (selected) setVoiceFor(selected);
+      },
+    },
+    {
+      phrases: ['add medication', 'new medication'],
+      hint: 'add medication',
+      run: () => {
+        setAddOpen(true);
+        return 'New medication. Say name, dose, schedule, then save.';
+      },
+    },
+  ]);
 
   return (
     <>
@@ -174,6 +214,7 @@ export function MedicationsScreen() {
                     confirmLabel="Tap again to confirm"
                     icon={<Check size={18} />}
                     onConfirmed={() => confirmTaken(selected)}
+                    voicePhrases={['confirm taken', 'take medication']}
                   />
                 )}
                 <Button
@@ -345,6 +386,49 @@ function AddMedicationDialog({
     });
     if (err) setError(err);
   };
+
+  useVoiceCommands('dialog', [
+    {
+      phrases: ['name *'],
+      hint: 'name <medication>',
+      run: (v) => {
+        setName(v ?? '');
+        return `Name ${v}.`;
+      },
+    },
+    {
+      phrases: ['dose *'],
+      hint: 'dose <amount>',
+      run: (v) => {
+        setDose(v ?? '');
+        return `Dose ${v}.`;
+      },
+    },
+    {
+      phrases: ['schedule *'],
+      hint: 'schedule <when>',
+      run: (v) => {
+        setSchedule(v ?? '');
+        return `Schedule ${v}.`;
+      },
+    },
+    {
+      phrases: ['instructions *'],
+      hint: 'instructions <text>',
+      run: (v) => {
+        setInstructions(v ?? '');
+        return 'Instructions set.';
+      },
+    },
+    {
+      phrases: ['save', 'save medication'],
+      hint: 'save',
+      run: () => {
+        void submit();
+        return 'Saving.';
+      },
+    },
+  ]);
 
   return (
     <Dialog
