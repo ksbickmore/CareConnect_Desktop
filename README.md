@@ -31,11 +31,19 @@ repositories ported from the mobile app), with data persisted to
 ### Accessibility features (per [`docs/`](docs))
 
 - **Voice-first (C1):** a persistent voice command bar (docked below every
-  screen, toggled with `Ctrl+Space` from anywhere — including inside modal
-  dialogs) and every dictation
-  field use a **fully local Whisper speech-to-text engine** (transformers.js
-  running `whisper-base.en` in a Web Worker — no cloud calls, works offline).
-  Voice degrades gracefully to keyboard/typed entry when unavailable.
+  screen) toggles a **continuous listening session** with `Ctrl+Space` from
+  anywhere — including inside modal dialogs. Utterances dispatch through
+  contextual commands (dialog, then screen, then global), then navigation
+  keywords, then a visible-button-name fallback, then dictation into a focused
+  dialog text field. The bar executes screen actions (e.g. "next medication",
+  "confirm taken" → "confirm", "add medication" → "name aspirin" → "save"),
+  fills dialog forms by field name or focus walking, and falls back to
+  pressing visible buttons by name. Say **"what can I say"** for available
+  commands and **"stop listening"** to end the session. Dictation fields and
+  the command bar use a **fully local Whisper speech-to-text engine**
+  (transformers.js running `whisper-base.en` in a Web Worker — no cloud calls,
+  works offline). Voice degrades gracefully to keyboard/typed entry when
+  unavailable.
 - **No sustained gestures (C3):** critical actions (log taken, set reminder,
   emergency call) use an explicit **two-tap confirm**; history uses **manual
   pagination**, never infinite scroll.
@@ -105,6 +113,10 @@ What's covered:
 - **Units:** formatters, voice-command parser, `localStorage` persistence,
   `Async`/`guard` wrapper, repositories, and all Zustand stores (with
   injected test repositories).
+- **Voice commands:** unit suites in [`src/lib/voice/`](src/lib/voice/)
+  (matcher, registry, DOM actions) plus per-screen voice integration tests
+  (Dashboard, Medications, Schedule, Messages, Health Log, Emergency) and
+  AppShell/Dialog/TwoTapConfirm voice wiring.
 
 Test plumbing lives in [`src/test-utils/`](src/test-utils): a global setup
 file (jsdom gap-fills for `speechSynthesis`/`URL.createObjectURL`, per-test
@@ -157,7 +169,7 @@ focusable with a visible focus ring, and the active nav item exposes
 | `1` … `5` | Dashboard / Medications / Schedule / Messages / Health Log |
 | `Ctrl+N` | New record |
 | `Ctrl+Shift+E` | Emergency (SOS) |
-| `Ctrl+Space` | Toggle the voice command bar (works on any screen, even in dialogs) |
+| `Ctrl+Space` | Toggle continuous voice commands (works on any screen and in dialogs) |
 | `F1` or `?` | Keyboard shortcut reference |
 | `Tab` / `Shift+Tab` | Move focus between controls |
 | `Enter` / `Space` | Activate the focused control |

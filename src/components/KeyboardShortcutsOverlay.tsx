@@ -17,7 +17,7 @@ const RIGHT: ReadonlyArray<readonly [string, string]> = [
   ['Navigate panels', 'Tab / Shift+Tab'],
   ['Close dialog / menu', 'Esc'],
   ['Keyboard shortcuts help', 'F1 or ?'],
-  ['Voice command / dictation', 'Ctrl + Space'],
+  ['Voice commands (any screen; say "what can I say")', 'Ctrl + Space'],
   ['Emergency SOS', 'Ctrl + Shift + E'],
 ];
 
