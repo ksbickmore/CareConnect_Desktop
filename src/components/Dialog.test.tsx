@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { dispatchVoiceCommand } from '@/lib/voice/voice-registry';
 import { Dialog } from './Dialog';
 
 function Harness() {
@@ -93,5 +94,34 @@ describe('Dialog', () => {
     expect(backdrop).not.toBeNull();
     fireEvent.mouseDown(backdrop as Element);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+});
+
+describe('voice commands', () => {
+  it('registers close/cancel while open', () => {
+    const onClose = jest.fn();
+    render(
+      <Dialog title="T" onClose={onClose}>
+        <input aria-label="A" />
+      </Dialog>,
+    );
+    expect(dispatchVoiceCommand('close').handled).toBe(true);
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('walks focus with next/previous field', () => {
+    render(
+      <Dialog title="T" onClose={jest.fn()}>
+        <input aria-label="A" />
+        <input aria-label="B" />
+      </Dialog>,
+    );
+    // Dialog auto-focuses the first focusable (the close button in the head).
+    dispatchVoiceCommand('next field');
+    expect(screen.getByLabelText('A')).toHaveFocus();
+    dispatchVoiceCommand('next field');
+    expect(screen.getByLabelText('B')).toHaveFocus();
+    dispatchVoiceCommand('previous field');
+    expect(screen.getByLabelText('A')).toHaveFocus();
   });
 });

@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { X } from 'lucide-react';
+import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import styles from './Dialog.module.css';
 
 interface DialogProps {
@@ -33,6 +34,33 @@ export function Dialog({
   const panelRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const descId = useId();
+
+  // Voice: every dialog is closable and focus-walkable by voice.
+  const moveFocus = (dir: 1 | -1) => {
+    const nodes = panelRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE);
+    if (!nodes || nodes.length === 0) return;
+    const list = Array.from(nodes);
+    const idx = list.indexOf(document.activeElement as HTMLElement);
+    const next = (idx + dir + list.length) % list.length;
+    list[next].focus();
+  };
+
+  useVoiceCommands('dialog', [
+    {
+      phrases: ['close', 'cancel', 'close dialog'],
+      hint: 'close',
+      run: () => {
+        onClose();
+        return 'Closed.';
+      },
+    },
+    { phrases: ['next field'], hint: 'next field', run: () => moveFocus(1) },
+    {
+      phrases: ['previous field'],
+      hint: 'previous field',
+      run: () => moveFocus(-1),
+    },
+  ]);
 
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null;
