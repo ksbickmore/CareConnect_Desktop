@@ -10,6 +10,7 @@ import { whenLabel, clockLabel, slugify, minuteStamp } from '@/lib/format';
 import { useAppointmentsStore } from '@/stores/appointments-store';
 import { dataOrNull } from '@/stores/async';
 import { useAnnouncer } from '@/stores/announcer-store';
+import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import type { Appointment } from '@/models/types';
 import styles from './AppointmentsScreen.module.css';
 
@@ -85,6 +86,27 @@ export function AppointmentsScreen() {
     }
     return `${MONTHS[anchor.getMonth()]} ${anchor.getFullYear()}`;
   };
+
+  useVoiceCommands('screen', [
+    ...VIEWS.map((v) => ({
+      phrases: [`${v} view`, v === 'month' ? 'show month' : `show ${v}`],
+      hint: `${v} view`,
+      run: () => {
+        setView(v);
+        return `${v[0].toUpperCase() + v.slice(1)} view.`;
+      },
+    })),
+    { phrases: ['next'], hint: 'next', run: () => { step(1); } },
+    { phrases: ['previous', 'back'], hint: 'previous', run: () => { step(-1); } },
+    {
+      phrases: ['new appointment', 'add appointment'],
+      hint: 'new appointment',
+      run: () => {
+        setAddOpen(true);
+        return 'New appointment. Say title, then save.';
+      },
+    },
+  ]);
 
   const apptsFor = (day: Date, band: number) =>
     list.filter((a) => sameDay(a.when, day) && bandOf(new Date(a.when).getHours()) === band);
@@ -295,6 +317,7 @@ function DetailDialog({
           icon={<AlarmClock size={18} />}
           onConfirmed={onSetReminder}
           disabled={appt.status === 'reminderSet'}
+          voicePhrases={['set reminder']}
         />
       </div>
     </Dialog>
@@ -340,6 +363,39 @@ function AddDialog({
     const err = await onSave({ title: title.trim(), clinician, location, when });
     if (err) setError(err);
   };
+
+  useVoiceCommands('dialog', [
+    {
+      phrases: ['title *'],
+      hint: 'title <text>',
+      run: (v) => {
+        setTitle(v ?? '');
+        return `Title ${v}.`;
+      },
+    },
+    {
+      phrases: ['clinician *', 'doctor *'],
+      hint: 'clinician <name>',
+      run: (v) => {
+        setClinician(v ?? '');
+      },
+    },
+    {
+      phrases: ['location *'],
+      hint: 'location <place>',
+      run: (v) => {
+        setLocation(v ?? '');
+      },
+    },
+    {
+      phrases: ['save', 'save appointment'],
+      hint: 'save',
+      run: () => {
+        void submit();
+        return 'Saving.';
+      },
+    },
+  ]);
 
   return (
     <Dialog
