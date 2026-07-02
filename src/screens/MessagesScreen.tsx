@@ -112,7 +112,8 @@ export function MessagesScreen() {
       phrases: ['read aloud', 'read message aloud'],
       hint: 'read aloud',
       run: () => {
-        const lastReceived = selected?.messages.filter((m) => !m.fromMe).at(-1);
+        const received = selected?.messages.filter((m) => !m.fromMe) ?? [];
+        const lastReceived = received[received.length - 1];
         if (lastReceived) readAloud(lastReceived.body);
         else return 'No received message to read.';
       },
