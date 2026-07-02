@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useAnnouncer } from '@/stores/announcer-store';
+import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
+import type { VoiceCommand } from '@/lib/voice/match-command';
 import styles from './TwoTapConfirm.module.css';
 
 interface TwoTapConfirmProps {
@@ -15,6 +17,8 @@ interface TwoTapConfirmProps {
   readonly tone?: 'primary' | 'danger';
   /** Auto-disarm after this many ms without a second tap. */
   readonly disarmAfterMs?: number;
+  /** Voice phrases that arm this action, e.g. ['confirm taken']. */
+  readonly voicePhrases?: readonly string[];
 }
 
 /**
@@ -32,6 +36,7 @@ export function TwoTapConfirm({
   fullWidth = false,
   tone = 'primary',
   disarmAfterMs = 4000,
+  voicePhrases,
 }: TwoTapConfirmProps) {
   const [armed, setArmed] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -47,17 +52,58 @@ export function TwoTapConfirm({
     setArmed(false);
   };
 
-  const onClick = () => {
-    if (disabled) return;
-    if (armed) {
-      disarm();
-      onConfirmed();
-      return;
-    }
+  // Voice recognition adds utterance + decode latency, so voice arming gets a
+  // longer window than the 4s click default.
+  const VOICE_DISARM_MS = 10_000;
+
+  const arm = (windowMs: number) => {
     setArmed(true);
     announce(`${confirmLabel}.`);
-    timer.current = setTimeout(disarm, disarmAfterMs);
+    timer.current = setTimeout(disarm, windowMs);
   };
+
+  const confirm = () => {
+    disarm();
+    onConfirmed();
+  };
+
+  const onClick = () => {
+    if (disabled) return;
+    if (armed) confirm();
+    else arm(disarmAfterMs);
+  };
+
+  // While armed, "confirm"/"yes"/"cancel" outrank screen commands (dialog
+  // priority) until the window lapses.
+  const voiceCommands: VoiceCommand[] = armed
+    ? [
+        {
+          phrases: ['confirm', 'yes'],
+          hint: 'confirm',
+          run: () => {
+            confirm();
+            return `${idleLabel} confirmed.`;
+          },
+        },
+        {
+          phrases: ['cancel'],
+          run: () => {
+            disarm();
+            return 'Cancelled.';
+          },
+        },
+      ]
+    : (voicePhrases ?? []).map((phrase) => ({
+        phrases: [phrase],
+        hint: phrase,
+        run: () => {
+          if (disabled) return 'Not available.';
+          arm(VOICE_DISARM_MS);
+          return `Say confirm to ${idleLabel.toLowerCase()}.`;
+        },
+      }));
+
+  useVoiceCommands('dialog', voiceCommands);
 
   return (
     <button
