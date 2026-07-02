@@ -1,3 +1,5 @@
+import { act, render, screen } from '@testing-library/react';
+import { useState } from 'react';
 import {
   clickButtonByName,
   dictateIntoFocusedField,
@@ -58,6 +60,26 @@ describe('dictateIntoFocusedField', () => {
     expect(dictateIntoFocusedField('milligrams daily')).toBe('Dose');
     expect(input.value).toBe('10 milligrams daily');
     expect(onInput).toHaveBeenCalled();
+  });
+
+  it('updates a React controlled input through onChange', () => {
+    function Harness() {
+      const [value, setValue] = useState('10');
+      return (
+        <div role="dialog">
+          <label htmlFor="dose">Dose</label>
+          <input id="dose" value={value} onChange={(e) => setValue(e.target.value)} />
+        </div>
+      );
+    }
+    render(<Harness />);
+    screen.getByLabelText('Dose').focus();
+    let label: string | null;
+    act(() => {
+      label = dictateIntoFocusedField('milligrams');
+    });
+    expect(label!).toBe('Dose');
+    expect(screen.getByLabelText('Dose')).toHaveValue('10 milligrams');
   });
 
   it('returns null when focus is outside the dialog or not a text field', () => {
