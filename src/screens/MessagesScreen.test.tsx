@@ -1,9 +1,17 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
+jest.mock('@/lib/speech/speech-recognition', () =>
+  jest.requireActual<typeof import('@/test-utils/fake-speech')>(
+    '@/test-utils/fake-speech',
+  ).fakeSpeechModule,
+);
+
+import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MessagesScreen } from './MessagesScreen';
 import { createMessagesRepository } from '@/data/messages-repository';
 import { useMessagesStore } from '@/stores/messages-store';
 import type { Conversation } from '@/models/types';
+import { renderAt, signIn } from '@/test-utils/render';
+import { fakeSpeech } from '@/test-utils/fake-speech';
 
 const seed: readonly Conversation[] = [
   {
@@ -107,5 +115,63 @@ describe('MessagesScreen', () => {
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect((await screen.findAllByText('Thank you!')).length).toBeGreaterThan(0);
+  });
+});
+
+const pressedConvo = () => {
+  const list = screen.getByRole('list', { name: 'Conversations' });
+  return within(list)
+    .getAllByRole('button')
+    .find((b) => b.getAttribute('aria-pressed') === 'true');
+};
+
+describe('voice commands', () => {
+  beforeEach(() => {
+    signIn();
+    useMessagesStore.getState().reset(createMessagesRepository(seed));
+  });
+
+  afterEach(() => {
+    fakeSpeech.reset();
+  });
+
+  it('moves between conversations', async () => {
+    const user = userEvent.setup();
+    renderAt('/messages');
+    await screen.findByRole('heading', { level: 1, name: 'Messages' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    const first = pressedConvo();
+    act(() => fakeSpeech.emitFinal('next conversation'));
+    expect(pressedConvo()).not.toBe(first);
+    act(() => fakeSpeech.emitFinal('previous conversation'));
+    expect(pressedConvo()).toBe(first);
+  });
+
+  it('dictates a reply and sends it', async () => {
+    const user = userEvent.setup();
+    renderAt('/messages');
+    await screen.findByRole('heading', { level: 1, name: 'Messages' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('reply see you at three'));
+    expect(screen.getByPlaceholderText(/Voice reply/)).toHaveValue('see you at three');
+    act(() => fakeSpeech.emitFinal('send'));
+    expect(await screen.findAllByText('see you at three')).toHaveLength(2);
+  });
+
+  it('composes a new message by voice', async () => {
+    const user = userEvent.setup();
+    renderAt('/messages');
+    await screen.findByRole('heading', { level: 1, name: 'Messages' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('new message'));
+    expect(await screen.findByRole('dialog', { name: 'New message' })).toBeInTheDocument();
+    act(() => fakeSpeech.emitFinal('message hello from voice'));
+    expect(screen.getByLabelText('Message')).toHaveValue('hello from voice');
+    act(() => fakeSpeech.emitFinal('send'));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect((await screen.findAllByText('hello from voice')).length).toBeGreaterThan(0);
   });
 });

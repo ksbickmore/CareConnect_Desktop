@@ -4,6 +4,7 @@ import { Toolbar } from '@/components/Toolbar';
 import { Button } from '@/components/Button';
 import { Dialog } from '@/components/Dialog';
 import { useSpeechRecognition } from '@/lib/speech/use-speech-recognition';
+import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import { useMessagesStore } from '@/stores/messages-store';
 import { dataOrNull } from '@/stores/async';
 import { useAnnouncer } from '@/stores/announcer-store';
@@ -69,6 +70,62 @@ export function MessagesScreen() {
     speechSynthesis.cancel();
     speechSynthesis.speak(new SpeechSynthesisUtterance(text));
   };
+
+  const moveConversation = (dir: 1 | -1) => {
+    if (filtered.length === 0) return;
+    const idx = Math.max(0, filtered.findIndex((c) => c.id === selected?.id));
+    const next = Math.min(filtered.length - 1, Math.max(0, idx + dir));
+    setSelectedId(filtered[next].id);
+    return `${filtered[next].contactName}.`;
+  };
+
+  useVoiceCommands('screen', [
+    { phrases: ['next conversation'], hint: 'next conversation', run: () => moveConversation(1) },
+    {
+      phrases: ['previous conversation'],
+      hint: 'previous conversation',
+      run: () => moveConversation(-1),
+    },
+    {
+      phrases: ['search *'],
+      hint: 'search <name>',
+      run: (v) => {
+        setQuery(v ?? '');
+        return `Searching ${v}.`;
+      },
+    },
+    {
+      phrases: ['reply *', 'message *'],
+      hint: 'reply <text>',
+      run: (v) => {
+        setDraft((prev) => (prev ? `${prev} ${v}` : v ?? ''));
+      },
+    },
+    {
+      phrases: ['send', 'send message'],
+      hint: 'send',
+      run: () => {
+        submit();
+      },
+    },
+    {
+      phrases: ['read aloud', 'read message aloud'],
+      hint: 'read aloud',
+      run: () => {
+        const lastReceived = selected?.messages.filter((m) => !m.fromMe).at(-1);
+        if (lastReceived) readAloud(lastReceived.body);
+        else return 'No received message to read.';
+      },
+    },
+    {
+      phrases: ['new message', 'compose'],
+      hint: 'new message',
+      run: () => {
+        setComposeOpen(true);
+        return 'New message. Say "to <name>", then "message <text>", then send.';
+      },
+    },
+  ]);
 
   return (
     <>
@@ -236,6 +293,36 @@ function ComposeDialog({
   const { listening, available, start, stop } = useSpeechRecognition((final) =>
     setBody((prev) => (prev ? `${prev} ${final}` : final)),
   );
+
+  useVoiceCommands('dialog', [
+    {
+      phrases: ['to *'],
+      hint: 'to <contact>',
+      run: (v) => {
+        const target = conversations.find((c) =>
+          c.name.toLowerCase().includes((v ?? '').toLowerCase()),
+        );
+        if (!target) return `No contact matching ${v}.`;
+        setTo(target.id);
+        return `To ${target.name}.`;
+      },
+    },
+    {
+      phrases: ['message *'],
+      hint: 'message <text>',
+      run: (v) => {
+        setBody((prev) => (prev ? `${prev} ${v}` : v ?? ''));
+      },
+    },
+    {
+      phrases: ['send', 'send message'],
+      hint: 'send',
+      run: () => {
+        if (to !== '' && body.trim().length > 0) onSend(to, body);
+        else return 'Pick a recipient and dictate a message first.';
+      },
+    },
+  ]);
 
   return (
     <Dialog
