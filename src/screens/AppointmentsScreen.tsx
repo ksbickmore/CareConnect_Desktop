@@ -12,6 +12,12 @@ import { dataOrNull } from '@/stores/async';
 import { useAnnouncer } from '@/stores/announcer-store';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import { openDialog } from '@/lib/voice/dom-actions';
+import {
+  formatSpokenDate,
+  formatSpokenTime,
+  parseSpokenDate,
+  parseSpokenTime,
+} from '@/lib/voice/spoken-datetime';
 import type { Appointment } from '@/models/types';
 import styles from './AppointmentsScreen.module.css';
 
@@ -402,6 +408,26 @@ function AddDialog({
       hint: 'location <place>',
       run: (v) => {
         setLocation(v ?? '');
+      },
+    },
+    {
+      phrases: ['date *'],
+      hint: 'date <e.g. july fifth, tomorrow, next monday>',
+      run: (v) => {
+        const parsed = parseSpokenDate(v ?? '');
+        if (!parsed) return `I didn't catch a date. Try "date july fifth" or "date tomorrow".`;
+        setDate(parsed);
+        return `Date set to ${formatSpokenDate(parsed)}.`;
+      },
+    },
+    {
+      phrases: ['time *'],
+      hint: 'time <e.g. nine thirty a m, 2 p m, noon>',
+      run: (v) => {
+        const parsed = parseSpokenTime(v ?? '');
+        if (!parsed) return `I didn't catch a time. Try "time nine thirty a m" or "time 2 p m".`;
+        setTime(parsed);
+        return `Time set to ${formatSpokenTime(parsed)}.`;
       },
     },
     {

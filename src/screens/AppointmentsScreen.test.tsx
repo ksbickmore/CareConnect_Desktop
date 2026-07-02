@@ -51,6 +51,43 @@ describe('voice commands', () => {
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
   });
 
+  it('sets the date and time fields by voice', async () => {
+    const user = userEvent.setup();
+    renderAt('/appointments');
+    await screen.findByRole('heading', { level: 1, name: 'Schedule' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('new appointment'));
+    expect(await screen.findByRole('dialog', { name: 'New appointment' })).toBeInTheDocument();
+    act(() => fakeSpeech.emitFinal('date july fifth 2027'));
+    expect(screen.getByLabelText('Date')).toHaveValue('2027-07-05');
+    act(() => fakeSpeech.emitFinal('time 2 30 pm'));
+    expect(screen.getByLabelText('Time')).toHaveValue('14:30');
+    await waitFor(() =>
+      expect(useAnnouncerStore.getState().polite).toBe('Time set to 2:30 PM.'),
+    );
+  });
+
+  it('announces when a spoken date or time is not understood', async () => {
+    const user = userEvent.setup();
+    renderAt('/appointments');
+    await screen.findByRole('heading', { level: 1, name: 'Schedule' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('new appointment'));
+    expect(await screen.findByRole('dialog', { name: 'New appointment' })).toBeInTheDocument();
+    const dateBefore = (screen.getByLabelText('Date') as HTMLInputElement).value;
+    act(() => fakeSpeech.emitFinal('date banana'));
+    await waitFor(() =>
+      expect(useAnnouncerStore.getState().polite).toContain('catch a date'),
+    );
+    expect(screen.getByLabelText('Date')).toHaveValue(dateBefore);
+    act(() => fakeSpeech.emitFinal('time banana'));
+    await waitFor(() =>
+      expect(useAnnouncerStore.getState().polite).toContain('catch a time'),
+    );
+  });
+
   it('blocks voice save when the title is empty', async () => {
     const user = userEvent.setup();
     renderAt('/appointments');
