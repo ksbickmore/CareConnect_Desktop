@@ -5,6 +5,7 @@ import { ConnectingOverlay } from '@/components/ConnectingOverlay';
 import { useContactsStore } from '@/stores/contacts-store';
 import { useAnnouncer } from '@/stores/announcer-store';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
+import { normalize } from '@/lib/voice/match-command';
 import styles from './EmergencyScreen.module.css';
 
 type TargetId = '911' | 'caregiver';
@@ -86,7 +87,7 @@ export function EmergencyScreen() {
     ...(caregiver
       ? [
           {
-            phrases: ['call caregiver', `call ${caregiver.name.toLowerCase()}`],
+            phrases: ['call caregiver', `call ${normalize(caregiver.name)}`],
             hint: 'call caregiver',
             run: () => {
               activate('caregiver');

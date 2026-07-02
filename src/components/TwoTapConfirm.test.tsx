@@ -113,6 +113,7 @@ describe('voice arming', () => {
       expect(dispatchVoiceCommand('confirm').handled).toBe(true);
     });
     expect(onConfirmed).toHaveBeenCalledTimes(1);
+    expect(useAnnouncerStore.getState().polite).not.toMatch(/confirmed\./i);
   });
 
   it('voice arm uses the longer 10s window', () => {

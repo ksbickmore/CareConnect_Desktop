@@ -99,6 +99,7 @@ export function MessagesScreen() {
       hint: 'reply <text>',
       run: (v) => {
         setDraft((prev) => (prev ? `${prev} ${v}` : v ?? ''));
+        return 'Added to reply.';
       },
     },
     {
@@ -313,6 +314,7 @@ function ComposeDialog({
       hint: 'message <text>',
       run: (v) => {
         setBody((prev) => (prev ? `${prev} ${v}` : v ?? ''));
+        return 'Message text added.';
       },
     },
     {

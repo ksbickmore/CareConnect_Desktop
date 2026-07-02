@@ -4,9 +4,10 @@ jest.mock('@/lib/speech/speech-recognition', () =>
   ).fakeSpeechModule,
 );
 
-import { act, screen } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderAt, signIn } from '@/test-utils/render';
+import { useAnnouncerStore } from '@/stores/announcer-store';
 import { fakeSpeech } from '@/test-utils/fake-speech';
 
 beforeEach(() => {
@@ -89,8 +90,9 @@ describe('voice commands', () => {
 
     act(() => fakeSpeech.emitFinal('confirm taken'));
     act(() => fakeSpeech.emitFinal('confirm'));
-    // confirmNext announces "… logged as taken." but VoiceInputBar then announces
-    // the dialog confirm feedback; assert via the updated next-med banner.
+    await waitFor(() =>
+      expect(useAnnouncerStore.getState().polite).toMatch(/logged as taken/i),
+    );
     expect(await screen.findByText('Ibuprofen 400 mg')).toBeInTheDocument();
   });
 

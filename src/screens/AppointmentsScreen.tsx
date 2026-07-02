@@ -11,6 +11,7 @@ import { useAppointmentsStore } from '@/stores/appointments-store';
 import { dataOrNull } from '@/stores/async';
 import { useAnnouncer } from '@/stores/announcer-store';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
+import { openDialog } from '@/lib/voice/dom-actions';
 import type { Appointment } from '@/models/types';
 import styles from './AppointmentsScreen.module.css';
 
@@ -96,8 +97,24 @@ export function AppointmentsScreen() {
         return `${v[0].toUpperCase() + v.slice(1)} view.`;
       },
     })),
-    { phrases: ['next'], hint: 'next', run: () => { step(1); } },
-    { phrases: ['previous', 'back'], hint: 'previous', run: () => { step(-1); } },
+    {
+      phrases: ['next'],
+      hint: 'next',
+      run: () => {
+        if (openDialog()) return 'Say next field to move within the form.';
+        step(1);
+        return 'Next.';
+      },
+    },
+    {
+      phrases: ['previous', 'back'],
+      hint: 'previous',
+      run: () => {
+        if (openDialog()) return 'Say next field to move within the form.';
+        step(-1);
+        return 'Previous.';
+      },
+    },
     {
       phrases: ['new appointment', 'add appointment'],
       hint: 'new appointment',
@@ -391,6 +408,7 @@ function AddDialog({
       phrases: ['save', 'save appointment'],
       hint: 'save',
       run: () => {
+        if (title.trim().length === 0) return 'Title is required.';
         void submit();
         return 'Saving.';
       },

@@ -63,7 +63,8 @@ export const VoiceInputBar = forwardRef<HTMLButtonElement>(function VoiceInputBa
     } else {
       // 3. Navigation keywords (lenient substring matching).
       const command = parseVoiceCommand(final);
-      if (command && command.route !== location.pathname) {
+      const sameRoute = command != null && command.route === location.pathname;
+      if (command && !sameRoute) {
         say(`Opening ${command.label}.`);
         navigate(command.route);
         return;
@@ -72,6 +73,10 @@ export const VoiceInputBar = forwardRef<HTMLButtonElement>(function VoiceInputBa
       const pressed = clickButtonByName(final);
       if (pressed) {
         say(`${pressed}.`);
+        return;
+      }
+      if (sameRoute && command) {
+        say(`Already on ${command.label}.`);
         return;
       }
     }

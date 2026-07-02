@@ -97,7 +97,10 @@ export function MedicationsScreen() {
       phrases: ['voice note', 'leave a voice note'],
       hint: 'voice note',
       run: () => {
-        if (selected) setVoiceFor(selected);
+        if (selected) {
+          setVoiceFor(selected);
+          return `Voice note for ${selected.name}.`;
+        }
       },
     },
     {
@@ -424,6 +427,9 @@ function AddMedicationDialog({
       phrases: ['save', 'save medication'],
       hint: 'save',
       run: () => {
+        if (name.trim().length === 0 || dose.trim().length === 0) {
+          return 'Name and dose are both required.';
+        }
         void submit();
         return 'Saving.';
       },

@@ -146,4 +146,19 @@ describe('voice commands', () => {
     act(() => fakeSpeech.emitFinal('cancel'));
     expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
   });
+
+  it('matches a punctuated caregiver name after normalization', async () => {
+    useContactsStore.getState().reset(
+      createContactsRepository([
+        { name: "Patricia O'Brien", relationship: 'Sister', initials: 'PO' },
+      ]),
+    );
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+    renderAt('/emergency');
+    await screen.findByRole('heading', { level: 1, name: 'Emergency (SOS)' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal("call patricia o brien"));
+    expect(screen.getByText("Tap again to call Patricia O'Brien")).toBeInTheDocument();
+  });
 });

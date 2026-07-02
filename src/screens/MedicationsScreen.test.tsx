@@ -4,11 +4,12 @@ jest.mock('@/lib/speech/speech-recognition', () =>
   ).fakeSpeechModule,
 );
 
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MedicationsScreen } from './MedicationsScreen';
 import { createMedicationsRepository } from '@/data/medications-repository';
 import { useMedicationsStore } from '@/stores/medications-store';
+import { useAnnouncerStore } from '@/stores/announcer-store';
 import type { Medication } from '@/models/types';
 import { renderAt, signIn } from '@/test-utils/render';
 import { fakeSpeech } from '@/test-utils/fake-speech';
@@ -226,5 +227,20 @@ describe('voice commands', () => {
       'aria-selected',
       'true',
     );
+  });
+
+  it('blocks voice save when required fields are empty', async () => {
+    const user = userEvent.setup();
+    renderAt('/medications');
+    await screen.findByRole('heading', { level: 1, name: 'Medications' });
+    await startVoice(user);
+
+    act(() => fakeSpeech.emitFinal('add medication'));
+    expect(await screen.findByRole('dialog', { name: 'New medication' })).toBeInTheDocument();
+    act(() => fakeSpeech.emitFinal('save'));
+    await waitFor(() =>
+      expect(useAnnouncerStore.getState().polite).toBe('Name and dose are both required.'),
+    );
+    expect(screen.getByRole('dialog', { name: 'New medication' })).toBeInTheDocument();
   });
 });

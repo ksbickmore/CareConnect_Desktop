@@ -90,10 +90,36 @@ export function HealthLogScreen() {
   };
 
   useVoiceCommands('screen', [
-    { phrases: ['pain up'], hint: 'pain up', run: () => { incrementPain(); } },
-    { phrases: ['pain down'], hint: 'pain down', run: () => { decrementPain(); } },
-    { phrases: ['sleep up'], run: () => { incrementSleep(); } },
-    { phrases: ['sleep down'], run: () => { decrementSleep(); } },
+    {
+      phrases: ['pain up'],
+      hint: 'pain up',
+      run: () => {
+        incrementPain();
+        return `Pain ${useHealthLogStore.getState().painLevel} of 10.`;
+      },
+    },
+    {
+      phrases: ['pain down'],
+      hint: 'pain down',
+      run: () => {
+        decrementPain();
+        return `Pain ${useHealthLogStore.getState().painLevel} of 10.`;
+      },
+    },
+    {
+      phrases: ['sleep up'],
+      run: () => {
+        incrementSleep();
+        return `Sleep ${useHealthLogStore.getState().sleepHours} hours.`;
+      },
+    },
+    {
+      phrases: ['sleep down'],
+      run: () => {
+        decrementSleep();
+        return `Sleep ${useHealthLogStore.getState().sleepHours} hours.`;
+      },
+    },
     {
       phrases: ['set pain to *', 'pain *'],
       hint: 'set pain to <0-10>',
@@ -101,7 +127,7 @@ export function HealthLogScreen() {
         const n = v != null ? parseSpokenNumber(v) : null;
         if (n == null) return 'Say a number, like "set pain to five".';
         setPain(n);
-        return `Pain ${n}.`;
+        return `Pain ${useHealthLogStore.getState().painLevel} of 10.`;
       },
     },
     {
@@ -111,7 +137,7 @@ export function HealthLogScreen() {
         const n = v != null ? parseSpokenNumber(v) : null;
         if (n == null) return 'Say a number of hours.';
         setSleep(n);
-        return `Sleep ${n} hours.`;
+        return `Sleep ${useHealthLogStore.getState().sleepHours} hours.`;
       },
     },
     ...MOODS.map((m) => ({

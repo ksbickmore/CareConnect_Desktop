@@ -14,6 +14,7 @@ import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderAt, signIn } from '@/test-utils/render';
 import { installCareconnectMock } from '@/test-utils/mocks';
 import { useAuthStore } from '@/stores/auth-store';
+import { useAnnouncerStore } from '@/stores/announcer-store';
 import { fakeSpeech } from '@/test-utils/fake-speech';
 
 const heading = (name: string) =>
@@ -216,6 +217,24 @@ describe('continuous voice session', () => {
     });
     expect(
       await screen.findByRole('dialog', { name: 'New medication' }),
+    ).toBeInTheDocument();
+  });
+
+  it('announces when a nav keyword matches the current route', async () => {
+    renderAt('/medications');
+    await heading('Medications');
+
+    press(' ', { code: 'Space', ctrlKey: true });
+    await waitFor(() => expect(fakeSpeech.listening()).toBe(true));
+    await act(async () => {
+      fakeSpeech.emitFinal('open medications');
+      await Promise.resolve();
+    });
+    await waitFor(() =>
+      expect(useAnnouncerStore.getState().polite).toBe('Already on Medications.'),
+    );
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Medications' }),
     ).toBeInTheDocument();
   });
 });

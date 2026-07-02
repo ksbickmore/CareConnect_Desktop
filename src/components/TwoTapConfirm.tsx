@@ -83,7 +83,6 @@ export function TwoTapConfirm({
           hint: 'confirm',
           run: () => {
             confirm();
-            return `${idleLabel} confirmed.`;
           },
         },
         {

@@ -74,11 +74,21 @@ export function DashboardScreen() {
   };
 
   useVoiceCommands('screen', [
-    { phrases: ['new record'], hint: 'new record', run: () => navigate(routes.medications) },
+    {
+      phrases: ['new record'],
+      hint: 'new record',
+      run: () => {
+        navigate(routes.medications);
+        return 'Opening Medications.';
+      },
+    },
     {
       phrases: ['voice log', 'manual log', 'log symptoms'],
       hint: 'voice log',
-      run: () => navigate(routes.healthLog),
+      run: () => {
+        navigate(routes.healthLog);
+        return 'Opening Health Log.';
+      },
     },
   ]);
 

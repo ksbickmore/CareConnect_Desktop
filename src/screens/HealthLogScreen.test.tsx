@@ -7,6 +7,7 @@ jest.mock('@/lib/speech/speech-recognition', () =>
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { HealthLogScreen } from './HealthLogScreen';
+import { dispatchVoiceCommand } from '@/lib/voice/voice-registry';
 import { createHealthLogRepository } from '@/data/health-log-repository';
 import { useHealthLogStore } from '@/stores/health-log-store';
 import { useAnnouncerStore } from '@/stores/announcer-store';
@@ -144,6 +145,20 @@ describe('voice commands', () => {
       'aria-pressed',
       'true',
     );
+  });
+
+  it('announces clamped pain when setting above the maximum', async () => {
+    renderAt('/healthlog');
+    await screen.findByRole('heading', { level: 1, name: 'Health Log' });
+
+    act(() => {
+      const result = dispatchVoiceCommand('set pain to 99');
+      expect(result.handled).toBe(true);
+      expect(result.feedback).toBe('Pain 10 of 10.');
+    });
+    expect(
+      screen.getByRole('spinbutton', { name: 'Wrist pain level' }),
+    ).toHaveAttribute('aria-valuenow', '10');
   });
 
   it('dictates a note and saves the entry', async () => {
