@@ -5,6 +5,7 @@ import { Button } from '@/components/Button';
 import { useAuthStore } from '@/stores/auth-store';
 import { displayName, initialsOf } from '@/lib/format';
 import { routes } from '@/lib/routes';
+import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import styles from './ProfileScreen.module.css';
 
 /**
@@ -24,6 +25,14 @@ export function ProfileScreen() {
     signOut();
     navigate(routes.login, { replace: true });
   };
+
+  useVoiceCommands('screen', [
+    {
+      phrases: ['sign out', 'log out'],
+      hint: 'sign out',
+      run: doSignOut,
+    },
+  ]);
 
   return (
     <>

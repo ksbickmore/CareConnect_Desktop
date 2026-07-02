@@ -79,3 +79,30 @@ describe('DashboardScreen', () => {
     ).toBeInTheDocument();
   });
 });
+
+describe('voice commands', () => {
+  it('confirms the next medication via two-step voice', async () => {
+    const user = userEvent.setup();
+    renderAt('/dashboard');
+    await screen.findByRole('heading', { level: 1, name: 'Dashboard' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('confirm taken'));
+    act(() => fakeSpeech.emitFinal('confirm'));
+    // confirmNext announces "… logged as taken." but VoiceInputBar then announces
+    // the dialog confirm feedback; assert via the updated next-med banner.
+    expect(await screen.findByText('Ibuprofen 400 mg')).toBeInTheDocument();
+  });
+
+  it('navigates to health log with "voice log"', async () => {
+    const user = userEvent.setup();
+    renderAt('/dashboard');
+    await screen.findByRole('heading', { level: 1, name: 'Dashboard' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('voice log'));
+    expect(
+      await screen.findByRole('heading', { level: 1, name: 'Health Log' }),
+    ).toBeInTheDocument();
+  });
+});

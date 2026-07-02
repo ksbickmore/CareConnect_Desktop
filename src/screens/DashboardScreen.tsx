@@ -12,6 +12,7 @@ import { dataOrNull } from '@/stores/async';
 import { useAnnouncer } from '@/stores/announcer-store';
 import { whenLabel } from '@/lib/format';
 import { routes } from '@/lib/routes';
+import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import styles from './DashboardScreen.module.css';
 
 const HOUR = 60 * 60 * 1000;
@@ -72,6 +73,15 @@ export function DashboardScreen() {
     announce(`${nextMed.name} ${nextMed.dose} logged as taken.`);
   };
 
+  useVoiceCommands('screen', [
+    { phrases: ['new record'], hint: 'new record', run: () => navigate(routes.medications) },
+    {
+      phrases: ['voice log', 'manual log', 'log symptoms'],
+      hint: 'voice log',
+      run: () => navigate(routes.healthLog),
+    },
+  ]);
+
   return (
     <>
       <Toolbar
@@ -127,6 +137,7 @@ export function DashboardScreen() {
                   icon={<Check size={18} />}
                   fullWidth
                   onConfirmed={confirmNext}
+                  voicePhrases={['confirm taken', 'take medication']}
                 />
               </>
             )}
