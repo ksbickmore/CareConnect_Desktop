@@ -17,10 +17,7 @@ export function signIn(email = 'demo@careconnect.app'): void {
 /** Render the full app route tree starting at `initialPath`. */
 export function renderAt(initialPath: string) {
   return render(
-    <MemoryRouter
-      initialEntries={[initialPath]}
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
+    <MemoryRouter initialEntries={[initialPath]}>
       <AppRoutes />
     </MemoryRouter>,
   );

@@ -53,7 +53,8 @@ repositories ported from the mobile app), with data persisted to
 
 ## Setup
 
-Requires Node.js 18+ and npm.
+Requires Node.js 22.12+ and npm (enforced via the `engines` field; needed by
+Electron 43 and Vite 7).
 
 ```powershell
 npm install

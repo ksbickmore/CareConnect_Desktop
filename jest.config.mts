@@ -13,6 +13,7 @@ const config: Config = {
     '\\?worker$': '<rootDir>/src/test-utils/worker-stub.ts',
     '\\?url$': '<rootDir>/src/test-utils/asset-url-stub.ts',
   },
+  setupFiles: ['<rootDir>/src/test-utils/setup-globals.ts'],
   setupFilesAfterEnv: ['<rootDir>/src/test-utils/setup-tests.ts'],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
