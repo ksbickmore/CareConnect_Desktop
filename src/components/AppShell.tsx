@@ -81,7 +81,10 @@ export function AppShell() {
     const off = window.careconnect?.onMenuAction?.((action) => {
       if (action === 'shortcuts') setShortcutsOpen(true);
       else if (action === 'emergency') navigate(routes.emergency);
-      else if (action === 'new-record') navigate(routes.medications);
+      else if (action === 'new-record')
+        navigate(routes.medications, { state: { openAdd: true } });
+      else if (action === 'new-appointment')
+        navigate(routes.appointments, { state: { openAdd: true } });
     });
     return off;
   }, [navigate]);

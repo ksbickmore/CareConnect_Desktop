@@ -11,6 +11,7 @@ import { useAppointmentsStore } from '@/stores/appointments-store';
 import { dataOrNull } from '@/stores/async';
 import { useAnnouncer } from '@/stores/announcer-store';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
+import { useOpenAddOnNavigate } from '@/lib/use-open-add-on-navigate';
 import { openDialog } from '@/lib/voice/dom-actions';
 import {
   formatSpokenDate,
@@ -65,6 +66,8 @@ export function AppointmentsScreen() {
   const [anchor, setAnchor] = useState<Date>(() => startOfDay(new Date()));
   const [selected, setSelected] = useState<Appointment | null>(null);
   const [addOpen, setAddOpen] = useState(false);
+
+  useOpenAddOnNavigate(() => setAddOpen(true));
 
   useEffect(() => {
     void load();

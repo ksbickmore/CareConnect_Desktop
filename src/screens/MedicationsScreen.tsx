@@ -8,6 +8,7 @@ import { TwoTapConfirm } from '@/components/TwoTapConfirm';
 import { RecordingRadar } from '@/components/RecordingRadar';
 import { useSpeechRecognition } from '@/lib/speech/use-speech-recognition';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
+import { useOpenAddOnNavigate } from '@/lib/use-open-add-on-navigate';
 import { slugify } from '@/lib/format';
 import { useMedicationsStore } from '@/stores/medications-store';
 import { dataOrNull } from '@/stores/async';
@@ -30,6 +31,8 @@ export function MedicationsScreen() {
   const [snoozed, setSnoozed] = useState<Set<string>>(new Set());
   const [addOpen, setAddOpen] = useState(false);
   const [voiceFor, setVoiceFor] = useState<Medication | null>(null);
+
+  useOpenAddOnNavigate(() => setAddOpen(true));
 
   const matchesFilter = (m: Medication) =>
     filter === 'all' ||

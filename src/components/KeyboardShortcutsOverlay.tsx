@@ -7,7 +7,8 @@ interface KeyboardShortcutsOverlayProps {
 
 // Two columns, mirroring .figma/keyboard_shortcuts.png.
 const LEFT: ReadonlyArray<readonly [string, string]> = [
-  ['New record / appointment', 'Ctrl + N'],
+  ['New record', 'Ctrl + N'],
+  ['New appointment', 'Ctrl + Shift + N'],
   ['Save', 'Ctrl + S'],
   ['Search / Find', 'Ctrl + F'],
   ['Open settings', 'Ctrl + ,'],

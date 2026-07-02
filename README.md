@@ -168,7 +168,8 @@ focusable with a visible focus ring, and the active nav item exposes
 | Key | Action |
 | --- | --- |
 | `1` … `5` | Dashboard / Medications / Schedule / Messages / Health Log |
-| `Ctrl+N` | New record |
+| `Ctrl+N` | New record (opens the add-medication form) |
+| `Ctrl+Shift+N` | New appointment (opens the new-appointment form) |
 | `Ctrl+Shift+E` | Emergency (SOS) |
 | `Ctrl+Space` | Toggle continuous voice commands (works on any screen and in dialogs) |
 | `F1` or `?` | Keyboard shortcut reference |
@@ -193,10 +194,11 @@ preload bridge (`window.careconnect.popupMenu`). The buttons are native
 `<button>`s, so the menus are fully keyboard-operable: Tab to focus, Enter or
 Space to open, arrow keys to navigate, Esc to close.
 
-The **File** menu (New Record, Emergency) and **Help** menu (Keyboard
-Shortcuts) carry real accelerators; the main process forwards their clicks —
-and the `Ctrl+Shift+E` / `Ctrl+N` / `F1` accelerators — to the renderer over a
-`menu:action` IPC channel (`window.careconnect.onMenuAction`).
+The **File** menu (New Record, New Appointment, Emergency) and **Help** menu
+(Keyboard Shortcuts) carry real accelerators; the main process forwards their
+clicks — and the `Ctrl+Shift+E` / `Ctrl+N` / `Ctrl+Shift+N` / `F1`
+accelerators — to the renderer over a `menu:action` IPC channel
+(`window.careconnect.onMenuAction`).
 
 ## Project structure
 

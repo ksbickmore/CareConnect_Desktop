@@ -90,7 +90,7 @@ function restrictPermissions(): void {
 
 const GITHUB_URL = 'https://github.com/ksbickmore/CareConnect_Desktop';
 
-type MenuAction = 'shortcuts' | 'emergency' | 'new-record';
+type MenuAction = 'shortcuts' | 'emergency' | 'new-record' | 'new-appointment';
 
 /** Forward a menu/accelerator action to the focused renderer. */
 function sendAction(action: MenuAction): void {
@@ -115,6 +115,12 @@ const newRecordItem: Electron.MenuItemConstructorOptions = {
   click: () => sendAction('new-record'),
 };
 
+const newAppointmentItem: Electron.MenuItemConstructorOptions = {
+  label: 'New Appointment',
+  accelerator: 'CmdOrCtrl+Shift+N',
+  click: () => sendAction('new-appointment'),
+};
+
 const emergencyItem: Electron.MenuItemConstructorOptions = {
   label: 'Emergency (SOS)',
   accelerator: 'CmdOrCtrl+Shift+E',
@@ -135,6 +141,7 @@ function buildAppMenu(): void {
       label: 'File',
       submenu: [
         newRecordItem,
+        newAppointmentItem,
         { type: 'separator' },
         emergencyItem,
         { type: 'separator' },
@@ -157,6 +164,7 @@ function buildPopupMenus(): Record<string, Electron.Menu> {
   const isMac = process.platform === 'darwin';
   const file: Electron.MenuItemConstructorOptions[] = [
     newRecordItem,
+    newAppointmentItem,
     emergencyItem,
     { type: 'separator' },
     ...(isMac ? [{ role: 'close' as const }] : []),

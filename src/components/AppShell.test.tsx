@@ -257,6 +257,45 @@ describe('native menu action bridge', () => {
 
       act(() => bridge.fireMenuAction('new-record'));
       expect(await heading('Medications')).toBeInTheDocument();
+      expect(
+        await screen.findByRole('dialog', { name: 'New medication' }),
+      ).toBeInTheDocument();
+    } finally {
+      bridge.cleanup();
+    }
+  });
+
+  it('new-appointment opens the add dialog on the Schedule screen', async () => {
+    const bridge = installCareconnectMock();
+    try {
+      renderAt('/dashboard');
+      await heading('Dashboard');
+
+      act(() => bridge.fireMenuAction('new-appointment'));
+      expect(await heading('Schedule')).toBeInTheDocument();
+      expect(
+        await screen.findByRole('dialog', { name: 'New appointment' }),
+      ).toBeInTheDocument();
+    } finally {
+      bridge.cleanup();
+    }
+  });
+
+  it('opens the add dialog even when already on the target screen, and stays closed after Escape', async () => {
+    const bridge = installCareconnectMock();
+    try {
+      renderAt('/medications');
+      await heading('Medications');
+
+      act(() => bridge.fireMenuAction('new-record'));
+      expect(
+        await screen.findByRole('dialog', { name: 'New medication' }),
+      ).toBeInTheDocument();
+
+      press('Escape');
+      await waitFor(() =>
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument(),
+      );
     } finally {
       bridge.cleanup();
     }

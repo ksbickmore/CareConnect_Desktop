@@ -6,6 +6,7 @@ jest.mock('@/lib/speech/speech-recognition', () =>
 
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 import { MedicationsScreen } from './MedicationsScreen';
 import { createMedicationsRepository } from '@/data/medications-repository';
 import { useMedicationsStore } from '@/stores/medications-store';
@@ -38,7 +39,11 @@ const seed: readonly Medication[] = [
 async function renderSeeded() {
   useMedicationsStore.getState().reset(createMedicationsRepository(seed));
   await useMedicationsStore.getState().load();
-  return render(<MedicationsScreen />);
+  return render(
+    <MemoryRouter>
+      <MedicationsScreen />
+    </MemoryRouter>,
+  );
 }
 
 const options = () => screen.getAllByRole('option');
