@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Toolbar } from '@/components/Toolbar';
 import { Button } from '@/components/Button';
 import { TwoTapConfirm } from '@/components/TwoTapConfirm';
-import { VoiceInputBar } from '@/components/VoiceInputBar';
 import { useAuthStore } from '@/stores/auth-store';
 import { useMedicationsStore } from '@/stores/medications-store';
 import { useAppointmentsStore } from '@/stores/appointments-store';
@@ -215,10 +214,6 @@ export function DashboardScreen() {
               </div>
             ))}
           </section>
-        </div>
-
-        <div className={styles.voiceBar}>
-          <VoiceInputBar />
         </div>
       </div>
     </>

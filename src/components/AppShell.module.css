@@ -18,3 +18,10 @@
   flex-direction: column;
   overflow: hidden;
 }
+
+/* Persistent voice command bar docked below the screen content. Horizontal
+   padding matches the 32px screen gutters so the bar lines up with content. */
+.voiceBar {
+  flex-shrink: 0;
+  padding: 12px 32px 20px;
+}

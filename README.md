@@ -20,7 +20,7 @@ repositories ported from the mobile app), with data persisted to
 | Screen | Notes |
 | --- | --- |
 | **Login** | Pre-filled demo credentials (`demo@careconnect.app` / `demo1234`). "Sign In" or "Continue as Guest" both enter the app. |
-| **Dashboard** | Greeting, **live** stat cards (meds taken, latest pain/sleep), a **two-tap** "Next Medication" banner, live Today's Schedule and Messages widgets, and a persistent voice command bar. |
+| **Dashboard** | Greeting, **live** stat cards (meds taken, latest pain/sleep), a **two-tap** "Next Medication" banner, and live Today's Schedule and Messages widgets. |
 | **Medications** | Two-column master–detail. Grouped Today / Completed list with an All/Due/Taken filter and Up/Down arrow-key navigation. Detail panel with a **two-tap** "Confirm taken", Snooze, and a Voice note recorder. "Add medication" opens a focus-trapped dialog (voice-dictated name). |
 | **Schedule** | Day/Week/Month calendar of appointments. Click a block to open a detail dialog with a **two-tap** "Set reminder". "New appointment" opens an add dialog (title dictation + date/time). |
 | **Messages** | Split-pane chat: keyboard-navigable conversation list + thread with a voice-first composer (dictate or type) and a "read aloud" (text-to-speech) button on incoming messages. |
@@ -30,7 +30,9 @@ repositories ported from the mobile app), with data persisted to
 
 ### Accessibility features (per [`docs/`](docs))
 
-- **Voice-first (C1):** the dashboard voice command bar and every dictation
+- **Voice-first (C1):** a persistent voice command bar (docked below every
+  screen, toggled with `Ctrl+Space` from anywhere — including inside modal
+  dialogs) and every dictation
   field use a **fully local Whisper speech-to-text engine** (transformers.js
   running `whisper-base.en` in a Web Worker — no cloud calls, works offline).
   Voice degrades gracefully to keyboard/typed entry when unavailable.
@@ -155,7 +157,7 @@ focusable with a visible focus ring, and the active nav item exposes
 | `1` … `5` | Dashboard / Medications / Schedule / Messages / Health Log |
 | `Ctrl+N` | New record |
 | `Ctrl+Shift+E` | Emergency (SOS) |
-| `Ctrl+Space` | Focus / toggle the voice command bar |
+| `Ctrl+Space` | Toggle the voice command bar (works on any screen, even in dialogs) |
 | `F1` or `?` | Keyboard shortcut reference |
 | `Tab` / `Shift+Tab` | Move focus between controls |
 | `Enter` / `Space` | Activate the focused control |

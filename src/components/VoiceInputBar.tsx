@@ -7,10 +7,11 @@ import { useAnnouncer } from '@/stores/announcer-store';
 import styles from './VoiceInputBar.module.css';
 
 /**
- * Persistent voice command bar for the Dashboard (SRS Feature C "permanent
- * voice listener bar"). Recognized keywords navigate to a screen; unmatched
- * speech surfaces a hint. `Ctrl+Space` toggles it (handled in AppShell, which
- * focuses this button via the forwarded ref).
+ * Persistent voice command bar (SRS Feature C "permanent voice listener
+ * bar"), mounted in AppShell so it is available on every authenticated
+ * screen. Recognized keywords navigate to a screen; unmatched speech
+ * surfaces a hint. `Ctrl+Space` toggles it from anywhere (handled in
+ * AppShell, which clicks this button by id).
  */
 export const VoiceInputBar = forwardRef<HTMLButtonElement>(function VoiceInputBar(
   _props,

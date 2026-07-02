@@ -129,24 +129,42 @@ describe('emergency shortcut (Ctrl+Shift+E)', () => {
 });
 
 describe('voice command shortcut (Ctrl+Space)', () => {
-  it('activates the dashboard mic when present', async () => {
+  // No SpeechRecognition in jsdom, so mic activation surfaces the fallback
+  // hint — proving the mic button actually received the click.
+  const unavailableHint = () =>
+    screen.findByText('Voice input is not available in this environment.');
+
+  it('activates the voice bar mic on the dashboard', async () => {
     renderAt('/dashboard');
     await heading('Dashboard');
 
     press(' ', { code: 'Space', ctrlKey: true });
-    // No SpeechRecognition in jsdom, so activation surfaces the fallback hint
-    // — proving the mic button actually received the click.
-    expect(
-      await screen.findByText('Voice input is not available in this environment.'),
-    ).toBeInTheDocument();
+    expect(await unavailableHint()).toBeInTheDocument();
   });
 
-  it('falls back to navigating to the dashboard from other screens', async () => {
+  it('activates the voice bar mic on other screens', async () => {
     renderAt('/medications');
     await heading('Medications');
 
     press(' ', { code: 'Space', ctrlKey: true });
-    expect(await heading('Dashboard')).toBeInTheDocument();
+    expect(await unavailableHint()).toBeInTheDocument();
+    // Still on Medications — no dashboard redirect.
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Medications' }),
+    ).toBeInTheDocument();
+  });
+
+  it('works while a modal dialog is open', async () => {
+    renderAt('/medications');
+    await heading('Medications');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Add medication' }));
+    expect(
+      screen.getByRole('dialog', { name: 'New medication' }),
+    ).toBeInTheDocument();
+
+    press(' ', { code: 'Space', ctrlKey: true });
+    expect(await unavailableHint()).toBeInTheDocument();
   });
 });
 

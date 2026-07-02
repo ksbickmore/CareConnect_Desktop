@@ -1,7 +1,7 @@
 import { routes } from './routes';
 
 /**
- * Keyword routing for the dashboard voice command bar, ported from the mobile
+ * Keyword routing for the global voice command bar, ported from the mobile
  * app. Pure function so it can be reasoned about without any speech mocking.
  * Returns `null` when no keyword matches — the caller surfaces a
  * "Heard: … — try saying a screen name" hint instead of navigating.

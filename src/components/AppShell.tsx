@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { MenuBar } from './MenuBar';
 import { Sidebar } from './Sidebar';
+import { VoiceInputBar } from './VoiceInputBar';
 import { LiveRegion } from './LiveRegion';
 import { KeyboardShortcutsOverlay } from './KeyboardShortcutsOverlay';
 import { useAuthStore } from '@/stores/auth-store';
@@ -24,7 +25,7 @@ const NUMBER_ROUTES: Record<string, string> = {
  * Owns the app's global keyboard shortcuts and screen-reader plumbing:
  *   1-5              → primary navigation
  *   F1 / ?           → keyboard shortcut reference
- *   Ctrl+Space       → focus/toggle the dashboard voice command bar
+ *   Ctrl+Space       → toggle the persistent voice command bar
  *   Ctrl+Shift+E     → Emergency (SOS)
  * Shortcuts are ignored while the user is typing. Also mounts the aria-live
  * regions and moves focus to each new page's <h1> on route change.
@@ -53,12 +54,11 @@ export function AppShell() {
         navigate(routes.emergency);
         return;
       }
-      // Focus/toggle the voice command bar.
+      // Toggle the persistent voice command bar; works while typing and with
+      // a modal open since the bar is always mounted in the shell.
       if (e.ctrlKey && e.code === 'Space') {
         e.preventDefault();
-        const mic = document.getElementById('voice-command-mic');
-        if (mic) mic.click();
-        else navigate(routes.dashboard);
+        document.getElementById('voice-command-mic')?.click();
         return;
       }
 
@@ -105,6 +105,9 @@ export function AppShell() {
         <Sidebar />
         <main className={styles.content}>
           <Outlet />
+          <div className={styles.voiceBar}>
+            <VoiceInputBar />
+          </div>
         </main>
       </div>
       <LiveRegion />
