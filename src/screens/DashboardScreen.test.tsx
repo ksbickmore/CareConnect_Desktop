@@ -70,7 +70,9 @@ describe('DashboardScreen', () => {
     });
 
     expect(
-      await screen.findByText('Heard: "sing a song" — try saying a screen name.'),
+      await screen.findByText(
+        'Heard: "sing a song" — say "what can I say" for options.',
+      ),
     ).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { level: 1, name: 'Dashboard' }),

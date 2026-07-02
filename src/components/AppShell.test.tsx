@@ -1,3 +1,9 @@
+jest.mock('@/lib/speech/speech-recognition', () =>
+  jest.requireActual<typeof import('@/test-utils/fake-speech')>(
+    '@/test-utils/fake-speech',
+  ).fakeSpeechModule,
+);
+
 /**
  * Keyboard-navigation integration suite: mounts the real route tree (screens
  * included) and drives the global shortcuts owned by AppShell. This is the
@@ -8,6 +14,7 @@ import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderAt, signIn } from '@/test-utils/render';
 import { installCareconnectMock } from '@/test-utils/mocks';
 import { useAuthStore } from '@/stores/auth-store';
+import { fakeSpeech } from '@/test-utils/fake-speech';
 
 const heading = (name: string) =>
   screen.findByRole('heading', { level: 1, name });
@@ -23,6 +30,10 @@ const press = (key: string, init: KeyboardEventInit = {}) => {
 
 beforeEach(() => {
   signIn();
+});
+
+afterEach(() => {
+  fakeSpeech.reset();
 });
 
 describe('AppShell auth gate', () => {
@@ -135,6 +146,7 @@ describe('voice command shortcut (Ctrl+Space)', () => {
     screen.findByText('Voice input is not available in this environment.');
 
   it('activates the voice bar mic on the dashboard', async () => {
+    fakeSpeech.setAvailable(false);
     renderAt('/dashboard');
     await heading('Dashboard');
 
@@ -143,6 +155,7 @@ describe('voice command shortcut (Ctrl+Space)', () => {
   });
 
   it('activates the voice bar mic on other screens', async () => {
+    fakeSpeech.setAvailable(false);
     renderAt('/medications');
     await heading('Medications');
 
@@ -155,6 +168,7 @@ describe('voice command shortcut (Ctrl+Space)', () => {
   });
 
   it('works while a modal dialog is open', async () => {
+    fakeSpeech.setAvailable(false);
     renderAt('/medications');
     await heading('Medications');
 
@@ -165,6 +179,44 @@ describe('voice command shortcut (Ctrl+Space)', () => {
 
     press(' ', { code: 'Space', ctrlKey: true });
     expect(await unavailableHint()).toBeInTheDocument();
+  });
+});
+
+describe('continuous voice session', () => {
+  it('keeps listening across multiple commands and stops on "stop listening"', async () => {
+    renderAt('/dashboard');
+    await heading('Dashboard');
+
+    press(' ', { code: 'Space', ctrlKey: true });
+    await waitFor(() => expect(fakeSpeech.listening()).toBe(true));
+
+    await act(async () => {
+      fakeSpeech.emitFinal('open medications');
+      await Promise.resolve();
+    });
+    expect(await heading('Medications')).toBeInTheDocument();
+    expect(fakeSpeech.listening()).toBe(true);
+
+    await act(async () => {
+      fakeSpeech.emitFinal('stop listening');
+      await Promise.resolve();
+    });
+    expect(fakeSpeech.listening()).toBe(false);
+  });
+
+  it('falls back to clicking a visible button by name', async () => {
+    renderAt('/medications');
+    await heading('Medications');
+
+    press(' ', { code: 'Space', ctrlKey: true });
+    await waitFor(() => expect(fakeSpeech.listening()).toBe(true));
+    await act(async () => {
+      fakeSpeech.emitFinal('add medication');
+      await Promise.resolve();
+    });
+    expect(
+      await screen.findByRole('dialog', { name: 'New medication' }),
+    ).toBeInTheDocument();
   });
 });
 

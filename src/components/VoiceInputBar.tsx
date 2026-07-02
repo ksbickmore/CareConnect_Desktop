@@ -1,40 +1,105 @@
 import { forwardRef, useState } from 'react';
 import { Mic, MicOff } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSpeechRecognition } from '@/lib/speech/use-speech-recognition';
 import { parseVoiceCommand } from '@/lib/voice-commands';
+import {
+  dispatchVoiceCommand,
+  registeredHints,
+} from '@/lib/voice/voice-registry';
+import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
+import {
+  clickButtonByName,
+  dictateIntoFocusedField,
+  openDialog,
+} from '@/lib/voice/dom-actions';
 import { useAnnouncer } from '@/stores/announcer-store';
 import styles from './VoiceInputBar.module.css';
 
 /**
- * Persistent voice command bar (SRS Feature C "permanent voice listener
- * bar"), mounted in AppShell so it is available on every authenticated
- * screen. Recognized keywords navigate to a screen; unmatched speech
- * surfaces a hint. `Ctrl+Space` toggles it from anywhere (handled in
- * AppShell, which clicks this button by id).
+ * Persistent voice command bar (SRS Feature C), mounted in AppShell so it is
+ * available on every authenticated screen. Owns the app's single continuous
+ * speech session and dispatches each utterance through the voice command
+ * registry: dialog commands, then screen commands, then global commands,
+ * then navigation keywords, then a visible-button-name fallback.
+ * `Ctrl+Space` toggles it from anywhere (AppShell clicks this button by id).
  */
 export const VoiceInputBar = forwardRef<HTMLButtonElement>(function VoiceInputBar(
   _props,
   ref,
 ) {
+  const location = useLocation();
   const navigate = useNavigate();
   const announce = useAnnouncer();
   const [hint, setHint] = useState<string | null>(null);
 
-  const { listening, transcript, error, available, start, stop } =
-    useSpeechRecognition((final) => {
-      const command = parseVoiceCommand(final);
-      if (command) {
-        setHint(`Opening ${command.label}…`);
-        announce(`Opening ${command.label}.`);
-        navigate(command.route);
-      } else {
-        setHint(`Heard: "${final}" — try saying a screen name.`);
-        announce('Command not recognized. Try saying a screen name.', {
-          assertive: true,
-        });
+  const say = (message: string) => {
+    setHint(message);
+    announce(message);
+  };
+
+  const handleFinal = (final: string) => {
+    // 1. Registered commands: dialog > screen > global.
+    const result = dispatchVoiceCommand(final);
+    if (result.handled) {
+      if (result.feedback) say(result.feedback);
+      else setHint(`Heard: "${final}"`);
+      return;
+    }
+
+    if (openDialog()) {
+      // 2a. Dictation into the focused text field of the open dialog.
+      const label = dictateIntoFocusedField(final);
+      if (label) {
+        say(`Added to ${label}.`);
+        return;
       }
+      // 2b. Buttons inside the dialog by name.
+      const pressed = clickButtonByName(final);
+      if (pressed) {
+        say(`${pressed}.`);
+        return;
+      }
+    } else {
+      // 3. Navigation keywords (lenient substring matching).
+      const command = parseVoiceCommand(final);
+      if (command && command.route !== location.pathname) {
+        say(`Opening ${command.label}.`);
+        navigate(command.route);
+        return;
+      }
+      // 4. Visible buttons in the main content by name.
+      const pressed = clickButtonByName(final);
+      if (pressed) {
+        say(`${pressed}.`);
+        return;
+      }
+    }
+
+    setHint(`Heard: "${final}" — say "what can I say" for options.`);
+    announce('Command not recognized. Say "what can I say" for options.', {
+      assertive: true,
     });
+  };
+
+  const { listening, transcript, error, available, start, stop } =
+    useSpeechRecognition(handleFinal, { continuous: true });
+
+  useVoiceCommands('global', [
+    {
+      phrases: ['stop listening', 'stop voice'],
+      hint: 'stop listening',
+      run: () => {
+        stop();
+        return 'Voice commands off.';
+      },
+    },
+    {
+      phrases: ['what can i say', 'help'],
+      hint: 'what can I say',
+      run: () => `You can say: ${registeredHints().join(', ')}.`,
+    },
+  ]);
 
   const toggle = () => {
     if (!available) {
@@ -46,7 +111,7 @@ export const VoiceInputBar = forwardRef<HTMLButtonElement>(function VoiceInputBa
   };
 
   const status = listening
-    ? transcript || 'Listening… say "medications", "schedule", "messages"…'
+    ? transcript || 'Listening… speak a command, or say "what can I say".'
     : error ?? hint ?? 'Tap to speak a command, or press Ctrl+Space.';
 
   return (
