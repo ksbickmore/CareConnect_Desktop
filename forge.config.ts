@@ -11,6 +11,9 @@ const config: ForgeConfig = {
     name: 'CareConnect',
     executableName: 'CareConnect',
     appBundleId: 'com.careconnect.desktop',
+    // Local Whisper speech model + ONNX runtime, downloaded by
+    // scripts/fetch-models.mjs and served via the app:// protocol.
+    extraResource: ['./models'],
   },
   rebuildConfig: {},
   makers: [

@@ -1,11 +1,91 @@
-import { app, BrowserWindow, ipcMain, Menu, shell } from 'electron';
-import { join } from 'node:path';
+import {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Menu,
+  net,
+  protocol,
+  session,
+  shell,
+} from 'electron';
+import { join, normalize, sep } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import started from 'electron-squirrel-startup';
 
 // Squirrel runs the app with special flags while creating/removing shortcuts
 // during install and uninstall; quit immediately in that case.
 if (started) {
   app.quit();
+}
+
+/**
+ * The packaged renderer is served over app:// instead of file:// so that
+ * fetch() and dynamic import() work for the local Whisper speech model
+ * (file:// blocks both). Must be registered before app is ready.
+ */
+protocol.registerSchemesAsPrivileged([
+  {
+    scheme: 'app',
+    privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true },
+  },
+]);
+
+/**
+ * Cross-origin isolation lets onnxruntime use SharedArrayBuffer and threads,
+ * which speeds up Whisper transcription considerably. Everything the app
+ * loads is same-origin, so require-corp is safe.
+ */
+const ISOLATION_HEADERS = {
+  'Cross-Origin-Opener-Policy': 'same-origin',
+  'Cross-Origin-Embedder-Policy': 'require-corp',
+  // Required so onnxruntime-web's nested worker scripts (loaded from
+  // /models/ort/) pass the require-corp embedding check above.
+  'Cross-Origin-Resource-Policy': 'cross-origin',
+};
+
+/** Serve a local file, refusing paths that escape the root directory. */
+function serveFrom(root: string, urlPath: string): Promise<Response> {
+  const filePath = normalize(join(root, decodeURIComponent(urlPath)));
+  if (filePath !== root && !filePath.startsWith(root + sep)) {
+    return Promise.resolve(new Response('Forbidden', { status: 403 }));
+  }
+  return net
+    .fetch(pathToFileURL(filePath).toString())
+    .then(
+      (res) =>
+        new Response(res.body, {
+          status: res.status,
+          headers: { ...Object.fromEntries(res.headers), ...ISOLATION_HEADERS },
+        }),
+    );
+}
+
+/**
+ * app://bundle/… → built renderer files; app://bundle/models/… → the Whisper
+ * model directory shipped via `extraResource` (repo `models/` in dev).
+ */
+function registerAppProtocol(): void {
+  const rendererRoot = join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}`);
+  const modelsRoot = app.isPackaged
+    ? join(process.resourcesPath, 'models')
+    : join(app.getAppPath(), 'models');
+
+  protocol.handle('app', (request) => {
+    const { pathname } = new URL(request.url);
+    if (pathname.startsWith('/models/')) {
+      return serveFrom(modelsRoot, pathname.slice('/models'.length));
+    }
+    return serveFrom(rendererRoot, pathname === '/' ? '/index.html' : pathname);
+  });
+}
+
+/** Grant only what the renderer legitimately needs (mic for voice input). */
+function restrictPermissions(): void {
+  session.defaultSession.setPermissionRequestHandler(
+    (_webContents, permission, callback) => {
+      callback(permission === 'media' || permission === 'fullscreen');
+    },
+  );
 }
 
 const GITHUB_URL = 'https://github.com/ksbickmore/CareConnect_Desktop';
@@ -140,18 +220,18 @@ function createWindow(): void {
   });
 
   // The Forge Vite plugin injects the dev server URL in development; in
-  // production we load the built renderer from disk
-  // (.vite/renderer/<name>/index.html).
+  // production the built renderer is served over app:// (see
+  // registerAppProtocol) so the speech model can be fetched.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     void win.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
-    void win.loadFile(
-      join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`),
-    );
+    void win.loadURL('app://bundle/index.html');
   }
 }
 
 app.whenReady().then(() => {
+  registerAppProtocol();
+  restrictPermissions();
   buildAppMenu();
 
   const popupMenus = buildPopupMenus();

@@ -145,5 +145,11 @@ vite.config.ts.timestamp-*
 # Electron Forge packaged output
 out/
 
+# Local Whisper speech model + ONNX runtime (populated by scripts/fetch-models.mjs)
+models/
+
+# Playwright MCP debug artifacts
+.playwright-mcp/
+
 CLAUDE.md
 .claude/

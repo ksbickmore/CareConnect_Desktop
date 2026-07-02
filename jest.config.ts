@@ -9,6 +9,9 @@ const config: Config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '\\.css$': 'identity-obj-proxy',
+    // Vite `?worker` / `?url` imports have no meaning in jsdom — map to stubs.
+    '\\?worker$': '<rootDir>/src/test-utils/worker-stub.ts',
+    '\\?url$': '<rootDir>/src/test-utils/asset-url-stub.ts',
   },
   setupFilesAfterEnv: ['<rootDir>/src/test-utils/setup-tests.ts'],
   collectCoverageFrom: [

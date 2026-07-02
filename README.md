@@ -31,8 +31,9 @@ repositories ported from the mobile app), with data persisted to
 ### Accessibility features (per [`docs/`](docs))
 
 - **Voice-first (C1):** the dashboard voice command bar and every dictation
-  field use the browser **Web Speech API** (Electron's Chromium). Voice
-  degrades gracefully to keyboard/typed entry when unavailable.
+  field use a **fully local Whisper speech-to-text engine** (transformers.js
+  running `whisper-base.en` in a Web Worker — no cloud calls, works offline).
+  Voice degrades gracefully to keyboard/typed entry when unavailable.
 - **No sustained gestures (C3):** critical actions (log taken, set reminder,
   emergency call) use an explicit **two-tap confirm**; history uses **manual
   pagination**, never infinite scroll.
@@ -47,6 +48,14 @@ Requires Node.js 18+ and npm.
 ```powershell
 npm install
 ```
+
+The first `npm start` / `npm run package` also populates `models/`
+(git-ignored) via `scripts/fetch-models.mjs`: it downloads the quantized
+`whisper-base.en` speech model (~80 MB) from the Hugging Face hub once and
+copies the matching onnxruntime-web WASM runtime out of `node_modules`.
+After that everything runs fully offline. Run `npm run models` to refresh
+it manually (required after upgrading `@huggingface/transformers`, so the
+WASM runtime stays version-matched).
 
 ## Running locally
 
@@ -86,8 +95,8 @@ What's covered:
   TwoTapConfirm (arm/confirm/auto-disarm/blur, fake timers), MenuBar
   (keyboard activation + `popupMenu` bridge), StepControl (spinbutton
   semantics, arrow keys, clamping).
-- **Screens:** Login, Dashboard (voice command wiring with a scripted
-  `SpeechRecognition` double), Medications (arrow-key ledger, filters,
+- **Screens:** Login, Dashboard (voice command wiring against a scriptable
+  fake of the speech module), Medications (arrow-key ledger, filters,
   two-tap taken, add-dialog validation), Emergency (two-tap + 5s countdown
   with fake timers), Health Log (steppers, mood chips, save, export),
   Messages (search, send, read-aloud via a `speechSynthesis` mock).
@@ -97,8 +106,9 @@ What's covered:
 
 Test plumbing lives in [`src/test-utils/`](src/test-utils): a global setup
 file (jsdom gap-fills for `speechSynthesis`/`URL.createObjectURL`, per-test
-store + `localStorage` resets) plus opt-in mocks for the `window.careconnect`
-preload bridge and the Web Speech API. Electron's main/preload processes are
+store + `localStorage` resets), an opt-in mock for the `window.careconnect`
+preload bridge, and a scriptable fake of the speech module
+(`fake-speech.ts`) for voice-flow tests. Electron's main/preload processes are
 outside Jest's scope (they need the Electron runtime); their renderer-side
 consumers are tested against the mocked bridge.
 
@@ -186,7 +196,8 @@ src/
   theme/tokens.css   Design tokens (color/spacing/radius) from Figma
   index.css          Global styles, DM Sans, focus rings
   models/types.ts    Shared data models (ported from mobile)
-  lib/               format helpers, voice-commands, speech/ (Web Speech API)
+  lib/               format helpers, voice-commands, speech/ (local Whisper
+                     engine: mic capture + VAD + Web Worker transcriber)
   stores/            Zustand stores: auth, medications, appointments, messages,
                      health-log, contacts, voice-notes, announcer, async helper
   data/              Repositories (medications, appointments, health-log,
@@ -207,15 +218,21 @@ vite.renderer.config.ts    Vite config for the renderer (React + @ alias)
 
 ## Tech notes
 
-- **Routing:** `HashRouter`, so routes resolve under `file://` in packaged
-  builds.
+- **Routing:** `HashRouter`, so routes resolve without a server — packaged
+  builds are served over the custom `app://` protocol.
 - **State:** Zustand stores and repositories are ported nearly verbatim from
   the mobile app (no React Native dependencies). Each repository hydrates from
   `localStorage` on first use and persists on every mutation, so added meds,
   appointments, health-log entries, contacts, and sent messages survive
   restarts. Clearing the app's `localStorage` resets everything to seed data.
-- **Voice:** the `src/lib/speech/` wrapper isolates the Web Speech API behind a
-  small interface; the rest of the app depends only on the `useSpeechRecognition`
-  hook, and everything degrades safely when speech is unavailable.
+- **Voice:** speech-to-text is a **local Whisper engine**
+  (`src/lib/speech/whisper/`): `getUserMedia` → 16 kHz AudioWorklet capture →
+  RMS-energy VAD segmentation → transformers.js `whisper-base.en` (quantized
+  ONNX) decoding in a Web Worker. The rest of the app depends only on the
+  `useSpeechRecognition` hook, and everything degrades safely when speech is
+  unavailable. The packaged renderer is served over a custom `app://`
+  protocol (instead of `file://`) with cross-origin-isolation headers so the
+  worker can fetch the model and run multi-threaded WASM; the same
+  `/models/` route is provided by Vite middleware in dev.
 - **Fonts:** DM Sans is bundled via `@fontsource/dm-sans` (works offline).
 - **Icons:** `lucide-react`.

@@ -1,18 +1,20 @@
+jest.mock('@/lib/speech/speech-recognition', () =>
+  jest.requireActual<typeof import('@/test-utils/fake-speech')>(
+    '@/test-utils/fake-speech',
+  ).fakeSpeechModule,
+);
+
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderAt, signIn } from '@/test-utils/render';
-import {
-  FakeSpeechRecognition,
-  installSpeech,
-  removeSpeech,
-} from '@/test-utils/mocks';
+import { fakeSpeech } from '@/test-utils/fake-speech';
 
 beforeEach(() => {
   signIn();
 });
 
 afterEach(() => {
-  removeSpeech();
+  fakeSpeech.reset();
 });
 
 describe('DashboardScreen', () => {
@@ -30,6 +32,7 @@ describe('DashboardScreen', () => {
   });
 
   it('shows the unavailable hint when voice input is missing', async () => {
+    fakeSpeech.setAvailable(false);
     const user = userEvent.setup();
     renderAt('/dashboard');
     await screen.findByRole('heading', { level: 1, name: 'Dashboard' });
@@ -41,14 +44,13 @@ describe('DashboardScreen', () => {
   });
 
   it('navigates when a recognized command is spoken', async () => {
-    installSpeech();
     const user = userEvent.setup();
     renderAt('/dashboard');
     await screen.findByRole('heading', { level: 1, name: 'Dashboard' });
 
     await user.click(screen.getByRole('button', { name: 'Start voice command' }));
     act(() => {
-      FakeSpeechRecognition.latest().emitResult('open medications', true);
+      fakeSpeech.emitFinal('open medications');
     });
 
     expect(
@@ -57,15 +59,14 @@ describe('DashboardScreen', () => {
   });
 
   it('surfaces a hint for unrecognized commands and stays put', async () => {
-    installSpeech();
     const user = userEvent.setup();
     renderAt('/dashboard');
     await screen.findByRole('heading', { level: 1, name: 'Dashboard' });
 
     await user.click(screen.getByRole('button', { name: 'Start voice command' }));
     act(() => {
-      FakeSpeechRecognition.latest().emitResult('sing a song', true);
-      FakeSpeechRecognition.latest().emitEnd();
+      fakeSpeech.emitFinal('sing a song');
+      fakeSpeech.emitEnd();
     });
 
     expect(
