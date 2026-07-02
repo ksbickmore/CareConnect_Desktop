@@ -51,10 +51,14 @@ const WORD_NUMBERS: Record<string, number> = {
   nineteen: 19, twenty: 20,
 };
 
+/** First number found among the words, so "7 hours" and "level five" work. */
 export function parseSpokenNumber(text: string): number | null {
-  const word = normalize(text);
-  if (/^\d+$/.test(word)) return Number(word);
-  return WORD_NUMBERS[word] ?? null;
+  for (const token of normalize(text).split(' ')) {
+    if (/^\d+$/.test(token)) return Number(token);
+    const word = WORD_NUMBERS[token];
+    if (word != null) return word;
+  }
+  return null;
 }
 
 interface PhraseMatch {

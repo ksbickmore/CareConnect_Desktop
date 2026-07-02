@@ -25,10 +25,10 @@ describe('HealthLogScreen', () => {
 
     expect(screen.getByText('Moderate–severe · 6/10')).toBeInTheDocument();
     await user.click(
-      screen.getByRole('button', { name: 'Increase Wrist pain level' }),
+      screen.getByRole('button', { name: 'Increase Pain level' }),
     );
     expect(
-      screen.getByRole('spinbutton', { name: 'Wrist pain level' }),
+      screen.getByRole('spinbutton', { name: 'Pain level' }),
     ).toHaveAttribute('aria-valuenow', '7');
     expect(screen.getByText('Moderate–severe · 7/10')).toBeInTheDocument();
   });
@@ -61,7 +61,7 @@ describe('HealthLogScreen', () => {
     ).toBeInTheDocument();
 
     await user.click(
-      screen.getByRole('button', { name: 'Increase Wrist pain level' }),
+      screen.getByRole('button', { name: 'Increase Pain level' }),
     ); // 7
     await user.click(screen.getByRole('button', { name: 'Manual entry' }));
     await user.type(
@@ -75,7 +75,7 @@ describe('HealthLogScreen', () => {
     expect(recent).toHaveTextContent('Wrist ache after typing');
     // Controls reset to defaults after saving.
     expect(
-      screen.getByRole('spinbutton', { name: 'Wrist pain level' }),
+      screen.getByRole('spinbutton', { name: 'Pain level' }),
     ).toHaveAttribute('aria-valuenow', '6');
     expect(screen.queryByLabelText('Note for today')).not.toBeInTheDocument();
   });
@@ -126,8 +126,32 @@ describe('voice commands', () => {
 
     act(() => fakeSpeech.emitFinal('set pain to five'));
     expect(
-      screen.getByRole('spinbutton', { name: 'Wrist pain level' }),
+      screen.getByRole('spinbutton', { name: 'Pain level' }),
     ).toHaveAttribute('aria-valuenow', '5');
+  });
+
+  it('sets pain from a natural phrasing with surrounding words', async () => {
+    const user = userEvent.setup();
+    renderAt('/healthlog');
+    await screen.findByRole('heading', { level: 1, name: 'Health Log' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('pain level three'));
+    expect(
+      screen.getByRole('spinbutton', { name: 'Pain level' }),
+    ).toHaveAttribute('aria-valuenow', '3');
+  });
+
+  it('sets sleep hours when the number is followed by "hours"', async () => {
+    const user = userEvent.setup();
+    renderAt('/healthlog');
+    await screen.findByRole('heading', { level: 1, name: 'Health Log' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('sleep 9 hours'));
+    expect(
+      screen.getByRole('spinbutton', { name: 'Sleep quality (hrs)' }),
+    ).toHaveAttribute('aria-valuenow', '9');
   });
 
   it('steps values and picks mood', async () => {
@@ -138,7 +162,7 @@ describe('voice commands', () => {
 
     act(() => fakeSpeech.emitFinal('pain up'));
     expect(
-      screen.getByRole('spinbutton', { name: 'Wrist pain level' }),
+      screen.getByRole('spinbutton', { name: 'Pain level' }),
     ).toHaveAttribute('aria-valuenow', '7'); // default 6 + 1
     act(() => fakeSpeech.emitFinal('mood good'));
     expect(screen.getByRole('button', { name: 'Good' })).toHaveAttribute(
@@ -157,7 +181,7 @@ describe('voice commands', () => {
       expect(result.feedback).toBe('Pain 10 of 10.');
     });
     expect(
-      screen.getByRole('spinbutton', { name: 'Wrist pain level' }),
+      screen.getByRole('spinbutton', { name: 'Pain level' }),
     ).toHaveAttribute('aria-valuenow', '10');
   });
 

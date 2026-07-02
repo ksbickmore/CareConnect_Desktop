@@ -108,6 +108,7 @@ export function HealthLogScreen() {
     },
     {
       phrases: ['sleep up'],
+      hint: 'sleep up',
       run: () => {
         incrementSleep();
         return `Sleep ${useHealthLogStore.getState().sleepHours} hours.`;
@@ -115,6 +116,7 @@ export function HealthLogScreen() {
     },
     {
       phrases: ['sleep down'],
+      hint: 'sleep down',
       run: () => {
         decrementSleep();
         return `Sleep ${useHealthLogStore.getState().sleepHours} hours.`;
@@ -132,7 +134,7 @@ export function HealthLogScreen() {
     },
     {
       phrases: ['set sleep to *', 'sleep *'],
-      hint: 'set sleep to <hours>',
+      hint: 'set sleep to <0-14 hours>',
       run: (v) => {
         const n = v != null ? parseSpokenNumber(v) : null;
         if (n == null) return 'Say a number of hours.';
@@ -234,7 +236,7 @@ export function HealthLogScreen() {
 
             <div className={styles.painBlock}>
               <StepControl
-                label="Wrist pain level"
+                label="Pain level"
                 value={painLevel}
                 min={PAIN_MIN}
                 max={PAIN_MAX}

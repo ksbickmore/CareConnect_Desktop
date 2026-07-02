@@ -31,6 +31,14 @@ describe('parseSpokenNumber', () => {
     expect(parseSpokenNumber('zero')).toBe(0);
     expect(parseSpokenNumber('banana')).toBeNull();
   });
+
+  it('finds the first number among surrounding words', () => {
+    expect(parseSpokenNumber('7 hours')).toBe(7);
+    expect(parseSpokenNumber('level five')).toBe(5);
+    expect(parseSpokenNumber('5 out of 10')).toBe(5);
+    expect(parseSpokenNumber('to 5 please')).toBe(5);
+    expect(parseSpokenNumber('hours')).toBeNull();
+  });
 });
 
 describe('matchCommand', () => {
