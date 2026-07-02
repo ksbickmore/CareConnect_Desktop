@@ -5,6 +5,7 @@ jest.mock('@/lib/speech/speech-recognition', () =>
 );
 
 import { act, render, screen, waitFor, within } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { MessagesScreen } from './MessagesScreen';
 import { createMessagesRepository } from '@/data/messages-repository';
@@ -38,7 +39,12 @@ const seed: readonly Conversation[] = [
 
 function renderSeeded() {
   useMessagesStore.getState().reset(createMessagesRepository(seed));
-  return render(<MessagesScreen />); // the screen loads the store on mount
+  return render(
+    // The screen calls useNavigate (voice contact switching), so it needs a router.
+    <MemoryRouter>
+      <MessagesScreen />
+    </MemoryRouter>,
+  ); // the screen loads the store on mount
 }
 
 describe('MessagesScreen', () => {
@@ -146,6 +152,71 @@ describe('voice commands', () => {
     expect(pressedConvo()).not.toBe(first);
     act(() => fakeSpeech.emitFinal('previous conversation'));
     expect(pressedConvo()).toBe(first);
+  });
+
+  it('steps between conversations with the contact aliases', async () => {
+    const user = userEvent.setup();
+    renderAt('/messages');
+    await screen.findByRole('heading', { level: 1, name: 'Messages' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    const first = pressedConvo();
+    act(() => fakeSpeech.emitFinal('next contact'));
+    expect(pressedConvo()).not.toBe(first);
+    act(() => fakeSpeech.emitFinal('previous contact'));
+    expect(pressedConvo()).toBe(first);
+  });
+
+  it('switches conversations by contact name, honorifics included', async () => {
+    const user = userEvent.setup();
+    renderAt('/messages');
+    await screen.findByRole('heading', { level: 1, name: 'Messages' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('open nurse'));
+    expect(pressedConvo()).toHaveTextContent('Nurse');
+    act(() => fakeSpeech.emitFinal('switch to doctor park'));
+    expect(pressedConvo()).toHaveTextContent('Dr. Park');
+  });
+
+  it('keeps the selection and says so when no contact matches', async () => {
+    const user = userEvent.setup();
+    renderAt('/messages');
+    await screen.findByRole('heading', { level: 1, name: 'Messages' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('open zorro'));
+    expect(pressedConvo()).toHaveTextContent('Dr. Park');
+    // The live-region announcement lands in a microtask.
+    expect(await screen.findByText(/No contact matching zorro/)).toBeInTheDocument();
+  });
+
+  it('clears an active search filter that hides the named contact', async () => {
+    const user = userEvent.setup();
+    renderAt('/messages');
+    await screen.findByRole('heading', { level: 1, name: 'Messages' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    const search = screen.getByRole('searchbox', { name: 'Search messages' });
+    await user.type(search, 'nurse');
+    const list = screen.getByRole('list', { name: 'Conversations' });
+    expect(within(list).queryByText('Dr. Park')).not.toBeInTheDocument();
+
+    act(() => fakeSpeech.emitFinal('open doctor park'));
+    expect(search).toHaveValue('');
+    expect(pressedConvo()).toHaveTextContent('Dr. Park');
+  });
+
+  it('still navigates to other screens when "open" names no contact', async () => {
+    const user = userEvent.setup();
+    renderAt('/messages');
+    await screen.findByRole('heading', { level: 1, name: 'Messages' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('open medications'));
+    expect(
+      await screen.findByRole('heading', { level: 1, name: 'Medications' }),
+    ).toBeInTheDocument();
   });
 
   it('dictates a reply and sends it', async () => {

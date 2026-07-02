@@ -1,14 +1,30 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Mic, Send, Volume2, Pencil } from 'lucide-react';
 import { Toolbar } from '@/components/Toolbar';
 import { Button } from '@/components/Button';
 import { Dialog } from '@/components/Dialog';
 import { useSpeechRecognition } from '@/lib/speech/use-speech-recognition';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
+import { normalize } from '@/lib/voice/match-command';
+import { parseVoiceCommand } from '@/lib/voice-commands';
 import { useMessagesStore } from '@/stores/messages-store';
 import { dataOrNull } from '@/stores/async';
 import { useAnnouncer } from '@/stores/announcer-store';
 import styles from './MessagesScreen.module.css';
+
+/** Spoken honorifics canonicalized so "doctor park" matches "Dr. Park". */
+const HONORIFICS: Record<string, string> = {
+  doctor: 'dr',
+  mister: 'mr',
+  missus: 'mrs',
+};
+
+const normalizeName = (text: string): string =>
+  normalize(text)
+    .split(' ')
+    .map((w) => HONORIFICS[w] ?? w)
+    .join(' ');
 
 export function MessagesScreen() {
   const conversations = useMessagesStore((s) => s.conversations);
@@ -16,6 +32,7 @@ export function MessagesScreen() {
   const send = useMessagesStore((s) => s.send);
   const markRead = useMessagesStore((s) => s.markRead);
   const announce = useAnnouncer();
+  const navigate = useNavigate();
 
   const list = dataOrNull(conversations) ?? [];
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -79,12 +96,40 @@ export function MessagesScreen() {
     return `${filtered[next].contactName}.`;
   };
 
+  // Switch the active conversation by spoken contact name. Contacts win over
+  // screen names; unmatched phrases fall through to global navigation so a
+  // screen-scoped "open *" doesn't swallow "open medications".
+  const openContact = (spoken?: string) => {
+    const target = normalizeName(spoken ?? '');
+    const match = list.find((c) => normalizeName(c.contactName).includes(target));
+    if (match) {
+      setSelectedId(match.id);
+      if (!filtered.some((c) => c.id === match.id)) setQuery('');
+      return `${match.contactName}.`;
+    }
+    const route = parseVoiceCommand(spoken ?? '');
+    if (route) {
+      navigate(route.route);
+      return `Opening ${route.label}.`;
+    }
+    return `No contact matching ${spoken}.`;
+  };
+
   useVoiceCommands('screen', [
-    { phrases: ['next conversation'], hint: 'next conversation', run: () => moveConversation(1) },
     {
-      phrases: ['previous conversation'],
+      phrases: ['next conversation', 'next contact'],
+      hint: 'next conversation',
+      run: () => moveConversation(1),
+    },
+    {
+      phrases: ['previous conversation', 'previous contact'],
       hint: 'previous conversation',
       run: () => moveConversation(-1),
+    },
+    {
+      phrases: ['open *', 'switch to *'],
+      hint: 'open <contact>',
+      run: openContact,
     },
     {
       phrases: ['search *'],
