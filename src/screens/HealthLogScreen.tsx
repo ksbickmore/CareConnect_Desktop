@@ -5,6 +5,8 @@ import { Button } from '@/components/Button';
 import { StepControl } from '@/components/StepControl';
 import { PaginatedList } from '@/components/PaginatedList';
 import { useSpeechRecognition } from '@/lib/speech/use-speech-recognition';
+import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
+import { parseSpokenNumber } from '@/lib/voice/match-command';
 import {
   useHealthLogStore,
   PAIN_MIN,
@@ -35,6 +37,8 @@ export function HealthLogScreen() {
   const incrementSleep = useHealthLogStore((s) => s.incrementSleep);
   const decrementSleep = useHealthLogStore((s) => s.decrementSleep);
   const setMood = useHealthLogStore((s) => s.setMood);
+  const setPain = useHealthLogStore((s) => s.setPain);
+  const setSleep = useHealthLogStore((s) => s.setSleep);
   const addEntry = useHealthLogStore((s) => s.addEntry);
   const announce = useAnnouncer();
 
@@ -84,6 +88,59 @@ export function HealthLogScreen() {
     URL.revokeObjectURL(url);
     announce('Health log exported.');
   };
+
+  useVoiceCommands('screen', [
+    { phrases: ['pain up'], hint: 'pain up', run: () => { incrementPain(); } },
+    { phrases: ['pain down'], hint: 'pain down', run: () => { decrementPain(); } },
+    { phrases: ['sleep up'], run: () => { incrementSleep(); } },
+    { phrases: ['sleep down'], run: () => { decrementSleep(); } },
+    {
+      phrases: ['set pain to *', 'pain *'],
+      hint: 'set pain to <0-10>',
+      run: (v) => {
+        const n = v != null ? parseSpokenNumber(v) : null;
+        if (n == null) return 'Say a number, like "set pain to five".';
+        setPain(n);
+        return `Pain ${n}.`;
+      },
+    },
+    {
+      phrases: ['set sleep to *', 'sleep *'],
+      hint: 'set sleep to <hours>',
+      run: (v) => {
+        const n = v != null ? parseSpokenNumber(v) : null;
+        if (n == null) return 'Say a number of hours.';
+        setSleep(n);
+        return `Sleep ${n} hours.`;
+      },
+    },
+    ...MOODS.map((m) => ({
+      phrases: [`mood ${m.toLowerCase()}`, ...(m === 'OK' ? ['mood okay'] : [])],
+      hint: `mood ${m.toLowerCase()}`,
+      run: () => {
+        setMood(m);
+        return `Mood ${m}.`;
+      },
+    })),
+    {
+      phrases: ['note *'],
+      hint: 'note <text>',
+      run: (v) => {
+        setNote((prev) => (prev ? `${prev} ${v}` : v ?? ''));
+        setShowNote(true);
+        return 'Note added.';
+      },
+    },
+    {
+      phrases: ['save entry', 'save'],
+      hint: 'save entry',
+      run: () => {
+        save();
+      },
+    },
+    { phrases: ['export log'], hint: 'export log', run: () => { exportLog(); } },
+    { phrases: ['manual entry'], run: () => { setShowNote((s) => !s); } },
+  ]);
 
   const trackPct = (painLevel / PAIN_MAX) * 100;
 

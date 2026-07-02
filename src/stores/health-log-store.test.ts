@@ -69,4 +69,14 @@ describe('useHealthLogStore', () => {
     store().addEntry({ note: 'second', now: Date.now() });
     expect(store().history.map((e) => e.note)).toEqual(['second', 'first']);
   });
+
+  it('setPain and setSleep clamp to bounds', () => {
+    const store = useHealthLogStore.getState();
+    store.setPain(4);
+    expect(useHealthLogStore.getState().painLevel).toBe(4);
+    store.setPain(99);
+    expect(useHealthLogStore.getState().painLevel).toBe(PAIN_MAX);
+    store.setSleep(-3);
+    expect(useHealthLogStore.getState().sleepHours).toBe(SLEEP_MIN);
+  });
 });

@@ -40,6 +40,8 @@ interface HealthLogStore {
   decrementPain(): void;
   incrementSleep(): void;
   decrementSleep(): void;
+  setPain(value: number): void;
+  setSleep(value: number): void;
   setMood(mood: string): void;
   /**
    * Append the current reading to history and reset the controls.
@@ -69,6 +71,8 @@ export const useHealthLogStore = create<HealthLogStore>()((set, get) => ({
     set({ sleepHours: clamp(get().sleepHours + 1, SLEEP_MIN, SLEEP_MAX) }),
   decrementSleep: () =>
     set({ sleepHours: clamp(get().sleepHours - 1, SLEEP_MIN, SLEEP_MAX) }),
+  setPain: (value) => set({ painLevel: clamp(value, PAIN_MIN, PAIN_MAX) }),
+  setSleep: (value) => set({ sleepHours: clamp(value, SLEEP_MIN, SLEEP_MAX) }),
   setMood: (mood) => set({ mood }),
 
   addEntry({ note, now }) {
