@@ -4,6 +4,7 @@ import { Toolbar } from '@/components/Toolbar';
 import { ConnectingOverlay } from '@/components/ConnectingOverlay';
 import { useContactsStore } from '@/stores/contacts-store';
 import { useAnnouncer } from '@/stores/announcer-store';
+import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import styles from './EmergencyScreen.module.css';
 
 type TargetId = '911' | 'caregiver';
@@ -71,6 +72,58 @@ export function EmergencyScreen() {
     setArmed(null);
     announce('Emergency call cancelled.', { assertive: true });
   };
+
+  const engaged = armed != null || countdown != null || connecting != null;
+
+  useVoiceCommands('screen', [
+    {
+      phrases: ['call 911', 'call emergency', 'call emergency services'],
+      hint: 'call 911',
+      run: () => {
+        activate('911');
+      },
+    },
+    ...(caregiver
+      ? [
+          {
+            phrases: ['call caregiver', `call ${caregiver.name.toLowerCase()}`],
+            hint: 'call caregiver',
+            run: () => {
+              activate('caregiver');
+            },
+          },
+        ]
+      : []),
+  ]);
+
+  // While armed/counting down/connecting, confirm and cancel outrank
+  // everything else (dialog priority) — life-safety controls.
+  useVoiceCommands(
+    'dialog',
+    engaged
+      ? [
+          ...(armed
+            ? [
+                {
+                  phrases: ['confirm', 'yes'],
+                  hint: 'confirm',
+                  run: () => {
+                    activate(armed);
+                  },
+                },
+              ]
+            : []),
+          {
+            phrases: ['cancel', 'stop'],
+            hint: 'cancel',
+            run: () => {
+              setConnecting(null);
+              cancel();
+            },
+          },
+        ]
+      : [],
+  );
 
   return (
     <>

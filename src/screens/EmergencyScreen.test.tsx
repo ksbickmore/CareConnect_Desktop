@@ -1,8 +1,16 @@
+jest.mock('@/lib/speech/speech-recognition', () =>
+  jest.requireActual<typeof import('@/test-utils/fake-speech')>(
+    '@/test-utils/fake-speech',
+  ).fakeSpeechModule,
+);
+
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { EmergencyScreen } from './EmergencyScreen';
 import { createContactsRepository } from '@/data/contacts-repository';
 import { useContactsStore } from '@/stores/contacts-store';
+import { renderAt, signIn } from '@/test-utils/render';
+import { fakeSpeech } from '@/test-utils/fake-speech';
 
 const caregiver = {
   name: 'Sarah Vance',
@@ -108,5 +116,34 @@ describe('EmergencyScreen', () => {
     expect(
       screen.getByText('Add a contact to enable speed dial'),
     ).toBeInTheDocument();
+  });
+});
+
+describe('voice commands', () => {
+  beforeEach(() => {
+    jest.useFakeTimers({ doNotFake: ['queueMicrotask'] });
+    signIn();
+  });
+
+  afterEach(() => {
+    fakeSpeech.reset();
+  });
+
+  it('arms 911 by voice, confirms, and cancels the countdown', async () => {
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+    renderAt('/emergency');
+    await screen.findByRole('heading', { level: 1, name: 'Emergency (SOS)' });
+    await user.click(screen.getByRole('button', { name: 'Start voice command' }));
+
+    act(() => fakeSpeech.emitFinal('call 911'));
+    expect(screen.getByText('Tap again to call 911')).toBeInTheDocument();
+
+    act(() => fakeSpeech.emitFinal('confirm'));
+    expect(
+      screen.getByRole('alertdialog', { name: 'Emergency countdown' }),
+    ).toBeInTheDocument();
+
+    act(() => fakeSpeech.emitFinal('cancel'));
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
   });
 });
