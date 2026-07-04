@@ -4,10 +4,10 @@ import { Search, Mic, Send, Volume2, Pencil } from 'lucide-react';
 import { Toolbar } from '@/components/Toolbar';
 import { Button } from '@/components/Button';
 import { Dialog } from '@/components/Dialog';
-import { useSpeechRecognition } from '@/lib/speech/use-speech-recognition';
+import { useDictation } from '@/lib/speech/use-dictation';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
-import { normalize } from '@/lib/voice/match-command';
-import { parseVoiceCommand } from '@/lib/voice-commands';
+import { normalize } from '@/lib/voice/spoken-words';
+import { parseNavigationKeyword } from '@/lib/voice/navigation-keywords';
 import { useMessagesStore } from '@/stores/messages-store';
 import { dataOrNull } from '@/stores/async';
 import { useAnnouncer } from '@/stores/announcer-store';
@@ -65,15 +65,7 @@ export function MessagesScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected?.id]);
 
-  const { listening, available, start, stop } = useSpeechRecognition((final) => {
-    setDraft((prev) => (prev ? `${prev} ${final}` : final));
-  });
-
-  const dictate = () => {
-    if (!available) return;
-    if (listening) stop();
-    else void start();
-  };
+  const { listening, toggle: dictate } = useDictation(setDraft);
 
   const submit = () => {
     if (!selected || draft.trim().length === 0) return;
@@ -107,7 +99,7 @@ export function MessagesScreen() {
       if (!filtered.some((c) => c.id === match.id)) setQuery('');
       return `${match.contactName}.`;
     }
-    const route = parseVoiceCommand(spoken ?? '');
+    const route = parseNavigationKeyword(spoken ?? '');
     if (route) {
       navigate(route.route);
       return `Opening ${route.label}.`;
@@ -337,9 +329,7 @@ function ComposeDialog({
 }) {
   const [to, setTo] = useState(conversations[0]?.id ?? '');
   const [body, setBody] = useState('');
-  const { listening, available, start, stop } = useSpeechRecognition((final) =>
-    setBody((prev) => (prev ? `${prev} ${final}` : final)),
-  );
+  const { listening, toggle } = useDictation(setBody);
 
   useVoiceCommands('dialog', [
     {
@@ -425,7 +415,7 @@ function ComposeDialog({
           <button
             type="button"
             className={`${styles.compMic} ${listening ? styles.listening : ''}`}
-            onClick={() => (listening ? stop() : available && void start())}
+            onClick={toggle}
             aria-label={listening ? 'Stop dictation' : 'Dictate message'}
           >
             <Mic size={20} />

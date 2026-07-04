@@ -150,9 +150,3 @@ models/
 
 # Playwright MCP debug artifacts
 .playwright-mcp/
-
-# Superpowers subagent scratch (task briefs, review packages, progress ledger)
-.superpowers/
-
-CLAUDE.md
-.claude/

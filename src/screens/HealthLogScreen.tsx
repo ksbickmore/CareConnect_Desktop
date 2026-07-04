@@ -6,7 +6,7 @@ import { StepControl } from '@/components/StepControl';
 import { PaginatedList } from '@/components/PaginatedList';
 import { useSpeechRecognition } from '@/lib/speech/use-speech-recognition';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
-import { parseSpokenNumber } from '@/lib/voice/match-command';
+import { parseSpokenNumber } from '@/lib/voice/spoken-words';
 import {
   useHealthLogStore,
   PAIN_MIN,

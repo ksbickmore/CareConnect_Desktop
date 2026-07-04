@@ -1,25 +1,16 @@
 import {
   clockLabel,
   displayName,
-  durationLabel,
-  hhmm,
   initialsOf,
-  initialsOfName,
   minuteStamp,
   slugify,
+  todayHeading,
   todayLabel,
   whenLabel,
 } from './format';
 
 // Build timestamps via the Date constructor so tests are timezone-safe.
 const at = (h: number, m: number) => new Date(2026, 5, 9, h, m).getTime(); // Tue Jun 9 2026
-
-describe('hhmm', () => {
-  it('zero-pads hours and minutes', () => {
-    expect(hhmm(at(8, 5))).toBe('08:05');
-    expect(hhmm(at(23, 59))).toBe('23:59');
-  });
-});
 
 describe('clockLabel', () => {
   it('formats morning times as AM', () => {
@@ -48,15 +39,9 @@ describe('todayLabel', () => {
   });
 });
 
-describe('durationLabel', () => {
-  it('renders minutes and padded seconds', () => {
-    expect(durationLabel(65_000)).toBe('1:05');
-  });
-  it('rounds sub-second recordings up', () => {
-    expect(durationLabel(500)).toBe('0:01');
-  });
-  it('handles zero', () => {
-    expect(durationLabel(0)).toBe('0:00');
+describe('todayHeading', () => {
+  it('renders the uppercase weekday', () => {
+    expect(todayHeading(at(9, 0))).toBe('TODAY — TUESDAY');
   });
 });
 
@@ -89,18 +74,6 @@ describe('initialsOf', () => {
   });
   it('returns "?" for empty input', () => {
     expect(initialsOf('')).toBe('?');
-  });
-});
-
-describe('initialsOfName', () => {
-  it('takes the first letters of the first two words', () => {
-    expect(initialsOfName('Sarah Vance')).toBe('SV');
-  });
-  it('handles single names', () => {
-    expect(initialsOfName('Cher')).toBe('C');
-  });
-  it('returns "?" for blank input', () => {
-    expect(initialsOfName('   ')).toBe('?');
   });
 });
 

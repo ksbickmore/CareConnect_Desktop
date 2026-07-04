@@ -6,10 +6,10 @@ import { StatusBadge } from '@/components/StatusBadge';
 import { Dialog } from '@/components/Dialog';
 import { TwoTapConfirm } from '@/components/TwoTapConfirm';
 import { RecordingRadar } from '@/components/RecordingRadar';
-import { useSpeechRecognition } from '@/lib/speech/use-speech-recognition';
+import { useDictation } from '@/lib/speech/use-dictation';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import { useOpenAddOnNavigate } from '@/lib/use-open-add-on-navigate';
-import { slugify } from '@/lib/format';
+import { slugify, todayHeading } from '@/lib/format';
 import { useMedicationsStore } from '@/stores/medications-store';
 import { dataOrNull } from '@/stores/async';
 import { useAnnouncer } from '@/stores/announcer-store';
@@ -34,13 +34,14 @@ export function MedicationsScreen() {
 
   useOpenAddOnNavigate(() => setAddOpen(true));
 
-  const matchesFilter = (m: Medication) =>
-    filter === 'all' ||
-    (filter === 'taken' ? m.status === 'taken' : m.status !== 'taken');
-
-  const today = list.filter((m) => m.status !== 'taken' && matchesFilter(m));
-  const completed = list.filter((m) => m.status === 'taken' && matchesFilter(m));
-  const ordered = useMemo(() => [...today, ...completed], [today, completed]);
+  const { today, completed, ordered } = useMemo(() => {
+    const matchesFilter = (m: Medication) =>
+      filter === 'all' ||
+      (filter === 'taken' ? m.status === 'taken' : m.status !== 'taken');
+    const today = list.filter((m) => m.status !== 'taken' && matchesFilter(m));
+    const completed = list.filter((m) => m.status === 'taken' && matchesFilter(m));
+    return { today, completed, ordered: [...today, ...completed] };
+  }, [list, filter]);
 
   const selected = useMemo(
     () => ordered.find((m) => m.id === selectedId) ?? ordered[0] ?? null,
@@ -152,7 +153,7 @@ export function MedicationsScreen() {
           tabIndex={0}
           onKeyDown={onListKeyDown}
         >
-          <Group label="TODAY — THURSDAY">
+          <Group label={todayHeading()}>
             {today.length === 0 && <Empty>Nothing due with this filter.</Empty>}
             {today.map((m) => (
               <MedRow
@@ -375,9 +376,7 @@ function AddMedicationDialog({
   const [instructions, setInstructions] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  const { listening, available, start, stop } = useSpeechRecognition((final) =>
-    setName((prev) => (prev ? `${prev} ${final}` : final)),
-  );
+  const { listening, toggle } = useDictation(setName);
 
   const submit = async () => {
     if (name.trim().length === 0 || dose.trim().length === 0) {
@@ -469,7 +468,7 @@ function AddMedicationDialog({
           <button
             type="button"
             className={`${styles.mic} ${listening ? styles.micOn : ''}`}
-            onClick={() => (listening ? stop() : available && void start())}
+            onClick={toggle}
             aria-label={listening ? 'Stop dictation' : 'Dictate name'}
           >
             <Mic size={18} />

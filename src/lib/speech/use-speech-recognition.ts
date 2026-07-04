@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   isSpeechAvailable,
-  requestSpeechPermissions,
   startListening,
   stopListening,
   type SpeechOptions,
@@ -54,8 +53,9 @@ export function useSpeechRecognition(
     setError(null);
     setTranscript('');
 
-    const granted = await requestSpeechPermissions();
-    if (!granted) {
+    // The mic itself prompts on session start; there is no separate
+    // permission call to make first.
+    if (!isSpeechAvailable()) {
       setError('Speech recognition is not available.');
       return;
     }

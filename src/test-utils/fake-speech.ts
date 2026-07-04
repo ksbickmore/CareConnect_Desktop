@@ -21,7 +21,6 @@ let available = true;
 /** Drop-in replacement for the real module's exports. */
 export const fakeSpeechModule = {
   isSpeechAvailable: (): boolean => available,
-  requestSpeechPermissions: async (): Promise<boolean> => available,
   startListening: (cb: SpeechCallbacks, _options?: SpeechOptions): (() => void) => {
     callbacks = cb;
     return () => {

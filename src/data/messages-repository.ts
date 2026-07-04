@@ -46,7 +46,7 @@ export const defaultConversationsSeed: readonly Conversation[] = [
 export function createMessagesRepository(
   seed: readonly Conversation[] = loadJSON(STORAGE_KEY, defaultConversationsSeed),
 ): MessagesRepository {
-  let convos: Conversation[] = seed.map((c) => ({ ...c, messages: [...c.messages] }));
+  const convos: Conversation[] = seed.map((c) => ({ ...c, messages: [...c.messages] }));
   const persist = () => saveJSON(STORAGE_KEY, convos);
   const snapshot = () => Object.freeze(convos.map((c) => ({ ...c })));
 
@@ -66,7 +66,7 @@ export function createMessagesRepository(
         ...convo,
         messages: [...convo.messages, message],
         // A message the user sends clears unread; an inbound one sets it.
-        unread: message.fromMe ? false : true,
+        unread: !message.fromMe,
       };
       persist();
       return snapshot();

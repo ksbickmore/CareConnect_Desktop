@@ -3,16 +3,14 @@ import { useAnnouncerStore } from './announcer-store';
 const flushMicrotasks = () => Promise.resolve();
 
 describe('useAnnouncerStore', () => {
-  it('routes plain announcements to the polite region', async () => {
+  it('routes plain announcements to the polite region synchronously', () => {
     useAnnouncerStore.getState().announce('Saved.');
-    await flushMicrotasks();
     expect(useAnnouncerStore.getState().polite).toBe('Saved.');
     expect(useAnnouncerStore.getState().assertive).toBe('');
   });
 
-  it('routes assertive announcements to the assertive region', async () => {
+  it('routes assertive announcements to the assertive region synchronously', () => {
     useAnnouncerStore.getState().announce('Emergency sent.', { assertive: true });
-    await flushMicrotasks();
     expect(useAnnouncerStore.getState().assertive).toBe('Emergency sent.');
     expect(useAnnouncerStore.getState().polite).toBe('');
   });

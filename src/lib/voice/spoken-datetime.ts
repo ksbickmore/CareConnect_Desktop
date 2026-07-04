@@ -5,14 +5,9 @@
  * everything is matched on whole lowercase words.
  */
 
-const pad2 = (v: number): string => v.toString().padStart(2, '0');
+import { lowerTokens, readNumber } from './spoken-words';
 
-const words = (text: string): string[] =>
-  text
-    .toLowerCase()
-    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
-    .split(/\s+/)
-    .filter(Boolean);
+const pad2 = (v: number): string => v.toString().padStart(2, '0');
 
 const MONTHS: Record<string, number> = {
   january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
@@ -23,50 +18,6 @@ const WEEKDAYS: Record<string, number> = {
   sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4,
   friday: 5, saturday: 6,
 };
-
-const UNITS: Record<string, number> = {
-  zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7,
-  eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13,
-  fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18,
-  nineteen: 19,
-};
-
-const TENS: Record<string, number> = {
-  twenty: 20, thirty: 30, forty: 40, fifty: 50,
-};
-
-const ORDINAL_UNITS: Record<string, number> = {
-  first: 1, second: 2, third: 3, fourth: 4, fifth: 5, sixth: 6, seventh: 7,
-  eighth: 8, ninth: 9, tenth: 10, eleventh: 11, twelfth: 12, thirteenth: 13,
-  fourteenth: 14, fifteenth: 15, sixteenth: 16, seventeenth: 17,
-  eighteenth: 18, nineteenth: 19, twentieth: 20, thirtieth: 30,
-};
-
-/**
- * Read a number from the token stream starting at `i`. Handles digits
- * ("5", "21"), digit ordinals ("5th"), number words ("five", "twenty one"),
- * and ordinal words ("fifth", "twenty first"). Returns the value and how
- * many tokens were consumed, or null.
- */
-function readNumber(tokens: string[], i: number): { value: number; used: number } | null {
-  const t = tokens[i];
-  if (t === undefined) return null;
-  const digits = /^(\d+)(?:st|nd|rd|th)?$/.exec(t);
-  if (digits) return { value: Number(digits[1]), used: 1 };
-  if (t in ORDINAL_UNITS) return { value: ORDINAL_UNITS[t], used: 1 };
-  if (t in UNITS) return { value: UNITS[t], used: 1 };
-  if (t in TENS) {
-    const next = tokens[i + 1];
-    if (next !== undefined && next in UNITS && UNITS[next] >= 1 && UNITS[next] <= 9) {
-      return { value: TENS[t] + UNITS[next], used: 2 };
-    }
-    if (next !== undefined && next in ORDINAL_UNITS && ORDINAL_UNITS[next] <= 9) {
-      return { value: TENS[t] + ORDINAL_UNITS[next], used: 2 };
-    }
-    return { value: TENS[t], used: 1 };
-  }
-  return null;
-}
 
 const daysInMonth = (year: number, month: number): number =>
   new Date(year, month, 0).getDate();
@@ -82,7 +33,7 @@ const isoDate = (d: Date): string =>
  */
 export function parseSpokenDate(text: string, now: Date = new Date()): string | null {
   // Drop filler words so "the fifth of july" and "on july 5" both parse.
-  const tokens = words(text).filter((t) => t !== 'the' && t !== 'on');
+  const tokens = lowerTokens(text).filter((t) => t !== 'the' && t !== 'on');
   if (tokens.length === 0) return null;
 
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -187,7 +138,7 @@ const DAY_PERIODS: Record<string, 'am' | 'pm'> = {
  */
 export function parseSpokenTime(text: string): string | null {
   // Whisper often squashes "1 p.m." into "1pm" — split the attached period.
-  let tokens = words(text)
+  let tokens = lowerTokens(text)
     .filter((t) => !TIME_FILLERS.has(t))
     .flatMap((t) => {
       const m = /^(\d{1,4})(am|pm)$/.exec(t);

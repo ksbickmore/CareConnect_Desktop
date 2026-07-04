@@ -5,7 +5,7 @@ import { Button } from '@/components/Button';
 import { Dialog } from '@/components/Dialog';
 import { TwoTapConfirm } from '@/components/TwoTapConfirm';
 import { StatusBadge } from '@/components/StatusBadge';
-import { useSpeechRecognition } from '@/lib/speech/use-speech-recognition';
+import { useDictation } from '@/lib/speech/use-dictation';
 import { whenLabel, clockLabel, slugify, minuteStamp } from '@/lib/format';
 import { useAppointmentsStore } from '@/stores/appointments-store';
 import { dataOrNull } from '@/stores/async';
@@ -374,9 +374,7 @@ function AddDialog({
   const [time, setTime] = useState('09:00');
   const [error, setError] = useState<string | null>(null);
 
-  const { listening, available, start, stop } = useSpeechRecognition((final) =>
-    setTitle((prev) => (prev ? `${prev} ${final}` : final)),
-  );
+  const { listening, toggle } = useDictation(setTitle);
 
   const submit = async () => {
     if (title.trim().length === 0) {
@@ -474,7 +472,7 @@ function AddDialog({
           <button
             type="button"
             className={`${styles.mic} ${listening ? styles.micOn : ''}`}
-            onClick={() => (listening ? stop() : available && void start())}
+            onClick={toggle}
             aria-label={listening ? 'Stop dictation' : 'Dictate title'}
           >
             <Mic size={18} />

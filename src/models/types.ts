@@ -104,10 +104,3 @@ export interface Conversation {
   readonly messages: readonly Message[];
   readonly unread: boolean;
 }
-
-export interface StatCard {
-  readonly label: string;
-  readonly value: string;
-  readonly hint: string;
-  readonly tone: 'amber' | 'teal' | 'neutral';
-}

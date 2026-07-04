@@ -2,7 +2,7 @@ import { forwardRef, useState } from 'react';
 import { Mic, MicOff } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSpeechRecognition } from '@/lib/speech/use-speech-recognition';
-import { parseVoiceCommand } from '@/lib/voice-commands';
+import { parseNavigationKeyword } from '@/lib/voice/navigation-keywords';
 import {
   dispatchVoiceCommand,
   registeredHints,
@@ -62,7 +62,7 @@ export const VoiceInputBar = forwardRef<HTMLButtonElement>(function VoiceInputBa
       }
     } else {
       // 3. Navigation keywords (lenient substring matching).
-      const command = parseVoiceCommand(final);
+      const command = parseNavigationKeyword(final);
       const sameRoute = command != null && command.route === location.pathname;
       if (command && !sameRoute) {
         say(`Opening ${command.label}.`);

@@ -8,7 +8,6 @@ jest.mock('./whisper/worker-transcriber');
 
 import {
   isSpeechAvailable,
-  requestSpeechPermissions,
   startListening,
   stopListening,
 } from './speech-recognition';
@@ -70,9 +69,8 @@ afterEach(() => {
 });
 
 describe('without microphone/worker support (plain jsdom)', () => {
-  it('reports speech as unavailable', async () => {
+  it('reports speech as unavailable', () => {
     expect(isSpeechAvailable()).toBe(false);
-    await expect(requestSpeechPermissions()).resolves.toBe(false);
   });
 
   it('startListening degrades to onError + onEnd without throwing', () => {
@@ -94,9 +92,8 @@ describe('with microphone/worker support', () => {
     installSpeechEnvironment();
   });
 
-  it('reports speech as available', async () => {
+  it('reports speech as available', () => {
     expect(isSpeechAvailable()).toBe(true);
-    await expect(requestSpeechPermissions()).resolves.toBe(true);
   });
 
   it('transcribes an utterance: partials, trimmed final, then end', async () => {

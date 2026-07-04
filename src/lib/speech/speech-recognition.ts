@@ -44,14 +44,6 @@ export function isSpeechAvailable(): boolean {
   );
 }
 
-/**
- * The mic itself prompts on session start, so there is no separate
- * permission call. Kept for interface parity with the mobile app.
- */
-export async function requestSpeechPermissions(): Promise<boolean> {
-  return isSpeechAvailable();
-}
-
 /** Lazy singleton: the engine (and its worker) exist only once voice is used. */
 let engine: WhisperEngine | null = null;
 

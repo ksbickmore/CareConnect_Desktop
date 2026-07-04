@@ -6,12 +6,6 @@
 
 const pad2 = (v: number): string => v.toString().padStart(2, '0');
 
-/** HH:MM rendering of a timestamp for the medication card UI. */
-export function hhmm(timestamp: number): string {
-  const t = new Date(timestamp);
-  return `${pad2(t.getHours())}:${pad2(t.getMinutes())}`;
-}
-
 /** 12-hour clock label, e.g. "2:00 PM". */
 export function clockLabel(timestamp: number): string {
   const t = new Date(timestamp);
@@ -28,18 +22,18 @@ export function whenLabel(timestamp: number): string {
   return `${days[t.getDay()]} · ${clockLabel(timestamp)}`;
 }
 
+/** Uppercase "today" group heading, e.g. "TODAY — THURSDAY". */
+export function todayHeading(timestamp: number = Date.now()): string {
+  const days = [
+    'SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY',
+  ];
+  return `TODAY — ${days[new Date(timestamp).getDay()]}`;
+}
+
 /** "Today HH:MM" stamp used when saving a health-log entry. */
 export function todayLabel(timestamp: number): string {
   const t = new Date(timestamp);
   return `Today ${pad2(t.getHours())}:${pad2(t.getMinutes())}`;
-}
-
-/** "M:SS" rendering of a voice-note duration in milliseconds. */
-export function durationLabel(lengthMs: number): string {
-  const totalSeconds = Math.round(lengthMs / 1000);
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  return `${minutes}:${pad2(seconds)}`;
 }
 
 /**
@@ -68,17 +62,6 @@ export function initialsOf(prefix: string): string {
     return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
   }
   return prefix[0].toUpperCase();
-}
-
-/**
- * Derive up to two initials from a space-separated display name
- * (e.g. "Sarah Vance" -> "SV"). Used by the Add Contact form.
- */
-export function initialsOfName(name: string): string {
-  const parts = name.trim().split(/\s+/).filter((p) => p.length > 0);
-  if (parts.length === 0) return '?';
-  if (parts.length === 1) return parts[0][0].toUpperCase();
-  return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
 }
 
 /**

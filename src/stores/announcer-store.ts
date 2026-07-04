@@ -13,17 +13,21 @@ interface AnnouncerStore {
   announce(message: string, options?: { assertive?: boolean }): void;
 }
 
-export const useAnnouncerStore = create<AnnouncerStore>()((set) => ({
+export const useAnnouncerStore = create<AnnouncerStore>()((set, get) => ({
   polite: '',
   assertive: '',
   announce(message, options) {
-    // Clear first so re-announcing the same text still fires the live region.
-    if (options?.assertive) {
-      set({ assertive: '' });
-      queueMicrotask(() => set({ assertive: message }));
+    const assertive = options?.assertive ?? false;
+    const apply = (text: string) =>
+      assertive ? set({ assertive: text }) : set({ polite: text });
+    // aria-live regions only fire on a content *change*, so a new message can
+    // be set immediately. Re-announcing the exact same text needs a clear
+    // first, deferred so React doesn't batch the two writes into a no-op.
+    if (get()[assertive ? 'assertive' : 'polite'] === message) {
+      apply('');
+      queueMicrotask(() => apply(message));
     } else {
-      set({ polite: '' });
-      queueMicrotask(() => set({ polite: message }));
+      apply(message);
     }
   },
 }));

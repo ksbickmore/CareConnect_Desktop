@@ -1,3 +1,4 @@
+import { clockLabel } from '@/lib/format';
 import type { Medication } from '@/models/types';
 import { loadJSON, saveJSON } from './storage';
 
@@ -108,14 +109,12 @@ export function createMedicationsRepository(
       if (i < 0) {
         throw new Error(`No medication with id "${id}"`);
       }
-      const now = new Date();
-      const takenAtLabel = now
-        .toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
-        .toUpperCase();
+      const now = Date.now();
+      const takenAtLabel = clockLabel(now);
       meds[i] = {
         ...meds[i],
         status: 'taken',
-        lastTakenAt: now.getTime(),
+        lastTakenAt: now,
         takenAtLabel,
         timeLabel: `Taken at ${takenAtLabel}`,
       };

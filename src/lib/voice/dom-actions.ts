@@ -1,4 +1,4 @@
-import { normalize } from './match-command';
+import { normalize } from './spoken-words';
 
 /**
  * DOM-level fallbacks for the voice dispatcher: click visible buttons by

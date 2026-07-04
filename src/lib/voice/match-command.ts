@@ -5,6 +5,8 @@
  * casing preserved) as the command's value.
  */
 
+import { tokenize } from './spoken-words';
+
 export interface VoiceCommand {
   /** Lowercase phrases; a trailing " *" captures the remainder as `value`. */
   readonly phrases: readonly string[];
@@ -32,34 +34,6 @@ const KIND_PRIORITY: Record<VoiceScopeKind, number> = {
   screen: 1,
   dialog: 2,
 };
-
-/** Split into words with punctuation stripped, original casing kept. */
-const tokenize = (text: string): string[] =>
-  text
-    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
-    .split(/\s+/)
-    .filter(Boolean);
-
-export function normalize(text: string): string {
-  return tokenize(text).join(' ').toLowerCase();
-}
-
-const WORD_NUMBERS: Record<string, number> = {
-  zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7,
-  eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13,
-  fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18,
-  nineteen: 19, twenty: 20,
-};
-
-/** First number found among the words, so "7 hours" and "level five" work. */
-export function parseSpokenNumber(text: string): number | null {
-  for (const token of normalize(text).split(' ')) {
-    if (/^\d+$/.test(token)) return Number(token);
-    const word = WORD_NUMBERS[token];
-    if (word != null) return word;
-  }
-  return null;
-}
 
 interface PhraseMatch {
   words: number;

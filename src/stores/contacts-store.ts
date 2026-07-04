@@ -13,11 +13,6 @@ import type { Contact } from '@/models/types';
  */
 interface ContactsStore {
   readonly contacts: readonly Contact[];
-  /**
-   * Append a new contact. Throws if the name collides (the form catches it and
-   * shows an inline error); on success the grid updates immediately.
-   */
-  add(contact: Contact): void;
   /** Replace the backing repository and reset state. Used by tests. */
   reset(repo?: ContactsRepository): void;
 }
@@ -26,10 +21,6 @@ let repository = createContactsRepository();
 
 export const useContactsStore = create<ContactsStore>()((set) => ({
   contacts: repository.getAll(),
-
-  add(contact) {
-    set({ contacts: repository.add(contact) });
-  },
 
   reset(repo) {
     repository = repo ?? createContactsRepository();

@@ -97,7 +97,6 @@ export async function startMicCapture(
     }
 
     const event = vad(computeRms(data));
-    if (event !== 'none') console.debug(`[mic] VAD event: ${event}`);
     if (event === 'speech-start') {
       utterance = [...preroll];
       preroll = [];
