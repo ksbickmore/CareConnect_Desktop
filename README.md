@@ -159,6 +159,46 @@ Notes:
   [fuses](https://www.electronjs.org/docs/latest/tutorial/fuses) (see the
   `FusesPlugin` block in `forge.config.ts`).
 
+## Publishing a GitHub release
+
+Pushing a version tag runs
+[`release.yml`](.github/workflows/release.yml), which builds the Windows
+distributables on a `windows-latest` runner and attaches them
+(`CareConnect Setup.exe`, the portable `.zip`, plus the Squirrel
+`RELEASES`/`.nupkg` update files) to a **draft** GitHub release with
+auto-generated notes. Review the draft, then publish it manually.
+
+The workflow fails fast if the tag doesn't match the `version` in
+`package.json`, so bump the version first:
+
+```powershell
+npm version 1.1.0          # updates package.json and creates tag v1.1.0
+git push origin main --follow-tags
+```
+
+### Testing the release workflow locally with act
+
+[nektos act](https://github.com/nektos/act) runs jobs in Linux containers
+by default, which can't execute a `windows-latest` job. Instead, map the
+runner to your own machine with `-self-hosted` — the steps run directly on
+your Windows host:
+
+```powershell
+act push -W .github/workflows/release.yml -e .github/act-events/tag-push.json -P windows-latest=-self-hosted
+```
+
+This does a real `npm ci` and `npm run make`, but skips the
+release-creation step, which is gated on `${{ !env.ACT }}` (act sets
+`ACT=true`). The run ends by listing the files that would have been
+uploaded. Note that act copies the repo to `~\.cache\act\...\hostexecutor\`
+and builds there, so the artifacts land in that copy's `out/make/`, not in
+your working tree (the final step prints their full paths).
+
+The sample event payload
+[`.github/act-events/tag-push.json`](.github/act-events/tag-push.json)
+simulates pushing tag `v1.0.0`; keep its tag in sync with the
+`package.json` version or the version-check step will (correctly) fail.
+
 ## Keyboard shortcuts
 
 Accessibility is a hard requirement — all nav items and buttons are
