@@ -1,0 +1,40 @@
+# Verifies the app compiles: typecheck plus a full Electron Forge package
+# (main, preload, and renderer all built through the Vite plugin). Kept
+# separate from test.yml so the README gets independent Build / Tests badges
+# (GitHub exposes one badge per workflow).
+
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'npm'
+
+      - run: npm ci --no-audit --no-fund --loglevel=error
+
+      # prepackage fetches the Whisper model (~85 MB) into models/; cache it
+      # so CI only re-downloads when the fetch script or the pinned
+      # onnxruntime-web version changes.
+      - name: Cache Whisper model
+        uses: actions/cache@v4
+        with:
+          path: models
+          key: models-${{ hashFiles('scripts/fetch-models.mjs', 'package-lock.json') }}
+
+      - run: npm run typecheck
+
+      - run: npm run package

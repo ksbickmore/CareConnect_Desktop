@@ -1,5 +1,10 @@
 # CareConnect Desktop
 
+[![Latest release](https://img.shields.io/github/v/release/ksbickmore/CareConnect_Desktop?sort=semver&display_name=tag)](https://github.com/ksbickmore/CareConnect_Desktop/releases/latest)
+[![Build](https://github.com/ksbickmore/CareConnect_Desktop/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/ksbickmore/CareConnect_Desktop/actions/workflows/build.yml)
+[![Tests](https://github.com/ksbickmore/CareConnect_Desktop/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/ksbickmore/CareConnect_Desktop/actions/workflows/test.yml)
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fksbickmore%2FCareConnect_Desktop%2Fbadges%2Fcoverage.json)](https://github.com/ksbickmore/CareConnect_Desktop/actions/workflows/test.yml)
+
 An Electron desktop implementation of the CareConnect application (carpal
 tunnel care focus), ported incrementally from the
 [CareConnect Expo mobile app](../careconnect_expo). Built with
@@ -126,6 +131,24 @@ preload bridge, and a scriptable fake of the speech module
 (`fake-speech.ts`) for voice-flow tests. Electron's main/preload processes are
 outside Jest's scope (they need the Electron runtime); their renderer-side
 consumers are tested against the mocked bridge.
+
+## Continuous integration
+
+Two GitHub Actions workflows run on every push and pull request to `main`
+(split so each gets its own README badge):
+
+- [`build.yml`](.github/workflows/build.yml) — **Build**: `npm run typecheck`
+  plus a full `npm run package` (main, preload, and renderer built through
+  the Forge Vite plugin). The Whisper model download (~85 MB) is cached
+  between runs.
+- [`test.yml`](.github/workflows/test.yml) — **Tests**: the Jest suite with
+  coverage. On pushes to `main` it publishes the line-coverage percentage as
+  a shields.io endpoint JSON on the orphan `badges` branch, which the
+  README's Coverage badge reads — no external coverage service involved.
+
+The release badge tracks the latest published GitHub release (see
+[Publishing a GitHub release](#publishing-a-github-release)); draft releases
+don't count until published.
 
 ## Building a release package
 
