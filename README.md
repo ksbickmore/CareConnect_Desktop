@@ -7,7 +7,7 @@
 
 An Electron desktop implementation of the CareConnect application (carpal
 tunnel care focus), ported incrementally from the
-[CareConnect Expo mobile app](../careconnect_expo). Built with
+[CareConnect Expo mobile app](https://github.com/ksbickmore/careconnect_carpaltunnel__mobile_exporeact_team1). Built with
 **Electron + React + TypeScript + Vite**, using the official
 [Electron Forge](https://www.electronforge.io/) toolchain (`@electron-forge/plugin-vite`)
 for dev, packaging, and release builds.
