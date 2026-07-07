@@ -11,6 +11,7 @@ import {
 import { join, normalize, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import started from 'electron-squirrel-startup';
+import { loadWindowState, trackWindowState } from './window-state';
 
 // Squirrel runs the app with special flags while creating/removing shortcuts
 // during install and uninstall; quit immediately in that case.
@@ -199,9 +200,15 @@ function buildPopupMenus(): Record<string, Electron.Menu> {
 }
 
 function createWindow(): void {
+  // Restore the bounds from the previous session; sanitized against the
+  // current displays so an unplugged monitor can't strand the window.
+  const state = loadWindowState();
+
   const win = new BrowserWindow({
-    width: 1440,
-    height: 900,
+    width: state.width,
+    height: state.height,
+    x: state.x,
+    y: state.y,
     minWidth: 1024,
     minHeight: 700,
     backgroundColor: '#F1EFE8',
@@ -218,8 +225,14 @@ function createWindow(): void {
   });
 
   win.setMenuBarVisibility(false);
+  trackWindowState(win);
 
-  win.once('ready-to-show', () => win.show());
+  win.once('ready-to-show', () => {
+    // Maximize while still hidden so the window doesn't flash at its normal
+    // bounds before snapping to maximized.
+    if (state.isMaximized) win.maximize();
+    win.show();
+  });
 
   // Open external links in the system browser, never in-app.
   win.webContents.setWindowOpenHandler(({ url }) => {
@@ -237,7 +250,7 @@ function createWindow(): void {
   }
 }
 
-app.whenReady().then(() => {
+void app.whenReady().then(() => {
   registerAppProtocol();
   restrictPermissions();
   buildAppMenu();

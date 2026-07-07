@@ -28,12 +28,12 @@ export function LoginScreen() {
       setError('Email and password are both required.');
       return;
     }
-    navigate(routes.dashboard, { replace: true });
+    void navigate(routes.dashboard, { replace: true });
   };
 
   const guest = () => {
     continueAsGuest();
-    navigate(routes.dashboard, { replace: true });
+    void navigate(routes.dashboard, { replace: true });
   };
 
   return (

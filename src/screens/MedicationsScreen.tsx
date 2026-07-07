@@ -25,7 +25,9 @@ export function MedicationsScreen() {
   const add = useMedicationsStore((s) => s.add);
   const announce = useAnnouncer();
 
-  const list = dataOrNull(meds) ?? [];
+  // Memoized so the fallback [] doesn't change identity every render and
+  // invalidate the useMemo below.
+  const list = useMemo(() => dataOrNull(meds) ?? [], [meds]);
   const [filter, setFilter] = useState<Filter>('all');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [snoozed, setSnoozed] = useState<Set<string>>(new Set());

@@ -30,20 +30,20 @@ export function EmergencyScreen() {
 
   const targetName = (t: TargetId) => (t === '911' ? '911' : caregiver?.name ?? 'caregiver');
 
-  // Drive the countdown; on expiry, escalate to the connecting overlay.
+  // Drive the countdown; the final tick escalates to the connecting overlay
+  // from inside the timer callback (event time, not the effect body).
   useEffect(() => {
     if (!countdown) return;
-    if (countdown.left <= 0) {
-      const name = targetName(countdown.target);
-      setConnecting(name);
-      setCountdown(null);
-      announce(`Emergency alert sent. Connecting to ${name}.`, { assertive: true });
-      return;
-    }
-    const t = setTimeout(
-      () => setCountdown((c) => (c ? { ...c, left: c.left - 1 } : null)),
-      1000,
-    );
+    const t = setTimeout(() => {
+      if (countdown.left <= 1) {
+        const name = targetName(countdown.target);
+        setConnecting(name);
+        setCountdown(null);
+        announce(`Emergency alert sent. Connecting to ${name}.`, { assertive: true });
+      } else {
+        setCountdown((c) => (c ? { ...c, left: c.left - 1 } : null));
+      }
+    }, 1000);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countdown]);

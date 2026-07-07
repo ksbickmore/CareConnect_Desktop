@@ -42,7 +42,7 @@ class FakeUtterance {
 }
 Object.defineProperty(window, 'SpeechSynthesisUtterance', {
   configurable: true,
-  value: FakeUtterance as unknown as typeof SpeechSynthesisUtterance,
+  value: FakeUtterance,
 });
 
 beforeEach(() => {

@@ -35,7 +35,9 @@
     "package": "electron-forge package",
     "premake": "npm run clean && npm run models",
     "make": "electron-forge make",
-    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
@@ -58,6 +60,7 @@
     "@electron-forge/plugin-vite": "^7.11.2",
     "@electron-forge/shared-types": "^7.11.2",
     "@electron/fuses": "^1.8.0",
+    "@eslint/js": "^9.39.4",
     "@playwright/test": "^1.61.1",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -68,12 +71,17 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.2.0",
     "electron": "^43.0.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.7.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
     "ts-jest": "^29.4.11",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
+    "typescript-eslint": "^8.63.0",
     "vite": "^7.3.6"
   }
 }

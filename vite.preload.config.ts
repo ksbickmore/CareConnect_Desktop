@@ -13,7 +13,7 @@ export default defineConfig((env) => {
       rollupOptions: {
         external: builtins,
         // Preload may pull in web assets, so use rollupOptions.input here.
-        input: forgeConfigSelf.entry!,
+        input: forgeConfigSelf.entry,
         output: {
           format: 'cjs',
           inlineDynamicImports: true,

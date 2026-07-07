@@ -10,5 +10,5 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["electron", "electron.vite.config.ts"]
+  "include": ["electron", "*.config.ts", "*.config.mts", "forge-env.d.ts"]
 }

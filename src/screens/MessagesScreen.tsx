@@ -34,7 +34,9 @@ export function MessagesScreen() {
   const announce = useAnnouncer();
   const navigate = useNavigate();
 
-  const list = dataOrNull(conversations) ?? [];
+  // Memoized so the fallback [] doesn't change identity every render and
+  // invalidate the useMemo below.
+  const list = useMemo(() => dataOrNull(conversations) ?? [], [conversations]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [draft, setDraft] = useState('');
@@ -101,7 +103,7 @@ export function MessagesScreen() {
     }
     const route = parseNavigationKeyword(spoken ?? '');
     if (route) {
-      navigate(route.route);
+      void navigate(route.route);
       return `Opening ${route.label}.`;
     }
     return `No contact matching ${spoken}.`;

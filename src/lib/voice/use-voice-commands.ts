@@ -13,8 +13,13 @@ export function useVoiceCommands(
   commands: readonly VoiceCommand[],
 ): void {
   const id = useId();
+  // Assigned in an effect (not during render) so aborted renders can't leak
+  // into the ref. Declared before the register effect below so the ref is
+  // fresh by the time registration (re)runs in the same commit.
   const ref = useRef(commands);
-  ref.current = commands;
+  useEffect(() => {
+    ref.current = commands;
+  });
 
   const phrasesKey = JSON.stringify(commands.map((c) => c.phrases));
 

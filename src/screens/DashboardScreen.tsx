@@ -78,7 +78,7 @@ export function DashboardScreen() {
       phrases: ['new record'],
       hint: 'new record',
       run: () => {
-        navigate(routes.medications);
+        void navigate(routes.medications);
         return 'Opening Medications.';
       },
     },
@@ -86,7 +86,7 @@ export function DashboardScreen() {
       phrases: ['voice log', 'manual log', 'log symptoms'],
       hint: 'voice log',
       run: () => {
-        navigate(routes.healthLog);
+        void navigate(routes.healthLog);
         return 'Opening Health Log.';
       },
     },

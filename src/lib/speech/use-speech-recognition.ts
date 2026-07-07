@@ -33,9 +33,13 @@ export function useSpeechRecognition(
   const [transcript, setTranscript] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  // Keep the latest callback without re-subscribing mid-session.
+  // Keep the latest callback without re-subscribing mid-session. Assigned in
+  // an effect (not during render) so aborted renders can't leak into the ref;
+  // the ref is only read from engine callbacks, which fire after commit.
   const onFinalRef = useRef(onFinal);
-  onFinalRef.current = onFinal;
+  useEffect(() => {
+    onFinalRef.current = onFinal;
+  });
   const unsubscribeRef = useRef<(() => void) | null>(null);
   const continuous = options.continuous ?? false;
 

@@ -51,7 +51,7 @@ export function AppShell() {
       // Emergency: works even while typing (life-safety), per SRS Feature E.
       if (e.ctrlKey && e.shiftKey && (e.key === 'E' || e.key === 'e')) {
         e.preventDefault();
-        navigate(routes.emergency);
+        void navigate(routes.emergency);
         return;
       }
       // Toggle the persistent voice command bar; works while typing and with
@@ -68,7 +68,7 @@ export function AppShell() {
         e.preventDefault();
         setShortcutsOpen((v) => !v);
       } else if (NUMBER_ROUTES[e.key]) {
-        navigate(NUMBER_ROUTES[e.key]);
+        void navigate(NUMBER_ROUTES[e.key]);
       }
     };
 
@@ -80,11 +80,11 @@ export function AppShell() {
   useEffect(() => {
     const off = window.careconnect?.onMenuAction?.((action) => {
       if (action === 'shortcuts') setShortcutsOpen(true);
-      else if (action === 'emergency') navigate(routes.emergency);
+      else if (action === 'emergency') void navigate(routes.emergency);
       else if (action === 'new-record')
-        navigate(routes.medications, { state: { openAdd: true } });
+        void navigate(routes.medications, { state: { openAdd: true } });
       else if (action === 'new-appointment')
-        navigate(routes.appointments, { state: { openAdd: true } });
+        void navigate(routes.appointments, { state: { openAdd: true } });
     });
     return off;
   }, [navigate]);

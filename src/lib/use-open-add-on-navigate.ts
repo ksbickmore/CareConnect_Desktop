@@ -15,6 +15,6 @@ export function useOpenAddOnNavigate(onOpenAdd: () => void): void {
   useEffect(() => {
     if (!openAdd) return;
     onOpenAdd();
-    navigate(location.pathname, { replace: true, state: null });
+    void navigate(location.pathname, { replace: true, state: null });
   }, [openAdd, onOpenAdd, navigate, location.pathname]);
 }

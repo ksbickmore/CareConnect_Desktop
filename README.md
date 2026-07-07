@@ -83,7 +83,9 @@ npm run dev      # alias for npm start
 Other scripts:
 
 ```powershell
-npm run typecheck  # tsc --noEmit
+npm run typecheck  # tsc --noEmit for both the renderer and electron/node projects
+npm run lint       # ESLint (flat config in eslint.config.mjs, type-aware)
+npm run lint:fix   # ESLint with auto-fix
 npm run clean      # remove build output (.vite/ and out/)
 ```
 
@@ -138,9 +140,9 @@ Two GitHub Actions workflows run on every push and pull request to `main`
 (split so each gets its own README badge):
 
 - [`build.yml`](.github/workflows/build.yml) — **Build**: `npm run typecheck`
-  plus a full `npm run package` (main, preload, and renderer built through
-  the Forge Vite plugin). The Whisper model download (~85 MB) is cached
-  between runs.
+  and `npm run lint`, plus a full `npm run package` (main, preload, and
+  renderer built through the Forge Vite plugin). The Whisper model download
+  (~85 MB) is cached between runs.
 - [`test.yml`](.github/workflows/test.yml) — **Tests**: the Jest suite with
   coverage. On pushes to `main` it publishes the line-coverage percentage as
   a shields.io endpoint JSON on the orphan `badges` branch, which the
@@ -269,6 +271,7 @@ accelerators — to the renderer over a `menu:action` IPC channel
 electron/            Electron main + preload (CommonJS output)
   main.ts            BrowserWindow, app lifecycle, menu + popup/action IPC
   preload.ts         contextBridge: platform, popupMenu, onMenuAction
+  window-state.ts    Persists window size/position/maximized across launches
 src/
   main.tsx           React entry
   App.tsx            HashRouter + AppRoutes (route tree; loads async stores)
@@ -288,7 +291,8 @@ src/
                      LiveRegion, KeyboardShortcutsOverlay
   screens/           Login, Dashboard, Medications, Appointments (Schedule),
                      Messages, HealthLog, Emergency, Profile
-  forge-env.d.ts     Ambient types for Forge's injected Vite globals
+forge-env.d.ts             Ambient types for Forge's injected Vite globals
+eslint.config.mjs          ESLint 9 flat config (typescript-eslint, react-hooks, jsx-a11y)
 forge.config.ts            Electron Forge config (makers, Vite plugin, fuses)
 vite.base.config.ts        Shared Vite helpers (define keys, hot reload)
 vite.main.config.ts        Vite config for the main process bundle
@@ -314,5 +318,15 @@ vite.renderer.config.ts    Vite config for the renderer (React + @ alias)
   protocol (instead of `file://`) with cross-origin-isolation headers so the
   worker can fetch the model and run multi-threaded WASM; the same
   `/models/` route is provided by Vite middleware in dev.
+- **Window state:** the app remembers its window size, position, and
+  maximized state across launches (`electron/window-state.ts`, stored as
+  `window-state.json` in the OS user-data directory). If the saved position
+  is no longer on a connected display (e.g. a monitor was unplugged), the
+  window re-centers instead of opening off-screen; a corrupt or missing
+  state file falls back to the 1440×900 default.
+- **Linting:** ESLint 9 flat config (`eslint.config.mjs`) with type-aware
+  typescript-eslint, `react-hooks` (incl. the React-compiler-powered rules),
+  and `jsx-a11y`. Each area lints against its own tsconfig (renderer /
+  electron+configs / tests). `npm run lint` runs in the Build CI workflow.
 - **Fonts:** DM Sans is bundled via `@fontsource/dm-sans` (works offline).
 - **Icons:** `lucide-react`.

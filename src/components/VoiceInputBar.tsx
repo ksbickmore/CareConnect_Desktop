@@ -66,7 +66,7 @@ export const VoiceInputBar = forwardRef<HTMLButtonElement>(function VoiceInputBa
       const sameRoute = command != null && command.route === location.pathname;
       if (command && !sameRoute) {
         say(`Opening ${command.label}.`);
-        navigate(command.route);
+        void navigate(command.route);
         return;
       }
       // 4. Visible buttons in the main content by name.

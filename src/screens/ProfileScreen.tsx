@@ -23,7 +23,7 @@ export function ProfileScreen() {
 
   const doSignOut = () => {
     signOut();
-    navigate(routes.login, { replace: true });
+    void navigate(routes.login, { replace: true });
   };
 
   useVoiceCommands('screen', [

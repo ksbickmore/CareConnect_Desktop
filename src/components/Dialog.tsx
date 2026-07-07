@@ -99,7 +99,11 @@ export function Dialog({
   }, [onClose]);
 
   return (
+    // Backdrop click-to-close is a mouse-only convenience; keyboard users
+    // close with Escape (handled above), so no keyboard handler is needed.
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div className={styles.backdrop} onMouseDown={onClose}>
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- stops backdrop-close from swallowing clicks inside the panel */}
       <div
         ref={panelRef}
         className={`${styles.panel} ${wide ? styles.wide : ''}`}

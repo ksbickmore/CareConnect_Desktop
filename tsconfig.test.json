@@ -5,5 +5,8 @@
     "moduleResolution": "node16",
     "types": ["jest", "@testing-library/jest-dom", "node"]
   },
-  "include": ["src"]
+  "include": ["src"],
+  // Un-inherit tsconfig.json's exclude so test files belong to this project
+  // (needed for ESLint's type-aware parsing; ts-jest ignores include/exclude).
+  "exclude": []
 }

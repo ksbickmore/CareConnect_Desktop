@@ -14,7 +14,7 @@ export const builtins = [
 export const external = [
   ...builtins,
   ...Object.keys(
-    'dependencies' in pkg ? (pkg.dependencies as Record<string, unknown>) : {},
+    'dependencies' in pkg ? (pkg.dependencies) : {},
   ),
 ];
 
@@ -57,7 +57,7 @@ export function getBuildDefine(env: ConfigEnv<'build'>) {
   const { command, forgeConfig } = env;
   const names = forgeConfig.renderer
     .filter(({ name }) => name != null)
-    .map(({ name }) => name!);
+    .map(({ name }) => name);
   const defineKeys = getDefineKeys(names);
   const define = Object.entries(defineKeys).reduce((acc, [name, keys]) => {
     const { VITE_DEV_SERVER_URL, VITE_NAME } = keys;

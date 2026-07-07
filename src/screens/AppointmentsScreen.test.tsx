@@ -76,7 +76,7 @@ describe('voice commands', () => {
 
     act(() => fakeSpeech.emitFinal('new appointment'));
     expect(await screen.findByRole('dialog', { name: 'New appointment' })).toBeInTheDocument();
-    const dateBefore = (screen.getByLabelText('Date') as HTMLInputElement).value;
+    const dateBefore = (screen.getByLabelText('Date')).value;
     act(() => fakeSpeech.emitFinal('date banana'));
     await waitFor(() =>
       expect(useAnnouncerStore.getState().polite).toContain('catch a date'),

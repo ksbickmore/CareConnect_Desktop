@@ -1,6 +1,6 @@
 /// <reference types="@electron-forge/plugin-vite/forge-vite-env" />
 import { defineConfig } from 'vite';
-import type { ConfigEnv, Plugin, UserConfig } from 'vite';
+import type { ConfigEnv, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { extname, join, normalize, resolve, sep } from 'node:path';
@@ -84,5 +84,5 @@ export default defineConfig((env) => {
     },
     plugins: [pluginExposeRenderer(name), react(), pluginServeModels()],
     clearScreen: false,
-  } as UserConfig;
+  };
 });
