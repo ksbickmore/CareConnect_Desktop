@@ -40,21 +40,47 @@ export function SettingsScreen() {
     announce(next ? 'Voice command bar shown.' : 'Voice command bar hidden.');
   };
 
+  const setMotion = (on: boolean) => {
+    setReducedMotion(on);
+    announce(on ? 'Reduced motion on.' : 'Reduced motion off.');
+  };
+
+  // Spoken size → zoom. Wildcards keep natural phrasings working ("text size
+  // extra large", "set text size to normal").
+  const speakTextSize = (spoken?: string) => {
+    const s = (spoken ?? '').toLowerCase();
+    if (s.includes('extra')) chooseTextSize(1.3, 'Extra large');
+    else if (s.includes('large') || s.includes('big')) chooseTextSize(1.15, 'Large');
+    else if (s.includes('default') || s.includes('normal') || s.includes('small'))
+      chooseTextSize(1, 'Default');
+    else announce('Say text size default, large, or extra large.');
+  };
+
   useVoiceCommands('screen', [
     {
-      phrases: ['text size large'],
-      hint: 'text size large',
-      run: () => chooseTextSize(1.15, 'Large'),
+      phrases: ['text size *', 'set text size to *', 'change text size to *'],
+      hint: 'text size <default | large | extra large>',
+      run: speakTextSize,
     },
     {
-      phrases: ['text size default', 'text size normal'],
-      hint: 'text size default',
-      run: () => chooseTextSize(1, 'Default'),
+      phrases: ['reduce motion on', 'reduced motion on', 'turn on reduced motion'],
+      hint: 'reduced motion on',
+      run: () => setMotion(true),
     },
     {
-      phrases: ['reduce motion'],
-      hint: 'reduce motion',
+      phrases: ['reduce motion off', 'reduced motion off', 'turn off reduced motion'],
+      hint: 'reduced motion off',
+      run: () => setMotion(false),
+    },
+    {
+      phrases: ['reduce motion', 'reduced motion'],
+      hint: 'reduced motion',
       run: toggleReducedMotion,
+    },
+    {
+      phrases: ['voice bar', 'voice command bar', 'toggle voice bar'],
+      hint: 'voice bar',
+      run: toggleVoiceBar,
     },
   ]);
 

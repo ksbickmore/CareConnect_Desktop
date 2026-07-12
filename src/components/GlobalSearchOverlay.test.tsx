@@ -162,6 +162,31 @@ describe('GlobalSearchOverlay', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
+  it('ignores Whisper sentence punctuation when dictating and matching', async () => {
+    renderAt('/dashboard');
+    await heading('Dashboard');
+
+    // Open by voice, then dictate the query as Whisper would transcribe it.
+    await speak('search');
+    const dialog = within(await searchDialog());
+    await speak('Aspirin.');
+
+    expect(searchBox()).toHaveValue('Aspirin');
+    expect(dialog.getByText(/Aspirin/)).toBeInTheDocument();
+  });
+
+  it('matches typed queries with stray punctuation', async () => {
+    const user = userEvent.setup();
+    renderAt('/dashboard');
+    await heading('Dashboard');
+
+    press('f', { ctrlKey: true });
+    const dialog = within(await searchDialog());
+    await user.type(searchBox(), 'dr. park.');
+
+    expect(dialog.getByText('Dr. Park follow-up')).toBeInTheDocument();
+  });
+
   it('supports arrow-key navigation from the input into the results', async () => {
     const user = userEvent.setup();
     renderAt('/dashboard');

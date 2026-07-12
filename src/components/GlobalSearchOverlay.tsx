@@ -10,6 +10,7 @@ import { useSearchStore } from '@/stores/search-store';
 import { dataOrNull } from '@/stores/async';
 import { routes } from '@/lib/routes';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
+import { normalize } from '@/lib/voice/spoken-words';
 import styles from './GlobalSearchOverlay.module.css';
 
 interface SearchResult {
@@ -28,8 +29,10 @@ interface ResultGroup {
 
 const MAX_PER_GROUP = 5;
 
+// Punctuation-insensitive on both sides: dictated queries can carry Whisper's
+// trailing period ("Aspirin.") and data can contain dots ("Dr. Park").
 const matches = (query: string, ...haystack: ReadonlyArray<string | undefined>) =>
-  haystack.some((h) => h?.toLowerCase().includes(query));
+  haystack.some((h) => h != null && normalize(h).includes(query));
 
 /**
  * Global search (Ctrl+F): one query across medications, appointments, health
@@ -56,7 +59,7 @@ export function GlobalSearchOverlay({ onClose }: { onClose: () => void }) {
   const conversations = useMessagesStore((s) => s.conversations);
 
   const groups = useMemo<readonly ResultGroup[]>(() => {
-    const q = query.trim().toLowerCase();
+    const q = normalize(query);
     if (q === '') return [];
 
     const medResults = (dataOrNull(meds) ?? [])
@@ -118,7 +121,7 @@ export function GlobalSearchOverlay({ onClose }: { onClose: () => void }) {
 
   // Announce the result count once the user pauses typing.
   useEffect(() => {
-    const q = query.trim();
+    const q = normalize(query);
     if (q === '') return;
     const t = setTimeout(() => {
       announce(
@@ -159,10 +162,10 @@ export function GlobalSearchOverlay({ onClose }: { onClose: () => void }) {
       phrases: ['open *'],
       hint: 'open <result>',
       run: (value) => {
-        const spoken = (value ?? '').trim().toLowerCase();
+        const spoken = normalize(value ?? '');
         const result = groups
           .flatMap((g) => g.results)
-          .find((r) => r.title.toLowerCase().includes(spoken));
+          .find((r) => normalize(r.title).includes(spoken));
         if (!result) return `No result matching ${value}.`;
         open(result);
         return `Opening ${result.title}.`;

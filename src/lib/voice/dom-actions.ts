@@ -1,4 +1,4 @@
-import { normalize } from './spoken-words';
+import { normalize, tokenize } from './spoken-words';
 
 /**
  * DOM-level fallbacks for the voice dispatcher: click visible buttons by
@@ -52,7 +52,13 @@ export function dictateIntoFocusedField(text: string): string | null {
     (el instanceof HTMLInputElement && TEXT_TYPES.has(el.type)) ||
     el instanceof HTMLTextAreaElement;
   if (!isText || !dialog.contains(el)) return null;
-  setNativeValue(el, el.value ? `${el.value} ${text}` : text);
+  // Search boxes match on words; Whisper's sentence punctuation ("Aspirin.")
+  // would poison the query. Notes and message drafts keep it.
+  const spoken =
+    el instanceof HTMLInputElement && el.type === 'search'
+      ? tokenize(text).join(' ')
+      : text;
+  setNativeValue(el, el.value ? `${el.value} ${spoken}` : spoken);
   const label = el.id
     ? dialog.querySelector<HTMLLabelElement>(`label[for="${el.id}"]`)?.textContent
     : null;

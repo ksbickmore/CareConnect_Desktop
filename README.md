@@ -32,7 +32,7 @@ repositories ported from the mobile app), with data persisted to
 | **Health Log** | Big `[ − ] value [ + ]` step controls for pain/sleep (no sliders), mood chips, voice/manual note entry, a paginated "Recent Entries" history, and "Export log" to a text file. Pain and sleep are settable by voice through the global voice bar (`Ctrl+Space`): "pain 5", "set pain to five", "pain level 5 out of 10", "sleep 8", "sleep 8 hours" — extra words around the number are fine, and values clamp to the control's range (pain 0–10, sleep 0–14). The on-screen "Voice log" button is different: it dictates into the note field. |
 | **Emergency (SOS)** | Two oversized stacked targets (911 + primary caregiver), each armed with a **two-tap** sequence and a keyboard-focused countdown cancel bar before "connecting". Reachable from the sidebar and the global `Ctrl+Shift+E` shortcut. |
 | **Profile** | Account details and the app's **Sign Out** action; reached from the sidebar profile chip. |
-| **Settings** | Persisted preferences (`Ctrl+,` or the sidebar): text size (scales the whole UI), reduce motion (disables animations/transitions), and show/hide the voice command bar. |
+| **Settings** | Persisted preferences (`Ctrl+,`, the sidebar, or say "settings"): text size (scales the whole UI), reduce motion (disables animations/transitions), and show/hide the voice command bar. All voice-settable on the screen: "text size large / extra large / default", "reduced motion on / off", "voice bar". |
 
 ### Global search
 
