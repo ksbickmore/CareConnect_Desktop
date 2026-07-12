@@ -80,6 +80,14 @@ describe('HealthLogScreen', () => {
     expect(screen.queryByLabelText('Note for today')).not.toBeInTheDocument();
   });
 
+  it('announces the save confirmation to screen readers', async () => {
+    const user = userEvent.setup();
+    render(<HealthLogScreen />);
+
+    await user.click(screen.getByRole('button', { name: 'Save entry' }));
+    expect(useAnnouncerStore.getState().polite).toBe('Entry saved.');
+  });
+
   it('exports the log as a text file download', async () => {
     const user = userEvent.setup();
     let anchor: HTMLAnchorElement | null = null;

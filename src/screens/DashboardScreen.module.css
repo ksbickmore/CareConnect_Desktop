@@ -11,10 +11,13 @@
   width: 300px;
   height: 42px;
   padding: 0 14px;
+  border: 0;
   border-radius: var(--radius-md);
   background: var(--bg);
   color: var(--muted);
+  font: inherit;
   font-size: 13px;
+  text-align: left;
 }
 
 .searchKbd {

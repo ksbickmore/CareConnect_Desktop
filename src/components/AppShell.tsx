@@ -5,7 +5,13 @@ import { Sidebar } from './Sidebar';
 import { VoiceInputBar } from './VoiceInputBar';
 import { LiveRegion } from './LiveRegion';
 import { KeyboardShortcutsOverlay } from './KeyboardShortcutsOverlay';
+import { GlobalSearchOverlay } from './GlobalSearchOverlay';
 import { useAuthStore } from '@/stores/auth-store';
+import { useSearchStore } from '@/stores/search-store';
+import { useAnnouncerStore } from '@/stores/announcer-store';
+import { dispatchSave } from '@/lib/save-actions';
+import { useSettingsStore } from '@/stores/settings-store';
+import { useApplySettings } from '@/lib/use-apply-settings';
 import { routes } from '@/lib/routes';
 import styles from './AppShell.module.css';
 
@@ -27,6 +33,9 @@ const NUMBER_ROUTES: Record<string, string> = {
  *   F1 / ?           → keyboard shortcut reference
  *   Ctrl+Space       → toggle the persistent voice command bar
  *   Ctrl+Shift+E     → Emergency (SOS)
+ *   Ctrl+F           → global search
+ *   Ctrl+S           → active save action (form dialog or screen)
+ *   Ctrl+,           → Settings
  * Shortcuts are ignored while the user is typing. Also mounts the aria-live
  * regions and moves focus to each new page's <h1> on route change.
  */
@@ -34,7 +43,11 @@ export function AppShell() {
   const navigate = useNavigate();
   const location = useLocation();
   const signedIn = useAuthStore((s) => s.signedIn);
+  const showVoiceBar = useSettingsStore((s) => s.showVoiceBar);
+  const searchOpen = useSearchStore((s) => s.open);
+  const setSearchOpen = useSearchStore((s) => s.setOpen);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
+  useApplySettings();
 
   useEffect(() => {
     const isTyping = () => {
@@ -61,6 +74,27 @@ export function AppShell() {
         document.getElementById('voice-command-mic')?.click();
         return;
       }
+      // Global search; preventDefault suppresses Chromium's native find bar.
+      if (e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 'f' || e.key === 'F')) {
+        e.preventDefault();
+        useSearchStore.getState().setOpen(true);
+        return;
+      }
+      // Save; usually pressed while typing in a form, so it lives above the
+      // isTyping() bail. preventDefault suppresses Chromium's "Save page as".
+      if (e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 's' || e.key === 'S')) {
+        e.preventDefault();
+        if (!dispatchSave()) {
+          useAnnouncerStore.getState().announce('Nothing to save.');
+        }
+        return;
+      }
+      // Settings; like the other Ctrl shortcuts, works while typing.
+      if (e.ctrlKey && !e.shiftKey && !e.altKey && e.key === ',') {
+        e.preventDefault();
+        void navigate(routes.settings);
+        return;
+      }
 
       if (isTyping() || e.metaKey || e.ctrlKey || e.altKey) return;
 
@@ -85,6 +119,8 @@ export function AppShell() {
         void navigate(routes.medications, { state: { openAdd: true } });
       else if (action === 'new-appointment')
         void navigate(routes.appointments, { state: { openAdd: true } });
+      else if (action === 'find') useSearchStore.getState().setOpen(true);
+      else if (action === 'settings') void navigate(routes.settings);
     });
     return off;
   }, [navigate]);
@@ -108,15 +144,18 @@ export function AppShell() {
         <Sidebar />
         <main className={styles.content}>
           <Outlet />
-          <div className={styles.voiceBar}>
-            <VoiceInputBar />
-          </div>
+          {showVoiceBar && (
+            <div className={styles.voiceBar}>
+              <VoiceInputBar />
+            </div>
+          )}
         </main>
       </div>
       <LiveRegion />
       {shortcutsOpen && (
         <KeyboardShortcutsOverlay onClose={() => setShortcutsOpen(false)} />
       )}
+      {searchOpen && <GlobalSearchOverlay onClose={() => setSearchOpen(false)} />}
     </div>
   );
 }

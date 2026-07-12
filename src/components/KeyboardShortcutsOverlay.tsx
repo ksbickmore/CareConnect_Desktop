@@ -9,9 +9,9 @@ interface KeyboardShortcutsOverlayProps {
 const LEFT: ReadonlyArray<readonly [string, string]> = [
   ['New record', 'Ctrl + N'],
   ['New appointment', 'Ctrl + Shift + N'],
-  ['Save', 'Ctrl + S'],
-  ['Search / Find', 'Ctrl + F'],
-  ['Open settings', 'Ctrl + ,'],
+  ['Save (open form / health entry)', 'Ctrl + S'],
+  ['Search all records', 'Ctrl + F'],
+  ['Settings', 'Ctrl + ,'],
   ['Dashboard / Meds / Schedule / Messages / Health', '1 2 3 4 5'],
 ];
 const RIGHT: ReadonlyArray<readonly [string, string]> = [

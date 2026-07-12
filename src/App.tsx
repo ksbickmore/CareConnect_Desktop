@@ -9,6 +9,7 @@ import { HealthLogScreen } from '@/screens/HealthLogScreen';
 import { MessagesScreen } from '@/screens/MessagesScreen';
 import { EmergencyScreen } from '@/screens/EmergencyScreen';
 import { ProfileScreen } from '@/screens/ProfileScreen';
+import { SettingsScreen } from '@/screens/SettingsScreen';
 import { useMedicationsStore } from '@/stores/medications-store';
 import { useAppointmentsStore } from '@/stores/appointments-store';
 import { useMessagesStore } from '@/stores/messages-store';
@@ -41,6 +42,7 @@ export function AppRoutes() {
         <Route path={routes.messages} element={<MessagesScreen />} />
         <Route path={routes.emergency} element={<EmergencyScreen />} />
         <Route path={routes.profile} element={<ProfileScreen />} />
+        <Route path={routes.settings} element={<SettingsScreen />} />
       </Route>
       <Route path="*" element={<Navigate to={routes.login} replace />} />
     </Routes>

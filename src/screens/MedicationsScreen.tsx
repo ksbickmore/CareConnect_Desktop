@@ -9,6 +9,8 @@ import { RecordingRadar } from '@/components/RecordingRadar';
 import { useDictation } from '@/lib/speech/use-dictation';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import { useOpenAddOnNavigate } from '@/lib/use-open-add-on-navigate';
+import { useSelectOnNavigate } from '@/lib/use-select-on-navigate';
+import { useSaveAction } from '@/lib/save-actions';
 import { slugify, todayHeading } from '@/lib/format';
 import { useMedicationsStore } from '@/stores/medications-store';
 import { dataOrNull } from '@/stores/async';
@@ -35,6 +37,7 @@ export function MedicationsScreen() {
   const [voiceFor, setVoiceFor] = useState<Medication | null>(null);
 
   useOpenAddOnNavigate(() => setAddOpen(true));
+  useSelectOnNavigate(setSelectedId);
 
   const { today, completed, ordered } = useMemo(() => {
     const matchesFilter = (m: Medication) =>
@@ -393,6 +396,7 @@ function AddMedicationDialog({
     });
     if (err) setError(err);
   };
+  useSaveAction('dialog', () => void submit());
 
   useVoiceCommands('dialog', [
     {

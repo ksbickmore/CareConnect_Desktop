@@ -10,6 +10,7 @@ import { useMessagesStore } from '@/stores/messages-store';
 import { useHealthLogStore } from '@/stores/health-log-store';
 import { dataOrNull } from '@/stores/async';
 import { useAnnouncer } from '@/stores/announcer-store';
+import { useSearchStore } from '@/stores/search-store';
 import { whenLabel } from '@/lib/format';
 import { routes } from '@/lib/routes';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
@@ -98,11 +99,15 @@ export function DashboardScreen() {
         title="Dashboard"
         actions={
           <>
-            <div className={styles.search}>
-              <Search size={16} />
+            <button
+              type="button"
+              className={styles.search}
+              onClick={() => useSearchStore.getState().setOpen(true)}
+            >
+              <Search size={16} aria-hidden="true" />
               <span>Search records, meds…</span>
               <kbd className={styles.searchKbd}>Ctrl F</kbd>
-            </div>
+            </button>
             <Button icon={<Plus size={18} />} onClick={() => navigate(routes.medications)}>
               New record
             </Button>

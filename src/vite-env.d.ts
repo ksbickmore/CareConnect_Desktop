@@ -6,7 +6,13 @@ declare module '*.module.css' {
 }
 
 /** Menu / accelerator actions forwarded from the Electron main process. */
-type MenuAction = 'shortcuts' | 'emergency' | 'new-record' | 'new-appointment';
+type MenuAction =
+  | 'shortcuts'
+  | 'emergency'
+  | 'new-record'
+  | 'new-appointment'
+  | 'find'
+  | 'settings';
 
 interface CareConnectBridge {
   platform: string;

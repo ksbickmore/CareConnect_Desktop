@@ -8,4 +8,5 @@ export const routes = {
   messages: '/messages',
   emergency: '/emergency',
   profile: '/profile',
+  settings: '/settings',
 } as const;

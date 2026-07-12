@@ -5,6 +5,7 @@ import {
   CalendarDays,
   MessageSquare,
   HeartPulse,
+  Settings,
   TriangleAlert,
   type LucideIcon,
 } from 'lucide-react';
@@ -88,6 +89,17 @@ export function Sidebar() {
             </NavLink>
           );
         })}
+
+        <div className={styles.groupLabel}>APP</div>
+        <NavLink
+          to={routes.settings}
+          className={({ isActive }) =>
+            `${styles.navItem} ${isActive ? styles.active : ''}`
+          }
+        >
+          <Settings size={18} />
+          <span className={styles.navLabel}>Settings</span>
+        </NavLink>
       </nav>
 
       <button

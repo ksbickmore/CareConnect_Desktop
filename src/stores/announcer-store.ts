@@ -6,28 +6,30 @@ import { create } from 'zustand';
  * applied) and an assertive one for time-sensitive alerts (emergency sent,
  * "already logged today"). Any component can call `announce` without prop
  * drilling; `LiveRegion` (mounted once in AppShell) renders both regions.
+ *
+ * The store only records the message text (synchronously, so tests can assert
+ * it) plus a nonce that increments on every call — including repeats of the
+ * same text. `LiveRegion` watches the nonce and performs the clear-then-set
+ * DOM dance that actually makes screen readers speak.
  */
 interface AnnouncerStore {
   readonly polite: string;
+  readonly politeNonce: number;
   readonly assertive: string;
+  readonly assertiveNonce: number;
   announce(message: string, options?: { assertive?: boolean }): void;
 }
 
-export const useAnnouncerStore = create<AnnouncerStore>()((set, get) => ({
+export const useAnnouncerStore = create<AnnouncerStore>()((set) => ({
   polite: '',
+  politeNonce: 0,
   assertive: '',
+  assertiveNonce: 0,
   announce(message, options) {
-    const assertive = options?.assertive ?? false;
-    const apply = (text: string) =>
-      assertive ? set({ assertive: text }) : set({ polite: text });
-    // aria-live regions only fire on a content *change*, so a new message can
-    // be set immediately. Re-announcing the exact same text needs a clear
-    // first, deferred so React doesn't batch the two writes into a no-op.
-    if (get()[assertive ? 'assertive' : 'polite'] === message) {
-      apply('');
-      queueMicrotask(() => apply(message));
+    if (options?.assertive) {
+      set((s) => ({ assertive: message, assertiveNonce: s.assertiveNonce + 1 }));
     } else {
-      apply(message);
+      set((s) => ({ polite: message, politeNonce: s.politeNonce + 1 }));
     }
   },
 }));

@@ -39,7 +39,7 @@ export function LoginScreen() {
   return (
     <div className={styles.page}>
       <MenuBar />
-      <div className={styles.center}>
+      <main className={styles.center}>
         <form className={styles.card} onSubmit={submit}>
           <p className={styles.eyebrow}>CARECONNECT</p>
           <h1 className={styles.title}>Welcome back</h1>
@@ -86,7 +86,7 @@ export function LoginScreen() {
             </Button>
           </div>
         </form>
-      </div>
+      </main>
     </div>
   );
 }

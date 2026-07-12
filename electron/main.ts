@@ -91,7 +91,13 @@ function restrictPermissions(): void {
 
 const GITHUB_URL = 'https://github.com/ksbickmore/CareConnect_Desktop';
 
-type MenuAction = 'shortcuts' | 'emergency' | 'new-record' | 'new-appointment';
+type MenuAction =
+  | 'shortcuts'
+  | 'emergency'
+  | 'new-record'
+  | 'new-appointment'
+  | 'find'
+  | 'settings';
 
 /** Forward a menu/accelerator action to the focused renderer. */
 function sendAction(action: MenuAction): void {
@@ -128,6 +134,18 @@ const emergencyItem: Electron.MenuItemConstructorOptions = {
   click: () => sendAction('emergency'),
 };
 
+const findItem: Electron.MenuItemConstructorOptions = {
+  label: 'Find',
+  accelerator: 'CmdOrCtrl+F',
+  click: () => sendAction('find'),
+};
+
+const settingsItem: Electron.MenuItemConstructorOptions = {
+  label: 'Settings',
+  accelerator: 'CmdOrCtrl+,',
+  click: () => sendAction('settings'),
+};
+
 /**
  * The renderer renders its own dark menu-bar strip to match the Figma
  * desktop chrome. We still register a real application Menu so standard
@@ -146,10 +164,25 @@ function buildAppMenu(): void {
         { type: 'separator' },
         emergencyItem,
         { type: 'separator' },
+        settingsItem,
+        { type: 'separator' },
         isMac ? { role: 'close' } : { role: 'quit' },
       ],
     },
-    { role: 'editMenu' },
+    {
+      label: 'Edit',
+      submenu: [
+        findItem,
+        { type: 'separator' },
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'selectAll' },
+      ],
+    },
     { role: 'viewMenu' },
     { role: 'help', submenu: [shortcutsItem, { type: 'separator' }, helpItem] },
   ];
@@ -168,10 +201,14 @@ function buildPopupMenus(): Record<string, Electron.Menu> {
     newAppointmentItem,
     emergencyItem,
     { type: 'separator' },
+    settingsItem,
+    { type: 'separator' },
     ...(isMac ? [{ role: 'close' as const }] : []),
     { role: 'quit' },
   ];
   const edit: Electron.MenuItemConstructorOptions[] = [
+    findItem,
+    { type: 'separator' },
     { role: 'undo' },
     { role: 'redo' },
     { type: 'separator' },

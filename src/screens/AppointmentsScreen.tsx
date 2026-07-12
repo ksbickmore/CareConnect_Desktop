@@ -12,6 +12,8 @@ import { dataOrNull } from '@/stores/async';
 import { useAnnouncer } from '@/stores/announcer-store';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import { useOpenAddOnNavigate } from '@/lib/use-open-add-on-navigate';
+import { useSelectOnNavigate } from '@/lib/use-select-on-navigate';
+import { useSaveAction } from '@/lib/save-actions';
 import { openDialog } from '@/lib/voice/dom-actions';
 import {
   formatSpokenDate,
@@ -61,13 +63,31 @@ export function AppointmentsScreen() {
   const add = useAppointmentsStore((s) => s.add);
   const announce = useAnnouncer();
 
-  const list = dataOrNull(appointments) ?? [];
+  // Memoized so the fallback [] doesn't change identity every render and
+  // invalidate the pending-selection effect below.
+  const list = useMemo(() => dataOrNull(appointments) ?? [], [appointments]);
   const [view, setView] = useState<View>('week');
   const [anchor, setAnchor] = useState<Date>(() => startOfDay(new Date()));
   const [selected, setSelected] = useState<Appointment | null>(null);
   const [addOpen, setAddOpen] = useState(false);
 
   useOpenAddOnNavigate(() => setAddOpen(true));
+
+  // Global search: open the matching appointment and move the calendar to it.
+  // Resolved lazily because the list reloads (and is briefly empty) on mount.
+  const [pendingSelectId, setPendingSelectId] = useState<string | null>(null);
+  useSelectOnNavigate(setPendingSelectId);
+  useEffect(() => {
+    if (pendingSelectId == null) return;
+    const appt = list.find((a) => a.id === pendingSelectId);
+    if (!appt) return;
+    const t = setTimeout(() => {
+      setPendingSelectId(null);
+      setSelected(appt);
+      setAnchor(startOfDay(new Date(appt.when)));
+    }, 0);
+    return () => clearTimeout(t);
+  }, [pendingSelectId, list]);
 
   useEffect(() => {
     void load();
@@ -387,6 +407,7 @@ function AddDialog({
     const err = await onSave({ title: title.trim(), clinician, location, when });
     if (err) setError(err);
   };
+  useSaveAction('dialog', () => void submit());
 
   useVoiceCommands('dialog', [
     {

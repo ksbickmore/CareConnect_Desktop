@@ -1,7 +1,5 @@
 import { useAnnouncerStore } from './announcer-store';
 
-const flushMicrotasks = () => Promise.resolve();
-
 describe('useAnnouncerStore', () => {
   it('routes plain announcements to the polite region synchronously', () => {
     useAnnouncerStore.getState().announce('Saved.');
@@ -15,14 +13,13 @@ describe('useAnnouncerStore', () => {
     expect(useAnnouncerStore.getState().polite).toBe('');
   });
 
-  it('clears synchronously so repeating a message re-fires the live region', async () => {
+  it('bumps the nonce on every call so repeats are observable as new announcements', () => {
     useAnnouncerStore.getState().announce('Same text');
-    await flushMicrotasks();
+    const first = useAnnouncerStore.getState().politeNonce;
     useAnnouncerStore.getState().announce('Same text');
-    // Cleared immediately (this is what makes screen readers re-announce)…
-    expect(useAnnouncerStore.getState().polite).toBe('');
-    // …and set again on the microtask queue.
-    await flushMicrotasks();
+    // Text stays set synchronously; the nonce is what LiveRegion re-fires on.
     expect(useAnnouncerStore.getState().polite).toBe('Same text');
+    expect(useAnnouncerStore.getState().politeNonce).toBe(first + 1);
+    expect(useAnnouncerStore.getState().assertiveNonce).toBe(0);
   });
 });

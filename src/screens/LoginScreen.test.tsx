@@ -10,6 +10,15 @@ describe('LoginScreen', () => {
     expect(screen.getByLabelText('Password')).toHaveValue('demo1234');
   });
 
+  it('places the sign-in form inside a main landmark', () => {
+    renderAt('/');
+    const main = screen.getByRole('main');
+    expect(main).toContainElement(
+      screen.getByRole('heading', { level: 1, name: 'Welcome back' }),
+    );
+    expect(main).toContainElement(screen.getByLabelText('Email'));
+  });
+
   it('signs in and lands on the dashboard', async () => {
     const user = userEvent.setup();
     renderAt('/');

@@ -32,6 +32,15 @@ repositories ported from the mobile app), with data persisted to
 | **Health Log** | Big `[ − ] value [ + ]` step controls for pain/sleep (no sliders), mood chips, voice/manual note entry, a paginated "Recent Entries" history, and "Export log" to a text file. Pain and sleep are settable by voice through the global voice bar (`Ctrl+Space`): "pain 5", "set pain to five", "pain level 5 out of 10", "sleep 8", "sleep 8 hours" — extra words around the number are fine, and values clamp to the control's range (pain 0–10, sleep 0–14). The on-screen "Voice log" button is different: it dictates into the note field. |
 | **Emergency (SOS)** | Two oversized stacked targets (911 + primary caregiver), each armed with a **two-tap** sequence and a keyboard-focused countdown cancel bar before "connecting". Reachable from the sidebar and the global `Ctrl+Shift+E` shortcut. |
 | **Profile** | Account details and the app's **Sign Out** action; reached from the sidebar profile chip. |
+| **Settings** | Persisted preferences (`Ctrl+,` or the sidebar): text size (scales the whole UI), reduce motion (disables animations/transitions), and show/hide the voice command bar. |
+
+### Global search
+
+`Ctrl+F` (or the Dashboard search box, or Edit → Find) opens a search overlay
+that queries medications, appointments, health-log entries, and message
+threads at once. Results are grouped by category and keyboard-navigable
+(arrow keys or Tab); activating a result navigates to the owning screen with
+the matching item selected. The result count is announced to screen readers.
 
 ### Accessibility features (per [`docs/`](docs))
 
@@ -236,15 +245,19 @@ focusable with a visible focus ring, and the active nav item exposes
 | `Ctrl+N` | New record (opens the add-medication form) |
 | `Ctrl+Shift+N` | New appointment (opens the new-appointment form) |
 | `Ctrl+Shift+E` | Emergency (SOS) |
+| `Ctrl+F` | Global search across records, medications, appointments, and messages |
+| `Ctrl+S` | Save the open form dialog or health-log entry (announces "Nothing to save." elsewhere) |
+| `Ctrl+,` | Settings |
 | `Ctrl+Space` | Toggle continuous voice commands (works on any screen and in dialogs) |
 | `F1` or `?` | Keyboard shortcut reference |
 | `Tab` / `Shift+Tab` | Move focus between controls |
 | `Enter` / `Space` | Activate the focused control |
 | `Esc` | Close the top dialog / menu |
 
-Number shortcuts and `F1`/`?` are ignored while typing in a text field;
-`Ctrl+Shift+E` works everywhere. Press `F1` or `?` any time to see the full
-reference overlay.
+Number shortcuts and `F1`/`?` are ignored while typing in a text field; the
+`Ctrl` shortcuts (`Ctrl+Shift+E`, `Ctrl+F`, `Ctrl+S`, `Ctrl+,`, `Ctrl+Space`)
+work everywhere, including while typing. Press `F1` or `?` any time to see
+the full reference overlay.
 
 ## Menu bar
 
@@ -259,11 +272,11 @@ preload bridge (`window.careconnect.popupMenu`). The buttons are native
 `<button>`s, so the menus are fully keyboard-operable: Tab to focus, Enter or
 Space to open, arrow keys to navigate, Esc to close.
 
-The **File** menu (New Record, New Appointment, Emergency) and **Help** menu
-(Keyboard Shortcuts) carry real accelerators; the main process forwards their
-clicks — and the `Ctrl+Shift+E` / `Ctrl+N` / `Ctrl+Shift+N` / `F1`
-accelerators — to the renderer over a `menu:action` IPC channel
-(`window.careconnect.onMenuAction`).
+The **File** menu (New Record, New Appointment, Emergency, Settings), **Edit**
+menu (Find), and **Help** menu (Keyboard Shortcuts) carry real accelerators;
+the main process forwards their clicks — and the `Ctrl+Shift+E` / `Ctrl+N` /
+`Ctrl+Shift+N` / `Ctrl+F` / `Ctrl+,` / `F1` accelerators — to the renderer
+over a `menu:action` IPC channel (`window.careconnect.onMenuAction`).
 
 ## Project structure
 

@@ -16,7 +16,10 @@ import { useContactsStore } from '@/stores/contacts-store';
 import { useHealthLogStore } from '@/stores/health-log-store';
 import { useMedicationsStore } from '@/stores/medications-store';
 import { useMessagesStore } from '@/stores/messages-store';
+import { useSettingsStore } from '@/stores/settings-store';
 import { useVoiceNotesStore } from '@/stores/voice-notes-store';
+import { useSearchStore } from '@/stores/search-store';
+import { useSaveActionsStore } from '@/lib/save-actions';
 
 // jsdom does not implement object URLs; the Health Log export path needs them.
 if (typeof URL.createObjectURL === 'undefined') {
@@ -53,9 +56,19 @@ beforeEach(() => {
   useHealthLogStore.getState().reset();
   useContactsStore.getState().reset();
   useVoiceNotesStore.getState().reset();
+  useSettingsStore.getState().reset();
+  useSearchStore.setState({ open: false });
+  useSaveActionsStore.setState({ entries: [] });
+  document.body.style.zoom = '';
+  delete document.documentElement.dataset.reducedMotion;
   // auth-store has no reset(); announcer keeps only live-region text.
   useAuthStore.setState({ signedIn: false, email: null });
-  useAnnouncerStore.setState({ polite: '', assertive: '' });
+  useAnnouncerStore.setState({
+    polite: '',
+    politeNonce: 0,
+    assertive: '',
+    assertiveNonce: 0,
+  });
   jest.clearAllMocks();
 });
 

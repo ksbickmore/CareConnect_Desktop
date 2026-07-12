@@ -5,6 +5,7 @@ import { Toolbar } from '@/components/Toolbar';
 import { Button } from '@/components/Button';
 import { Dialog } from '@/components/Dialog';
 import { useDictation } from '@/lib/speech/use-dictation';
+import { useSelectOnNavigate } from '@/lib/use-select-on-navigate';
 import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import { normalize } from '@/lib/voice/spoken-words';
 import { parseNavigationKeyword } from '@/lib/voice/navigation-keywords';
@@ -41,6 +42,8 @@ export function MessagesScreen() {
   const [query, setQuery] = useState('');
   const [draft, setDraft] = useState('');
   const [composeOpen, setComposeOpen] = useState(false);
+
+  useSelectOnNavigate(setSelectedId);
 
   useEffect(() => {
     void load();

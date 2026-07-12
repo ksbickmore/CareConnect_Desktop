@@ -10,7 +10,7 @@ jest.mock('@/lib/speech/speech-recognition', () =>
  * executable form of the project's accessibility requirement that every
  * primary action be reachable and operable by keyboard alone.
  */
-import { act, fireEvent, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor, within } from '@testing-library/react';
 import { renderAt, signIn } from '@/test-utils/render';
 import { installCareconnectMock } from '@/test-utils/mocks';
 import { useAuthStore } from '@/stores/auth-store';
@@ -137,6 +137,65 @@ describe('emergency shortcut (Ctrl+Shift+E)', () => {
     screen.getByRole('searchbox', { name: 'Search messages' }).focus();
     press('e', { ctrlKey: true, shiftKey: true });
     expect(await heading('Emergency (SOS)')).toBeInTheDocument();
+  });
+});
+
+describe('settings shortcut (Ctrl+,)', () => {
+  it('navigates to the Settings screen', async () => {
+    renderAt('/dashboard');
+    await heading('Dashboard');
+
+    press(',', { ctrlKey: true });
+    expect(await heading('Settings')).toBeInTheDocument();
+  });
+
+  it('works while typing in a field', async () => {
+    renderAt('/messages');
+    await heading('Messages');
+
+    screen.getByRole('searchbox', { name: 'Search messages' }).focus();
+    press(',', { ctrlKey: true });
+    expect(await heading('Settings')).toBeInTheDocument();
+  });
+});
+
+describe('save shortcut (Ctrl+S)', () => {
+  it('announces "Nothing to save." on screens without a save action', async () => {
+    renderAt('/dashboard');
+    await heading('Dashboard');
+
+    press('s', { ctrlKey: true });
+    expect(useAnnouncerStore.getState().polite).toBe('Nothing to save.');
+  });
+
+  it('saves the health log entry, even while typing in the note field', async () => {
+    renderAt('/healthlog');
+    await heading('Health Log');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Manual entry' }));
+    const note = screen.getByLabelText('Note for today');
+    fireEvent.change(note, { target: { value: 'Saved via Ctrl+S' } });
+    note.focus();
+
+    press('s', { ctrlKey: true });
+    expect(useAnnouncerStore.getState().polite).toBe('Entry saved.');
+    expect(
+      screen.getByRole('region', { name: 'Recent entries' }),
+    ).toHaveTextContent('Saved via Ctrl+S');
+  });
+
+  it('submits an open add-dialog instead of the screen action', async () => {
+    renderAt('/medications');
+    await heading('Medications');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Add medication' }));
+    const dialog = screen.getByRole('dialog', { name: 'New medication' });
+
+    press('s', { ctrlKey: true });
+    // Empty form: the dialog's submit ran and surfaced its validation error.
+    expect(await within(dialog).findByRole('alert')).toHaveTextContent(
+      'Name and dose are both required.',
+    );
   });
 });
 
@@ -296,6 +355,25 @@ describe('native menu action bridge', () => {
       await waitFor(() =>
         expect(screen.queryByRole('dialog')).not.toBeInTheDocument(),
       );
+    } finally {
+      bridge.cleanup();
+    }
+  });
+
+  it('find opens the search overlay and settings navigates to Settings', async () => {
+    const bridge = installCareconnectMock();
+    try {
+      renderAt('/dashboard');
+      await heading('Dashboard');
+
+      act(() => bridge.fireMenuAction('find'));
+      expect(
+        screen.getByRole('dialog', { name: 'Search' }),
+      ).toBeInTheDocument();
+      press('Escape');
+
+      act(() => bridge.fireMenuAction('settings'));
+      expect(await heading('Settings')).toBeInTheDocument();
     } finally {
       bridge.cleanup();
     }

@@ -15,6 +15,7 @@ import {
   SLEEP_MAX,
 } from '@/stores/health-log-store';
 import { useAnnouncer } from '@/stores/announcer-store';
+import { useSaveAction } from '@/lib/save-actions';
 import type { LogEntry } from '@/models/types';
 import styles from './HealthLogScreen.module.css';
 
@@ -66,6 +67,7 @@ export function HealthLogScreen() {
     setShowNote(false);
     announce('Entry saved.');
   };
+  useSaveAction('screen', save);
 
   const exportLog = () => {
     const text = history

@@ -1,6 +1,12 @@
 import { contextBridge, ipcRenderer, type IpcRendererEvent } from 'electron';
 
-type MenuAction = 'shortcuts' | 'emergency' | 'new-record' | 'new-appointment';
+type MenuAction =
+  | 'shortcuts'
+  | 'emergency'
+  | 'new-record'
+  | 'new-appointment'
+  | 'find'
+  | 'settings';
 
 /**
  * Minimal, safe bridge. `popupMenu` lets the renderer's styled menu-bar
