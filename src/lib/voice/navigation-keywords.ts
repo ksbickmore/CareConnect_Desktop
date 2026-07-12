@@ -33,6 +33,9 @@ export function parseNavigationKeyword(words: string): NavigationCommand | null 
   if (lower.includes('profile') || lower.includes('account')) {
     return { route: routes.profile, label: 'Profile' };
   }
+  if (lower.includes('setting') || lower.includes('preference')) {
+    return { route: routes.settings, label: 'Settings' };
+  }
   if (lower.includes('emergency') || lower.includes('help')) {
     return { route: routes.emergency, label: 'Emergency' };
   }

@@ -14,6 +14,9 @@ describe('parseNavigationKeyword', () => {
     ['read my messages', routes.messages, 'Messages'],
     ['open my profile', routes.profile, 'Profile'],
     ['account settings', routes.profile, 'Profile'],
+    ['open settings', routes.settings, 'Settings'],
+    ['settings', routes.settings, 'Settings'],
+    ['change my preferences', routes.settings, 'Settings'],
     ['this is an emergency', routes.emergency, 'Emergency'],
     ['I need help', routes.emergency, 'Emergency'],
   ])('routes "%s" to %s', (words, route, label) => {

@@ -42,6 +42,14 @@ threads at once. Results are grouped by category and keyboard-navigable
 (arrow keys or Tab); activating a result navigates to the owning screen with
 the matching item selected. The result count is announced to screen readers.
 
+Search is fully voice-operable through the global voice bar (`Ctrl+Space`):
+say **"search"** / **"find"** to open the overlay, or **"search aspirin"** to
+open it with the query pre-filled. Inside the overlay say **"search
+\<text\>"** to change the query, **"open \<result\>"** to activate a match,
+**"clear search"**, or **"close"**. Unmatched speech dictates into the
+focused search box. Saying **"settings"** (or "preferences") anywhere
+navigates to the Settings screen, like the other screen names.
+
 ### Accessibility features (per [`docs/`](docs))
 
 - **Voice-first (C1):** a persistent voice command bar (docked below every

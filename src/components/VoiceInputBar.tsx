@@ -14,6 +14,7 @@ import {
   openDialog,
 } from '@/lib/voice/dom-actions';
 import { useAnnouncer } from '@/stores/announcer-store';
+import { useSearchStore } from '@/stores/search-store';
 import styles from './VoiceInputBar.module.css';
 
 /**
@@ -97,6 +98,20 @@ export const VoiceInputBar = forwardRef<HTMLButtonElement>(function VoiceInputBa
       run: () => {
         stop();
         return 'Voice commands off.';
+      },
+    },
+    {
+      // Screens may shadow "search *" with a local filter (Messages does);
+      // the bare word and "find" still open the global overlay everywhere.
+      phrases: ['search', 'find', 'open search', 'search *', 'find *'],
+      hint: 'search <text>',
+      run: (value) => {
+        if (value) {
+          useSearchStore.getState().openWith(value);
+          return `Searching for ${value}.`;
+        }
+        useSearchStore.getState().setOpen(true);
+        return 'Opening search.';
       },
     },
     {

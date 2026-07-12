@@ -12,6 +12,7 @@ import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import { renderAt, signIn } from '@/test-utils/render';
 import { useAnnouncerStore } from '@/stores/announcer-store';
+import { fakeSpeech } from '@/test-utils/fake-speech';
 
 const heading = (name: string) =>
   screen.findByRole('heading', { level: 1, name });
@@ -29,6 +30,22 @@ const searchBox = () =>
 beforeEach(() => {
   signIn();
 });
+
+afterEach(() => {
+  fakeSpeech.reset();
+});
+
+/** Start the continuous voice session and speak one utterance. */
+const speak = async (utterance: string) => {
+  if (!fakeSpeech.listening()) {
+    press(' ', { code: 'Space', ctrlKey: true });
+    await waitFor(() => expect(fakeSpeech.listening()).toBe(true));
+  }
+  await act(async () => {
+    fakeSpeech.emitFinal(utterance);
+    await Promise.resolve();
+  });
+};
 
 describe('GlobalSearchOverlay', () => {
   it('opens with Ctrl+F, focuses the input, and closes with Escape', async () => {
@@ -98,6 +115,47 @@ describe('GlobalSearchOverlay', () => {
 
     expect(await heading('Medications')).toBeInTheDocument();
     // The detail panel shows the selected medication ("Aspirin 81mg …").
+    expect(
+      await screen.findByRole('heading', { level: 2, name: /Aspirin/ }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('opens by voice with the spoken query pre-filled', async () => {
+    renderAt('/dashboard');
+    await heading('Dashboard');
+
+    await speak('search aspirin');
+    const dialog = within(await searchDialog());
+    expect(searchBox()).toHaveValue('aspirin');
+    expect(dialog.getByText(/Aspirin/)).toBeInTheDocument();
+  });
+
+  it('opens by voice with the bare word "search"', async () => {
+    renderAt('/dashboard');
+    await heading('Dashboard');
+
+    await speak('search');
+    expect(await searchDialog()).toBeInTheDocument();
+    expect(searchBox()).toHaveValue('');
+  });
+
+  it('supports voice inside the overlay: search, open result, clear', async () => {
+    renderAt('/dashboard');
+    await heading('Dashboard');
+
+    await speak('find');
+    await searchDialog();
+
+    await speak('search park');
+    expect(searchBox()).toHaveValue('park');
+
+    await speak('clear search');
+    expect(searchBox()).toHaveValue('');
+
+    await speak('search aspirin');
+    await speak('open aspirin');
+    expect(await heading('Medications')).toBeInTheDocument();
     expect(
       await screen.findByRole('heading', { level: 2, name: /Aspirin/ }),
     ).toBeInTheDocument();

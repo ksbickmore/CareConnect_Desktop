@@ -6,8 +6,10 @@ import { useAppointmentsStore } from '@/stores/appointments-store';
 import { useHealthLogStore } from '@/stores/health-log-store';
 import { useMessagesStore } from '@/stores/messages-store';
 import { useAnnouncer } from '@/stores/announcer-store';
+import { useSearchStore } from '@/stores/search-store';
 import { dataOrNull } from '@/stores/async';
 import { routes } from '@/lib/routes';
+import { useVoiceCommands } from '@/lib/voice/use-voice-commands';
 import styles from './GlobalSearchOverlay.module.css';
 
 interface SearchResult {
@@ -38,7 +40,8 @@ const matches = (query: string, ...haystack: ReadonlyArray<string | undefined>) 
 export function GlobalSearchOverlay({ onClose }: { onClose: () => void }) {
   const navigate = useNavigate();
   const announce = useAnnouncer();
-  const [query, setQuery] = useState('');
+  // Voice ("search aspirin") opens the overlay with the query pre-filled.
+  const [query, setQuery] = useState(() => useSearchStore.getState().initialQuery);
   const listRef = useRef<HTMLDivElement>(null);
 
   // Dialog focuses its first focusable (the close button); the search box is
@@ -132,6 +135,40 @@ export function GlobalSearchOverlay({ onClose }: { onClose: () => void }) {
       result.selectId != null ? { state: { selectId: result.selectId } } : undefined,
     );
   };
+
+  // Voice: set/clear the query and open a result by name. Unmatched speech
+  // still dictates into the focused search box (the dispatcher's dialog
+  // fallback), and "close" comes from Dialog's own commands.
+  useVoiceCommands('dialog', [
+    {
+      phrases: ['search *', 'find *'],
+      hint: 'search <text>',
+      run: (value) => {
+        setQuery(value ?? '');
+      },
+    },
+    {
+      phrases: ['clear search', 'clear'],
+      hint: 'clear search',
+      run: () => {
+        setQuery('');
+        return 'Search cleared.';
+      },
+    },
+    {
+      phrases: ['open *'],
+      hint: 'open <result>',
+      run: (value) => {
+        const spoken = (value ?? '').trim().toLowerCase();
+        const result = groups
+          .flatMap((g) => g.results)
+          .find((r) => r.title.toLowerCase().includes(spoken));
+        if (!result) return `No result matching ${value}.`;
+        open(result);
+        return `Opening ${result.title}.`;
+      },
+    },
+  ]);
 
   // Arrow keys walk the result buttons; ArrowDown from the input enters the
   // list. Tab still works — this is a convenience, not a focus prison.

@@ -264,6 +264,19 @@ describe('continuous voice session', () => {
     expect(fakeSpeech.listening()).toBe(false);
   });
 
+  it('navigates to Settings by voice', async () => {
+    renderAt('/dashboard');
+    await heading('Dashboard');
+
+    press(' ', { code: 'Space', ctrlKey: true });
+    await waitFor(() => expect(fakeSpeech.listening()).toBe(true));
+    await act(async () => {
+      fakeSpeech.emitFinal('open settings');
+      await Promise.resolve();
+    });
+    expect(await heading('Settings')).toBeInTheDocument();
+  });
+
   it('falls back to clicking a visible button by name', async () => {
     renderAt('/medications');
     await heading('Medications');
