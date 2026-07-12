@@ -58,19 +58,26 @@ describe('SettingsScreen', () => {
     const speak = (utterance: string) =>
       act(() => void dispatchVoiceCommand(utterance));
 
+    // Awaiting the heading lets the shell's async store loads (sidebar
+    // badges) settle inside act before the test body runs.
+    const renderSettings = async () => {
+      renderAt('/settings');
+      await screen.findByRole('heading', { level: 1, name: 'Settings' });
+    };
+
     it.each([
       ['text size large', 1.15],
       ['Text size extra large.', 1.3],
       ['set text size to normal', 1],
       ['text size big', 1.15],
-    ])('"%s" sets zoom to %s', (utterance, zoom) => {
-      renderAt('/settings');
+    ])('"%s" sets zoom to %s', async (utterance, zoom) => {
+      await renderSettings();
       speak(utterance);
       expect(useSettingsStore.getState().textZoom).toBe(zoom);
     });
 
-    it('hints when the spoken size is not recognized', () => {
-      renderAt('/settings');
+    it('hints when the spoken size is not recognized', async () => {
+      await renderSettings();
       speak('text size gigantic');
       expect(useSettingsStore.getState().textZoom).toBe(1);
       expect(useAnnouncerStore.getState().polite).toBe(
@@ -78,8 +85,8 @@ describe('SettingsScreen', () => {
       );
     });
 
-    it('turns reduced motion on and off, with "reduced" accepted', () => {
-      renderAt('/settings');
+    it('turns reduced motion on and off, with "reduced" accepted', async () => {
+      await renderSettings();
 
       speak('Reduced motion on.');
       expect(useSettingsStore.getState().reducedMotion).toBe(true);
@@ -89,8 +96,8 @@ describe('SettingsScreen', () => {
       expect(useSettingsStore.getState().reducedMotion).toBe(true);
     });
 
-    it('toggles the voice command bar', () => {
-      renderAt('/settings');
+    it('toggles the voice command bar', async () => {
+      await renderSettings();
 
       speak('voice bar');
       expect(useSettingsStore.getState().showVoiceBar).toBe(false);
