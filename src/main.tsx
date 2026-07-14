@@ -5,8 +5,8 @@ import { App } from './App';
 import './index.css';
 
 if (import.meta.env.DEV) {
-  import('@axe-core/react').then(({ default: axe }) => {
-    axe(React, ReactDOM, 1000);
+  void import('@axe-core/react').then(({ default: axe }) => {
+    void axe(React, ReactDOM, 1000);
   });
 }
 
