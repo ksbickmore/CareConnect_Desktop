@@ -43,9 +43,9 @@ export function LoginScreen() {
         <form className={styles.card} onSubmit={submit}>
           <p className={styles.eyebrow}>CARECONNECT</p>
           <h1 className={styles.title}>Welcome back</h1>
-          <p className={styles.intro}>
-            Demo credentials are pre-filled — just select Sign In to continue.
-          </p>
+          {/*<p className={styles.intro}>*/}
+          {/*  Demo credentials are pre-filled — just select Sign In to continue.*/}
+          {/*</p>*/}
 
           <label className={styles.label} htmlFor="email">
             Email

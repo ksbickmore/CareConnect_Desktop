@@ -150,3 +150,5 @@ models/
 
 # Playwright MCP debug artifacts
 .playwright-mcp/
+
+.idea
